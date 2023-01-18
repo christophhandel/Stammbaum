@@ -5,7 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="be4250ad-690f-4fa3-8d6d-146b22c6294a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/App/Core/Workloads/Person/Accomplishment.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/App/Core/Workloads/Person/Company.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/App/Core/Workloads/Person/Job.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.MongoDBDemoApp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MongoDBDemoApp/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/Core/Util/MapperProfile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/App/Core/Util/MapperProfile.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/Core/Workloads/FamilyTree/FamilyTree.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/Core/Workloads/FamilyTree/FamilyTreeRepository.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/Core/Workloads/FamilyTree/FamilyTreeService.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/Core/Workloads/FamilyTree/IPersonRepository.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/Core/Workloads/FamilyTree/IPersonService.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/App/Core/Workloads/Person/Person.cs" beforeDir="false" afterPath="$PROJECT_DIR$/App/Core/Workloads/Person/Person.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/Model/FamilyTree/FamilyTreeDto.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/App/Startup.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +73,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1674044319837</updated>
-      <workItem from="1674044321228" duration="3287000" />
+      <workItem from="1674044321228" duration="4803000" />
     </task>
     <servers />
   </component>
