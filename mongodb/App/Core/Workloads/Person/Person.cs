@@ -7,5 +7,7 @@ public sealed class Person : EntityBase
 {
     public string FirstName { get; set; } = default!;
     public string LastName { get; set; } = default!;
-    public ObjectId Relationship { get; set; }
+    public Location BirthPlace { get; set; } = default!;
+    
+    public List<ObjectId> Children { get; set; } = default!;
 }
