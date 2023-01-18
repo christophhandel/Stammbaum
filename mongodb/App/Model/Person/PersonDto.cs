@@ -1,4 +1,4 @@
-﻿namespace FamilyTreeMongoApp.Model.Comment;
+﻿namespace FamilyTreeMongoApp.Model.Person;
 
 public sealed class PersonDto
 {

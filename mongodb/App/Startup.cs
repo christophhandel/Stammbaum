@@ -1,5 +1,6 @@
 using LeoMongo;
 using FamilyTreeMongoApp.Core.Util;
+using FamilyTreeMongoApp.Core.Workloads.FamilyTree;
 using FamilyTreeMongoApp.Core.Workloads.Person;
 
 namespace FamilyTreeMongoApp;
@@ -26,6 +27,8 @@ public class Startup
         // for bigger assemblies it would be alright to register those via reflection by naming convention!
         services.AddScoped<IPersonService, PersonService>();
         services.AddScoped<IPersonRepository, PersonRepository>();
+        services.AddScoped<IFamilyTreeService, FamilyTreeService>();
+        services.AddScoped<IFamilyTreeRepository, FamilyTreeRepository>();
         
         services.AddTransient<IDateTimeProvider, DateTimeProvider>();
 
