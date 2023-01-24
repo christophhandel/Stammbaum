@@ -26,7 +26,7 @@ public sealed class PersonController : ControllerBase
         _logger = logger;
     }
 
-     /// <summary>
+    /// <summary>
     ///     Creates a new Person.
     /// </summary>
     /// <param name="request">Data for the new comment</param>
@@ -35,23 +35,23 @@ public sealed class PersonController : ControllerBase
     public async Task<IActionResult> Create([FromBody] PersonDto request)
     {
                 // for a real app it would be a good idea to configure model validation to remove long ifs like this
-        if (string.IsNullOrWhiteSpace(request.FirstName)
-            || string.IsNullOrWhiteSpace(request.LastName))
+        if (string.IsNullOrWhiteSpace(request.Firstname)
+            || string.IsNullOrWhiteSpace(request.Lastname))
         {
             return BadRequest();
         }
 
-        using var transaction = await _transactionProvider.BeginTransaction();
+        //using var transaction = await _transactionProvider.BeginTransaction();
         //check if dto contains parents ids
         //      - if yes: check if ids are correct
         //      - if no: one (or more) parents are unknown 
-        if(!string.IsNullOrEmpty(request.FatherId)) {
+        if(!string.IsNullOrWhiteSpace(request.FatherId)) {
             var father = await _personService.GetPersonById(MongoDB.Bson.ObjectId.Parse(request.FatherId));
             if(father == null) {
                 return BadRequest();
             }
         }
-        if(!string.IsNullOrEmpty(request.MotherId)) {
+        if(!string.IsNullOrWhiteSpace(request.MotherId)) {
             var mother = await _personService.GetPersonById(MongoDB.Bson.ObjectId.Parse(request.MotherId));
             if(mother == null) {
                 return BadRequest();
@@ -59,9 +59,20 @@ public sealed class PersonController : ControllerBase
         }
         
         var person = await _personService.AddPerson(request);
-        await transaction.CommitAsync();
-        return CreatedAtAction(nameof(Person), new {id = person.Id.ToString()}, person);
+        //await transaction.CommitAsync();
+        return new OkResult();
+        //return CreatedAtAction(nameof(Person), new {id = person.Id.ToString()}, person);
     }
     
-    
+    /// <summary>
+    ///     Returns all people
+    /// </summary>
+    /// <param name="sex">filter by sex</param>
+    /// <returns>List of comments, may be empty</returns>
+    [HttpGet]
+    public async Task<ActionResult<IReadOnlyCollection<PersonDto>>> GetPeopleBySex(string? sex)
+    {
+        IReadOnlyCollection<Person> people = await _personService.GetPeopleBySex(sex);
+        return Ok(_mapper.Map<List<PersonDto>>(people));
+    }
 }

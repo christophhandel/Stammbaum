@@ -18,11 +18,17 @@ public sealed class PersonService : IPersonService
     public async Task<Person> AddPerson(PersonDto request)
     {
         return await _repository.AddPerson(new Person {
-            FirstName = request.FirstName,
-            LastName = request.LastName,
-            Father = ObjectId.Parse(request.FatherId),
-            Mother = ObjectId.Parse(request.MotherId),
+            Firstname = request.Firstname,
+            Lastname = request.Lastname,
+            Sex = request.Sex,
+            Father = string.IsNullOrWhiteSpace(request.FatherId)?null: ObjectId.Parse(request.FatherId),
+            Mother = string.IsNullOrWhiteSpace(request.MotherId)?null: ObjectId.Parse(request.MotherId) 
         });
+    }
+
+    public async Task<IReadOnlyCollection<Person>> GetPeopleBySex(string? sex)
+    {
+        return await _repository.GetPeopleBySex(sex);
     }
 
     public Task<Person> GetPersonById(ObjectId objectId)

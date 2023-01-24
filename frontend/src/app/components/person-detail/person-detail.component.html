@@ -1,0 +1,49 @@
+<form action="" method="post" #personForm="ngForm" (submit)="onSubmit()">
+  <div>
+    <label for="firstname">Firstname</label>
+    <input type="text" id="firstname"
+           required
+           [(ngModel)]="model.firstname" name="firstname"
+           #firstname="ngModel">
+    <div [hidden]="firstname.valid || firstname.pristine">Firstname is required</div>
+  </div>
+  <div>
+    <label for="lastname">Lastname</label>
+    <input type="text" id="lastname"
+           required
+           [(ngModel)]="model.lastname" name="lastname"
+           #lastname="ngModel">
+    <div [hidden]="lastname.valid || lastname.pristine">Lastname is required</div>
+  </div>
+  <div>
+    <label for="father">Father</label>
+    <select id="father"
+            [(ngModel)]="model.fatherId" name="father"
+            #father="ngModel">
+      <option [ngValue]="null" selected>Unknown</option>
+      <option *ngFor="let f of fathers" [value]="f.id">{{f.firstname}} {{f.lastname}}</option>
+    </select>
+  </div>
+  <div>
+    <label for="mother">Mother</label>
+    <select id="mother"
+            [(ngModel)]="model.motherId" name="mother"
+            #mother="ngModel">
+      <option [ngValue]="null" selected>Unknown</option>
+      <option *ngFor="let m of mothers" [value]="m.id">{{m.firstname}} {{m.lastname}}</option>
+    </select>
+  </div>
+  <div style="display:flex">
+    <label for="sex">Sex</label>
+    <div>
+      <input #malesex="ngModel" id="male" type="radio" value="m" name="sex" [(ngModel)]="model.sex" required>
+      <label class="custom-control-label" for="male">Male</label>
+    </div>
+    <div>
+        <input #femalesex="ngModel" id="female" type="radio" value="f" name="sex" [(ngModel)]="model.sex" required>
+        <label class="custom-control-label" for="female">Female</label>
+    </div>
+    <div [hidden]="malesex.valid || femalesex.valid || malesex.pristine || femalesex.pristine">Sex is required</div>
+  </div>
+  <button type="submit">Submit</button>
+</form>
