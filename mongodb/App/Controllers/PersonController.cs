@@ -36,22 +36,28 @@ public sealed class PersonController : ControllerBase
     {
                 // for a real app it would be a good idea to configure model validation to remove long ifs like this
         if (string.IsNullOrWhiteSpace(request.FirstName)
-            || string.IsNullOrWhiteSpace(request.LastName)
-            || request.MotherId == null
-            || request.FatherId == null)
+            || string.IsNullOrWhiteSpace(request.LastName))
         {
             return BadRequest();
         }
 
         using var transaction = await _transactionProvider.BeginTransaction();
-        var father = await _personService.GetPersonById(MongoDB.Bson.ObjectId.Parse(request.FatherId));
-        if(father == null) {
-            return BadRequest();
+        //check if dto contains parents ids
+        //      - if yes: check if ids are correct
+        //      - if no: one (or more) parents are unknown 
+        if(!string.IsNullOrEmpty(request.FatherId)) {
+            var father = await _personService.GetPersonById(MongoDB.Bson.ObjectId.Parse(request.FatherId));
+            if(father == null) {
+                return BadRequest();
+            }
         }
-        var mother = await _personService.GetPersonById(MongoDB.Bson.ObjectId.Parse(request.MotherId));
-        if(mother == null) {
-            return BadRequest();
+        if(!string.IsNullOrEmpty(request.MotherId)) {
+            var mother = await _personService.GetPersonById(MongoDB.Bson.ObjectId.Parse(request.MotherId));
+            if(mother == null) {
+                return BadRequest();
+            }
         }
+        
         var person = await _personService.AddPerson(request);
         await transaction.CommitAsync();
         return CreatedAtAction(nameof(Person), new {id = person.Id.ToString()}, person);
