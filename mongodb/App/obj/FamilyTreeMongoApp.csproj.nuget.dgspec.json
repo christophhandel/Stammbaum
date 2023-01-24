@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/dariuspavelescu/HTL/DBI/Stammbaum-MongoDB-DBI-5ahif/mongodb/App/FamilyTreeMongoApp.csproj": {}
+    "/home/ubuntu/tmp/Stammbaum-MongoDB-DBI-5ahif/mongodb/App/FamilyTreeMongoApp.csproj": {}
   },
   "projects": {
-    "/Users/dariuspavelescu/HTL/DBI/Stammbaum-MongoDB-DBI-5ahif/mongodb/App/FamilyTreeMongoApp.csproj": {
+    "/home/ubuntu/tmp/Stammbaum-MongoDB-DBI-5ahif/mongodb/App/FamilyTreeMongoApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/dariuspavelescu/HTL/DBI/Stammbaum-MongoDB-DBI-5ahif/mongodb/App/FamilyTreeMongoApp.csproj",
+        "projectUniqueName": "/home/ubuntu/tmp/Stammbaum-MongoDB-DBI-5ahif/mongodb/App/FamilyTreeMongoApp.csproj",
         "projectName": "FamilyTreeMongoApp",
-        "projectPath": "/Users/dariuspavelescu/HTL/DBI/Stammbaum-MongoDB-DBI-5ahif/mongodb/App/FamilyTreeMongoApp.csproj",
-        "packagesPath": "/Users/dariuspavelescu/.nuget/packages/",
-        "outputPath": "/Users/dariuspavelescu/HTL/DBI/Stammbaum-MongoDB-DBI-5ahif/mongodb/App/obj/",
+        "projectPath": "/home/ubuntu/tmp/Stammbaum-MongoDB-DBI-5ahif/mongodb/App/FamilyTreeMongoApp.csproj",
+        "packagesPath": "/home/ubuntu/.nuget/packages/",
+        "outputPath": "/home/ubuntu/tmp/Stammbaum-MongoDB-DBI-5ahif/mongodb/App/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/dariuspavelescu/.nuget/NuGet/NuGet.Config"
+          "/home/ubuntu/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -79,6 +79,20 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[7.0.1, 7.0.1]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.linux-arm64",
+              "version": "[7.0.1, 7.0.1]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[7.0.1, 7.0.1]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -87,7 +101,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.101/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/opt/dotnet-arm-64/sdk/7.0.101/RuntimeIdentifierGraph.json"
         }
       }
     }
