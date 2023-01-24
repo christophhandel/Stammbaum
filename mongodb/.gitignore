@@ -24,8 +24,8 @@
 *.suo
 *.user
 .vs/
-[Bb]in/
-[Oo]bj/
+App/bin/
+App/obj/
 _UpgradeReport_Files/
 [Pp]ackages/
 
