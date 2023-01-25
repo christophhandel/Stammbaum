@@ -1,49 +1,128 @@
-<form action="" method="post" #personForm="ngForm" (submit)="onSubmit()">
+<div class="divide-y divide-double">
   <div>
-    <label for="firstname">Firstname</label>
-    <input type="text" id="firstname"
-           required
-           [(ngModel)]="model.firstname" name="firstname"
-           #firstname="ngModel">
-    <div [hidden]="firstname.valid || firstname.pristine">Firstname is required</div>
+    <h1 class="text-gray-900 text-4xl font-medium mb-2 pl-10 pt-10">Person Detail</h1>
   </div>
   <div>
-    <label for="lastname">Lastname</label>
-    <input type="text" id="lastname"
-           required
-           [(ngModel)]="model.lastname" name="lastname"
-           #lastname="ngModel">
-    <div [hidden]="lastname.valid || lastname.pristine">Lastname is required</div>
-  </div>
-  <div>
-    <label for="father">Father</label>
-    <select id="father"
-            [(ngModel)]="model.fatherId" name="father"
-            #father="ngModel">
-      <option [ngValue]="null" selected>Unknown</option>
-      <option *ngFor="let f of fathers" [value]="f.id">{{f.firstname}} {{f.lastname}}</option>
-    </select>
-  </div>
-  <div>
-    <label for="mother">Mother</label>
-    <select id="mother"
-            [(ngModel)]="model.motherId" name="mother"
-            #mother="ngModel">
-      <option [ngValue]="null" selected>Unknown</option>
-      <option *ngFor="let m of mothers" [value]="m.id">{{m.firstname}} {{m.lastname}}</option>
-    </select>
-  </div>
-  <div style="display:flex">
-    <label for="sex">Sex</label>
-    <div>
-      <input #malesex="ngModel" id="male" type="radio" value="m" name="sex" [(ngModel)]="model.sex" required>
-      <label class="custom-control-label" for="male">Male</label>
+    <div class="flex m-10 w-10/12">
+      <div class="flex flex-col rounded-lg bg-white shadow-lg">
+        <div class="flex">
+
+          <form class="w-full max-w-lg m-20" action="" method="post" #personForm="ngForm" (submit)="onSubmit()">
+            <div class="flex flex-wrap -mx-3 mb-6">
+              <!--    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">-->
+              <!--      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">-->
+              <!--        First Name-->
+              <!--      </label>-->
+              <!--      <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Max">-->
+              <!--      <p class="text-red-500 text-xs italic">Please fill out this field.</p>-->
+              <!--    </div>-->
+              <div class="w-full md:w-1/2 px-3">
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="first-name">
+                  First Name
+                </label>
+                <input
+                  class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  id="first-name" type="text" placeholder="Max" required [(ngModel)]="model.firstname" name="firstname"
+                  #firstname="ngModel">
+                <div [hidden]="firstname.valid || firstname.pristine">Firstname is required</div>
+              </div>
+
+              <!--    <label for="lastname">Lastname</label>-->
+              <!--    <input type="text" id="lastname"-->
+              <!--           required-->
+              <!--           [(ngModel)]="model.lastname" name="lastname"-->
+              <!--           #lastname="ngModel">-->
+              <!--    <div [hidden]="lastname.valid || lastname.pristine">Lastname is required</div>-->
+
+
+              <div class="w-full md:w-1/2 px-3">
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="last-name">
+                  Last Name
+                </label>
+                <input
+                  class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  id="last-name" type="text" placeholder="Musterfrau" required [(ngModel)]="model.lastname" name="lastname"
+                  #lastname="ngModel">
+                <div [hidden]="lastname.valid || lastname.pristine">Lastname is required</div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap -mx-3 mb-2">
+              <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="sex">
+                  Sex
+                </label>
+                <!--      <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-city" type="text">-->
+
+                <div class="flex space-x-4" id="sex">
+                  <div class="form-check">
+                    <input #malesex="ngModel" id="sex-male" type="radio" value="m" name="sex-male" [(ngModel)]="model.sex"
+                           required
+                           class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer">
+                    <label class="form-check-label inline-block text-gray-800" for="sex-male">
+                      Male
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input #femalesex="ngModel" type="radio" value="f" name="sex-female" [(ngModel)]="model.sex" required
+                           class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                           id="sex-female" checked>
+                    <label class="form-check-label inline-block text-gray-800" for="sex-female">
+                      Female
+                    </label>
+                  </div>
+                </div>
+
+              </div>
+              <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="mother">
+                  Mother
+                </label>
+                <div class="relative">
+                  <select
+                    class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="mother" [(ngModel)]="model.motherId" name="mother" #mother="ngModel">
+                    <option [ngValue]="null" selected>Unknown</option>
+                    <option *ngFor="let m of mothers" [value]="m.id">{{m.firstname}} {{m.lastname}}</option>
+                  </select>
+                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="father">
+                  Father
+                </label>
+                <div class="relative">
+                  <select
+                    class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="father" [(ngModel)]="model.fatherId" name="father" #father="ngModel">
+                    <option [ngValue]="null" selected>Unknown</option>
+                    <option *ngFor="let f of fathers" [value]="f.id">{{f.firstname}} {{f.lastname}}</option>
+                  </select>
+                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="flex items-center justify-center m-10">
+              <button
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                type="button">
+                Add
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-    <div>
-        <input #femalesex="ngModel" id="female" type="radio" value="f" name="sex" [(ngModel)]="model.sex" required>
-        <label class="custom-control-label" for="female">Female</label>
-    </div>
-    <div [hidden]="malesex.valid || femalesex.valid || malesex.pristine || femalesex.pristine">Sex is required</div>
   </div>
-  <button type="submit">Submit</button>
-</form>
+</div>

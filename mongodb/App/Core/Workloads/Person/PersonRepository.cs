@@ -31,8 +31,56 @@ public sealed class PersonRepository : RepositoryBase<Person>, IPersonRepository
         return await query.ToListAsync();
     }
 
-    public async Task<Person> GetPersonById(ObjectId objectId)
+    public async Task<Person?> GetPersonById(ObjectId objectId)
     {
         return await Query().FirstOrDefaultAsync(c=>c.Id==objectId);
+    }
+
+    public async Task<IReadOnlyCollection<Person>> GetPeopleWithNoParents()
+    {
+        return await Query()
+            .Where(c=>c.Mother == null && c.Father == null)
+            .ToListAsync();
+    }
+
+    public async Task<IReadOnlyCollection<Person>> GetPeopleByParents(ObjectId? motherId, ObjectId? fatherId)
+    {
+        var query = Query();
+        if(motherId != null) {
+            query = query.Where(p=>p.Mother == motherId);
+        }
+        
+        if(fatherId != null) {
+            query = query.Where(p=>p.Father == fatherId);
+        }
+        
+        return await query.ToListAsync();
+    }
+
+    public async Task<Person> UpdatePerson(ObjectId id, 
+        string firstname, 
+        string lastname, 
+        ObjectId? motherId, 
+        ObjectId? fatherId, 
+        string personSex)
+    {
+        var updateDef = UpdateDefBuilder
+            .Set(p => p.Firstname, firstname)
+            .Set(p => p.Lastname, lastname)
+            .Set(p => p.Sex, personSex);
+
+        if (motherId is not null)
+        {
+            updateDef = updateDef.Set(p => p.Mother,  motherId);
+        }
+
+        if (fatherId is not null)
+        {
+            updateDef = updateDef.Set(p => p.Father, fatherId);
+        }
+
+        await UpdateOneAsync(id, updateDef);
+        
+        return (await GetPersonById(id))!;
     }
 }

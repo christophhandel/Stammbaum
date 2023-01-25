@@ -3,6 +3,7 @@ using LeoMongo.Transaction;
 using Microsoft.AspNetCore.Mvc;
 using FamilyTreeMongoApp.Model.Person;
 using FamilyTreeMongoApp.Core.Workloads.Person;
+using MongoDB.Bson;
 
 namespace FamilyTreeMongoApp.Controllers;
 
@@ -45,14 +46,14 @@ public sealed class PersonController : ControllerBase
         //check if dto contains parents ids
         //      - if yes: check if ids are correct
         //      - if no: one (or more) parents are unknown 
-        if(!string.IsNullOrWhiteSpace(request.FatherId)) {
-            var father = await _personService.GetPersonById(MongoDB.Bson.ObjectId.Parse(request.FatherId));
+        if(!string.IsNullOrWhiteSpace(request.Father)) {
+            var father = await _personService.GetPersonById(MongoDB.Bson.ObjectId.Parse(request.Father));
             if(father == null) {
                 return BadRequest();
             }
         }
-        if(!string.IsNullOrWhiteSpace(request.MotherId)) {
-            var mother = await _personService.GetPersonById(MongoDB.Bson.ObjectId.Parse(request.MotherId));
+        if(!string.IsNullOrWhiteSpace(request.Mother)) {
+            var mother = await _personService.GetPersonById(MongoDB.Bson.ObjectId.Parse(request.Mother));
             if(mother == null) {
                 return BadRequest();
             }
@@ -74,5 +75,69 @@ public sealed class PersonController : ControllerBase
     {
         IEnumerable<Person> people = await _personService.GetPeopleBySex(sex);
         return Ok(_mapper.Map<List<PersonDto>>(people));
+    }
+
+    /// <summary>
+    ///     Returns person with id
+    /// </summary>
+    /// <param name="personId">ID of person</param>
+    /// <returns>Get by ID</returns>
+    [HttpGet]
+    [Route("{personId}")]
+    public async Task<ActionResult<IReadOnlyCollection<PersonDto>>> GetPersonById(string personId)
+    {
+        Person? person = await _personService.GetPersonById(new ObjectId(personId));
+        
+        if(person is null)
+        {
+            return NotFound();
+        }
+        
+        return Ok(_mapper.Map<PersonDto>(person));
+    }
+
+    /// <summary>
+    ///     Get by parent ID
+    ///
+    /// </summary>
+    /// <param name="motherId">ID of first Parent</param>
+    /// <param name="fatherId">ID of second Parent</param>
+    /// <returns>Get by ID</returns>
+    [HttpGet]
+    [Route("/parents")]
+    public async Task<ActionResult<IReadOnlyCollection<PersonDto>>> GetPeopleByParentId(string? motherId, string? fatherId)
+    {
+        IReadOnlyCollection<Person> person = await _personService.GetPeopleByParents(
+            motherId == null ? null : new ObjectId(motherId), 
+            fatherId == null ? null : new ObjectId(fatherId)
+            );
+        return Ok(_mapper.Map<IReadOnlyCollection<PersonDto>>(person));
+    }
+    
+    /// <summary>
+    ///     Update Person
+    ///
+    /// </summary>
+    /// <param name="personId">ID of Person to update</param>
+    /// <param name="person">New person</param>
+    /// <returns>Get by ID</returns>
+    [HttpPut]
+    [Route("/{personId}")]
+    public async Task<ActionResult<IReadOnlyCollection<PersonDto>>> UpdatePerson(string personId, PersonDto person)
+    {
+        Person? p = await _personService.GetPersonById(new ObjectId(personId));
+        if(p is null)
+        {
+            return NotFound();
+        }
+
+        Person newPerson = await _personService.UpdatePerson(new ObjectId(personId),
+            person.Firstname,
+            person.Lastname,
+            person.Mother == null ? null : new ObjectId(person.Mother),
+            person.Father == null ? null : new ObjectId(person.Father),
+            person.Sex);
+        
+        return Ok(_mapper.Map<PersonDto>(newPerson));
     }
 }
