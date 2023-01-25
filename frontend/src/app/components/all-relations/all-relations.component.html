@@ -1,0 +1,40 @@
+<div class="divide-y divide-double">
+  <div>
+    <h1 class="text-gray-900 text-4xl font-medium mb-2 pl-10 pt-10">Relations</h1>
+  </div>
+
+  <div>
+    <ngx-graph
+      class="chart-container w-full h-full"
+      [showMiniMap]="true"
+      [animate]="true"
+      [autoCenter]="false"
+      [links]="[
+    {
+      id: 'a',
+      source: 'first',
+    target: 'second',
+      label: 'is parent of'
+    }, {
+      id: 'b',
+      source: 'first',
+      target: 'third',
+      label: 'custom label'
+    }
+  ]"
+      [nodes]="[
+    {
+      id: 'first',
+      label: 'A'
+    }, {
+      id: 'second',
+      label: 'B'
+    }, {
+      id: 'third',
+      label: 'C'
+    }
+  ]"
+    >
+    </ngx-graph>
+  </div>
+</div>
