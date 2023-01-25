@@ -9,4 +9,6 @@ public interface IPersonRepository : IRepositoryBase
     Task<Person> AddPerson(Person request);
     Task<IReadOnlyCollection<Person>> GetPeopleBySex(string? sex);
     Task<Person> GetPersonById(ObjectId objectId);
+    Task<IReadOnlyCollection<Person>> GetPeopleWithNoParents();
+    Task<IReadOnlyCollection<Person>> GetPeopleByParents(ObjectId? motherId, ObjectId? fatherId);
 }

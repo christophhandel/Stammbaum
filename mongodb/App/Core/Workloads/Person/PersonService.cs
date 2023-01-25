@@ -35,4 +35,15 @@ public sealed class PersonService : IPersonService
     {
         return _repository.GetPersonById(objectId);
     }
+
+    
+    public Task<IReadOnlyCollection<Person>> GetPeopleByParents(ObjectId? motherId, ObjectId? fatherId)
+    {
+        if (motherId is null && fatherId is null)
+        {
+            return _repository.GetPeopleWithNoParents();
+        }
+
+        return _repository.GetPeopleByParents(motherId, fatherId);
+    }
 }

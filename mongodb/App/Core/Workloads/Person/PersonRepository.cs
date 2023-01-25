@@ -35,4 +35,25 @@ public sealed class PersonRepository : RepositoryBase<Person>, IPersonRepository
     {
         return await Query().FirstOrDefaultAsync(c=>c.Id==objectId);
     }
+
+    public async Task<IReadOnlyCollection<Person>> GetPeopleWithNoParents()
+    {
+        return await Query()
+            .Where(c=>c.Mother == null && c.Father == null)
+            .ToListAsync();
+    }
+
+    public async Task<IReadOnlyCollection<Person>> GetPeopleByParents(ObjectId? motherId, ObjectId? fatherId)
+    {
+        var query = Query();
+        if(motherId != null) {
+            query = query.Where(p=>p.Mother == motherId);
+        }
+        
+        if(fatherId != null) {
+            query = query.Where(p=>p.Father == fatherId);
+        }
+        
+        return await query.ToListAsync();
+    }
 }

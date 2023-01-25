@@ -3,6 +3,7 @@ using LeoMongo.Transaction;
 using Microsoft.AspNetCore.Mvc;
 using FamilyTreeMongoApp.Model.Person;
 using FamilyTreeMongoApp.Core.Workloads.Person;
+using MongoDB.Bson;
 
 namespace FamilyTreeMongoApp.Controllers;
 
@@ -74,5 +75,36 @@ public sealed class PersonController : ControllerBase
     {
         IReadOnlyCollection<Person> people = await _personService.GetPeopleBySex(sex);
         return Ok(_mapper.Map<List<PersonDto>>(people));
+    }
+
+    /// <summary>
+    ///     Returns person with id
+    /// </summary>
+    /// <param name="personId">ID of person</param>
+    /// <returns>Get by ID</returns>
+    [HttpGet]
+    [Route("{personId}")]
+    public async Task<ActionResult<IReadOnlyCollection<PersonDto>>> GetPersonById(string personId)
+    {
+        Person person = await _personService.GetPersonById(new ObjectId(personId));
+        return Ok(_mapper.Map<PersonDto>(person));
+    }
+
+    /// <summary>
+    ///     Get by parent ID
+    ///
+    /// </summary>
+    /// <param name="motherId">ID of first Parent</param>
+    /// <param name="fatherId">ID of second Parent</param>
+    /// <returns>Get by ID</returns>
+    [HttpGet]
+    [Route("/parents")]
+    public async Task<ActionResult<IReadOnlyCollection<PersonDto>>> GetPeopleByParentId(string? motherId, string? fatherId)
+    {
+        IReadOnlyCollection<Person> person = await _personService.GetPeopleByParents(
+            motherId == null ? null : new ObjectId(motherId), 
+            fatherId == null ? null : new ObjectId(fatherId)
+            );
+        return Ok(_mapper.Map<IReadOnlyCollection<PersonDto>>(person));
     }
 }
