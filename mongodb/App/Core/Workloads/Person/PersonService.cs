@@ -26,7 +26,7 @@ public sealed class PersonService : IPersonService
         });
     }
 
-    public async Task<IReadOnlyCollection<Person>> GetPeopleBySex(string? sex)
+    public async Task<IEnumerable<Person>> GetPeopleBySex(string? sex)
     {
         return await _repository.GetPeopleBySex(sex);
     }

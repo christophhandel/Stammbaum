@@ -70,9 +70,9 @@ public sealed class PersonController : ControllerBase
     /// <param name="sex">filter by sex</param>
     /// <returns>List of comments, may be empty</returns>
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyCollection<PersonDto>>> GetPeopleBySex(string? sex)
+    public async Task<ActionResult<IEnumerable<PersonDto>>> GetPeopleBySex(string? sex)
     {
-        IReadOnlyCollection<Person> people = await _personService.GetPeopleBySex(sex);
+        IEnumerable<Person> people = await _personService.GetPeopleBySex(sex);
         return Ok(_mapper.Map<List<PersonDto>>(people));
     }
 }

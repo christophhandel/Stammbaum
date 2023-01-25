@@ -22,7 +22,7 @@ public sealed class PersonRepository : RepositoryBase<Person>, IPersonRepository
         return await InsertOneAsync(request);
     }
 
-    public async Task<IReadOnlyCollection<Person>> GetPeopleBySex(string? sex)
+    public async Task<IEnumerable<Person>> GetPeopleBySex(string? sex)
     {
         var query = Query();
         if(sex != null) {

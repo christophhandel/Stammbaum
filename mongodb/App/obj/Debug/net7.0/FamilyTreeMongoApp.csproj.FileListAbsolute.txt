@@ -54,3 +54,6 @@
 /home/ubuntu/tmp/Stammbaum-MongoDB-DBI-5ahif/mongodb/App/obj/Debug/net7.0/FamilyTreeMongoApp.pdb
 /home/ubuntu/tmp/Stammbaum-MongoDB-DBI-5ahif/mongodb/App/obj/Debug/net7.0/FamilyTreeMongoApp.genruntimeconfig.cache
 /home/ubuntu/tmp/Stammbaum-MongoDB-DBI-5ahif/mongodb/App/obj/Debug/net7.0/ref/FamilyTreeMongoApp.dll
+/home/ubuntu/tmp/Stammbaum-MongoDB-DBI-5ahif/mongodb/App/bin/Debug/net7.0/Microsoft.Bcl.AsyncInterfaces.dll
+/home/ubuntu/tmp/Stammbaum-MongoDB-DBI-5ahif/mongodb/App/bin/Debug/net7.0/Neo4j.Driver.dll
+/home/ubuntu/tmp/Stammbaum-MongoDB-DBI-5ahif/mongodb/App/bin/Debug/net7.0/Neo4jClient.dll

@@ -1,6 +1,8 @@
 using LeoMongo;
 using FamilyTreeMongoApp.Core.Util;
 using FamilyTreeMongoApp.Core.Workloads.Person;
+using Neo4j.Driver;
+using Neo4jClient;
 
 namespace FamilyTreeMongoApp;
 
@@ -18,14 +20,34 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.Configure<AppSettings>(Configuration.GetSection(AppSettings.Key));
+
+        var settings = new AppSettings();
+        Configuration.GetSection("AppSettings").Bind(settings);
+
         services.AddAutoMapper(typeof(MapperProfile));
 
-        // configure fwk
-        services.AddLeoMongo<MongoConfig>();
+        switch (settings.DatabaseType.ToLower())
+        {
+            case "neo4j":
+                // This is to register your Neo4j Driver Object as a singleton
+                services.AddSingleton(GraphDatabase.Driver(settings.Neo4jConnection, AuthTokens.Basic(settings.Neo4jUser, settings.Neo4jPassword)));
+               
+                //TODO: REMOVE
+                services.AddLeoMongo<MongoConfig>();
 
-        // for bigger assemblies it would be alright to register those via reflection by naming convention!
+                // This is the registration for your domain repository class
+                services.AddScoped<IPersonRepository, PersonRepositoryNeo>();
+                break;
+            case "mongodb":
+                // configure fwk
+                services.AddLeoMongo<MongoConfig>();
+
+                // for bigger assemblies it would be alright to register those via reflection by naming convention!
+                services.AddScoped<IPersonRepository, PersonRepository>();
+                break;
+        }
+
         services.AddScoped<IPersonService, PersonService>();
-        services.AddScoped<IPersonRepository, PersonRepository>();
 
         services.AddTransient<IDateTimeProvider, DateTimeProvider>();
 
