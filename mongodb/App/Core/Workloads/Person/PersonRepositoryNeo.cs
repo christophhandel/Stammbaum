@@ -32,6 +32,11 @@ public class PersonRepositoryNeo : IPersonRepository
         throw new NotImplementedException();
     }
 
+    public Task<IReadOnlyCollection<Person>> GetPeopleByParents(ObjectId? motherId, ObjectId? fatherId)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<IEnumerable<Person>> GetPeopleBySex(string? sex)
     {
         using (var session = _driver.AsyncSession())
@@ -48,7 +53,17 @@ public class PersonRepositoryNeo : IPersonRepository
         }
     }
 
-    public Task<Person> GetPersonById(ObjectId objectId)
+    public Task<IReadOnlyCollection<Person>> GetPeopleWithNoParents()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Person?> GetPersonById(ObjectId objectId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Person> UpdatePerson(ObjectId id, string firstname, string lastname, ObjectId? motherId, ObjectId? fatherId, string personSex)
     {
         throw new NotImplementedException();
     }
