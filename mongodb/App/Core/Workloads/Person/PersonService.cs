@@ -21,8 +21,8 @@ public sealed class PersonService : IPersonService
             Firstname = request.Firstname,
             Lastname = request.Lastname,
             Sex = request.Sex,
-            Father = string.IsNullOrWhiteSpace(request.FatherId)?null: ObjectId.Parse(request.FatherId),
-            Mother = string.IsNullOrWhiteSpace(request.MotherId)?null: ObjectId.Parse(request.MotherId) 
+            Father = string.IsNullOrWhiteSpace(request.Father)?null: ObjectId.Parse(request.Father),
+            Mother = string.IsNullOrWhiteSpace(request.Mother)?null: ObjectId.Parse(request.Mother) 
         });
     }
 
@@ -31,7 +31,7 @@ public sealed class PersonService : IPersonService
         return await _repository.GetPeopleBySex(sex);
     }
 
-    public Task<Person> GetPersonById(ObjectId objectId)
+    public Task<Person?> GetPersonById(ObjectId objectId)
     {
         return _repository.GetPersonById(objectId);
     }
@@ -45,5 +45,20 @@ public sealed class PersonService : IPersonService
         }
 
         return _repository.GetPeopleByParents(motherId, fatherId);
+    }
+
+    public async Task<Person> UpdatePerson(ObjectId id, 
+        string firstname, 
+        string lastname, 
+        ObjectId? motherId, 
+        ObjectId? fatherId, 
+        string personSex)
+    {
+        return await _repository.UpdatePerson(id, 
+            firstname,
+            lastname,
+            motherId,
+            fatherId,
+            personSex);
     }
 }

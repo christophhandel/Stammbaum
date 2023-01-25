@@ -7,7 +7,7 @@ public interface IPersonService
 {
     Task<Person> AddPerson(PersonDto request);
     Task<IReadOnlyCollection<Person>> GetPeopleBySex(string? sex);
-    Task<Person> GetPersonById(ObjectId objectId);
+    Task<Person?> GetPersonById(ObjectId objectId);
     /// <summary>
     /// Returns the people by motherId or fatherId
     ///
@@ -18,4 +18,11 @@ public interface IPersonService
     /// <param name="fatherId">Father ID</param>
     /// <returns></returns>
     Task<IReadOnlyCollection<Person>> GetPeopleByParents(ObjectId? motherId, ObjectId? fatherId);
+
+    Task<Person> UpdatePerson(ObjectId id, 
+        string firstname, 
+        string lastname, 
+        ObjectId? motherId, 
+        ObjectId? fatherId, 
+        string personSex);
 }
