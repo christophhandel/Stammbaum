@@ -1,8 +1,7 @@
-import { environment } from './../../../environments/environment';
-import { Person } from './../../models/person';
-import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {environment} from '../../../environments/environment';
+import {Component, OnInit} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Person} from "../../models/person.model";
 
 @Component({
   selector: 'app-person-detail',
@@ -11,7 +10,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class PersonDetailComponent implements OnInit {
 
-  model = new Person(null,'','',null,null,null);
+  model : Person = {id: '', firstname: '', lastname: "", motherId: null, fatherId: null, sex: null};
 
   mothers : Person[] = []
   fathers : Person[] = []
