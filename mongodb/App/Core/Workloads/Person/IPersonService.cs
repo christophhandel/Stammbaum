@@ -24,5 +24,8 @@ public interface IPersonService
         string lastname, 
         ObjectId? motherId, 
         ObjectId? fatherId, 
-        string personSex);
+        string personSex,
+        ObjectId? BirthPlace,
+        ObjectId? Job,
+        ObjectId? Company);
 }
