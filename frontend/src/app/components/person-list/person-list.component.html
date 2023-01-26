@@ -24,10 +24,20 @@
           </p>
           <div class="mb-4">
             <p class="text-gray-700 text-base">
-              Mother: {{getMotherString(person)}}
+              <ng-container *ngIf="mother[person.id!]">
+                Mother: {{mother[person.id!]?.firstname}} {{mother[person.id!]?.lastname}}
+              </ng-container>
+              <ng-container *ngIf="!mother[person.id!]">
+                Mother: Unknown
+              </ng-container>
             </p>
             <p class="text-gray-700 text-base">
-              Father: {{getFatherString(person)}}
+              <ng-container *ngIf="father[person.id!]">
+                Father: {{father[person.id!]?.firstname}} {{father[person.id!]?.lastname}}
+              </ng-container>
+              <ng-container *ngIf="!father[person.id!]">
+                Father: Unknown
+              </ng-container>
             </p>
           </div>
           <!--      <p class="text-gray-600 text-xs">Last updated 3 mins ago</p>-->
