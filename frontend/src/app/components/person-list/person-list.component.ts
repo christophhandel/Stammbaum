@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Person} from "../../models/person.model";
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-person-list',
@@ -8,13 +10,10 @@ import {Person} from "../../models/person.model";
 })
 export class PersonListComponent implements OnInit {
   personList: Person[] = [];
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.personList.push({firstname: "Ablinger", lastname: "Raphael", sex: "Male", fatherId: null, motherId: null, id: null});
-    this.personList.push({firstname: "Saskia", lastname: "Humanbert", sex: "Female", fatherId: null, motherId: null, id: null});
-    this.personList.push({firstname: "Bruno", lastname: "der Kameramann", sex: "Male", fatherId: null, motherId: null, id: null});
-    this.personList.push({firstname: "Niklas", lastname: "Aichinger", sex: "Male", fatherId: null, motherId: null, id: null});
+    this.http.get<Person[]>(environment.API_URL + "person").subscribe({ next: value => { this.personList = value}})
   }
 
   getMotherString(person: Person) {
@@ -24,3 +23,6 @@ export class PersonListComponent implements OnInit {
     return person.motherId == null ? "Unknown" : person.motherId;
   }
 }
+
+
+
