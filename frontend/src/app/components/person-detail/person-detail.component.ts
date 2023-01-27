@@ -23,8 +23,6 @@ export class PersonDetailComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private router: Router) { }
 
-  }
-
   ngOnInit(): void {
     console.log(this.router.url.split("/"));
 
@@ -37,12 +35,13 @@ export class PersonDetailComponent implements OnInit {
         this.mothers = d;
       }
     })
+
     this.http.get<Person[]>(environment.API_URL + "person?sex=m").subscribe({
       next: d => {
         this.fathers = d;
       }
     })
-    this.route.params.subscribe(params => {
+    this.activatedRoute.params.subscribe(params => {
       if (params["id"]) {
         this.http.get<Person>(environment.API_URL + "person/" + params["id"])
           .subscribe(p => this.model = p);
@@ -54,25 +53,55 @@ export class PersonDetailComponent implements OnInit {
       .subscribe({ next: d => { this.fathers = d; }})
   }
 
-
-  onSubmit() {
+  onSubmit(){
     console.log(this.model)
+
     this.http.post<Person>(environment.API_URL + "Person", this.model).subscribe({
       next: d => {
-    if (this.model.id ==''){
-      this.http.post<Person>(environment.API_URL + "Person", this.model).subscribe({
-        next:d=>{
-          console.log(d)
+        if (this.model.id == ''){
+          this.http.post<Person>(environment.API_URL + "Person", this.model).subscribe({
+            next: d => {
+              console.log(d)
+            }
+          })
+        }else{
+          this.http.put<Person>(environment.API_URL+ "Person/"+ this.model.id, this.model).subscribe({
+            next: d=> {
+              console.log(d)
+            }
+          })
         }
-      })
-    }
-    else{
-      this.http.put<Person>(environment.API_URL + "Person/"+this.model.id, this.model).subscribe({
-      next:d=>{
-        console.log(d)
       }
     })
   }
-    })}
-   }
+
 }
+
+
+
+
+  // onSubmit() {
+  //   console.log(this.model)
+  //   this.http.post<Person>(environment.API_URL + "Person", this.model).subscribe({
+  //     next: d => {
+  //   if (this.model.id ==''){
+  //     this.http.post<Person>(environment.API_URL + "Person", this.model).subscribe({
+  //       next:d=>{
+  //         console.log(d)
+  //       }
+  //     })
+  //   }
+  //   else{
+  //     this.http.put<Person>(environment.API_URL + "Person/"+this.model.id, this.model).subscribe({
+  //     next:d=>{
+  //       console.log(d)
+  //     }
+  //   })
+  // }
+  //     }
+//   //
+//      onSubmit() {
+//       console.log(this.model)
+//
+//     }
+// }
