@@ -1,6 +1,7 @@
 import {Component, HostListener, OnInit} from '@angular/core';
 import {Layout, Edge, Node, DagreNodesOnlyLayout} from '@swimlane/ngx-graph';
 import * as shape from 'd3-shape';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-all-relations',
@@ -19,7 +20,7 @@ export class AllRelationsComponent implements OnInit {
   edges: ({ id: string; source: string; target: string })[] = [];
 
 
-  constructor() {
+  constructor(private router : Router) {
     this.getScreenSize();
     this.showGraph();
   }
@@ -57,4 +58,7 @@ export class AllRelationsComponent implements OnInit {
 
   }
 
+  onNodeClick($event: any, node: any) {
+    this.router.navigate(['/person', node.id]);
+  }
 }

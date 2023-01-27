@@ -22,7 +22,7 @@
 
       <!-- TEMPLATE FOR DISPLAYING THE NAMES -->
       <ng-template #nodeTemplate let-node>
-        <svg:g class="node">
+        <svg:g class="node hoverEffect" (click)="onNodeClick($event, node)">
           <svg:rect
             [attr.width]="node.dimension.width"
             [attr.height]="node.dimension.height"
