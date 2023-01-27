@@ -1,40 +1,60 @@
-<div class="divide-y divide-double">
+<div class="divide-y divide-double" xmlns:svg="http://www.w3.org/1999/XSL/Transform">
   <div>
     <h1 class="text-gray-900 text-4xl font-medium mb-2 pl-10 pt-10">Relations</h1>
   </div>
 
-  <div>
+  <div class="overflow-hidden">
     <ngx-graph
-      class="chart-container w-full h-full"
-      [showMiniMap]="true"
-      [animate]="true"
-      [autoCenter]="false"
-      [links]="[
-    {
-      id: 'a',
-      source: 'first',
-    target: 'second',
-      label: 'is parent of'
-    }, {
-      id: 'b',
-      source: 'first',
-      target: 'third',
-      label: 'custom label'
-    }
-  ]"
-      [nodes]="[
-    {
-      id: 'first',
-      label: 'A'
-    }, {
-      id: 'second',
-      label: 'B'
-    }, {
-      id: 'third',
-      label: 'C'
-    }
-  ]"
+      class="chart-container"
+      [autoCenter]="true"
+      [view]="view"
+      [links]="links"
+      [nodes]="nodes"
+      [curve]="curve"
+      [draggingEnabled]="false"
     >
+
+      <ng-template #defsTemplate>
+        <svg:marker id="arrow" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="4" markerHeight="4" orient="auto">
+          <svg:path d="M0,-5L10,0L0,5" class="arrow-head"/>
+        </svg:marker>
+      </ng-template>
+
+      <!-- TEMPLATE FOR DISPLAYING THE NAMES -->
+      <ng-template #nodeTemplate let-node>
+        <svg:g class="node hoverEffect" (click)="onNodeClick($event, node)">
+          <svg:rect
+            [attr.width]="node.dimension.width"
+            [attr.height]="node.dimension.height"
+            [attr.fill]="node.data.color"
+          />
+          <svg:text alignment-baseline="central" [attr.x]="10" [attr.y]="node.dimension.height / 2">
+            {{node.label}}
+          </svg:text>
+        </svg:g>
+      </ng-template>
+
+      <ng-template #linkTemplate let-link>
+        <svg:g class="edge">
+          <svg:path
+            class="line"
+            stroke-width="2">
+          </svg:path>
+          <svg:text
+            class="edge-label"
+            text-anchor="middle">
+            <textPath
+              style="fill: #666;"
+              [attr.href]="'#' + link.id"
+              startOffset="60%">
+              {{link.label}}
+            </textPath>
+          </svg:text>
+        </svg:g>
+      </ng-template>
+
     </ngx-graph>
+
+
   </div>
 </div>

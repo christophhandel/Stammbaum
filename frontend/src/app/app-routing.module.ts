@@ -8,8 +8,8 @@ const routes: Routes = [
   {path: 'relations', component: AllRelationsComponent},
   {path: 'person-detail', component: PersonDetailComponent},
   {path: 'people', component: PersonListComponent},
-  {path: 'people/add', component: PersonDetailComponent},
-  {path: 'people/:id', component: PersonDetailComponent},
+  {path: 'person/add', component: PersonDetailComponent},
+  {path: 'person/:id', component: PersonDetailComponent},
   {path: '', redirectTo: 'relations', pathMatch: 'full'},
   {path: '**', component: AllRelationsComponent},
 ];
