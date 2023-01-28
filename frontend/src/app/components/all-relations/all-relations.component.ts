@@ -1,7 +1,8 @@
 import {Component, HostListener, OnInit} from '@angular/core';
-import {Layout, Edge, Node, DagreNodesOnlyLayout} from '@swimlane/ngx-graph';
+import {Layout, Edge, Node} from '@swimlane/ngx-graph';
 import * as shape from 'd3-shape';
 import {Router} from "@angular/router";
+import { DagreNodesOnlyLayout } from './customDagreNodesOnly'
 
 @Component({
   selector: 'app-all-relations',
@@ -18,6 +19,9 @@ export class AllRelationsComponent implements OnInit {
 
   clusters: { childNodeIds: string[]; id: string; label: string }[] = [];
   edges: ({ id: string; source: string; target: string })[] = [];
+  layoutSettings = {
+    orientation: 'TB'
+  };
 
 
   constructor(private router : Router) {
