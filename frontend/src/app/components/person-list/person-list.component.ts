@@ -19,6 +19,7 @@ export class PersonListComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
+    //TODO use restService
     this.http.get<Person[]>(environment.API_URL + "person").subscribe({ next: value => {
       this.personList = value
       this.personList.forEach(p => {
@@ -39,9 +40,11 @@ export class PersonListComponent implements OnInit {
   }
 
   getMotherString(person: Person) {
+    //TODO use restService
      return this.http.get<Person>(environment.API_URL + "person/"+person.motherId);
   }
   getFatherString(person: Person) {
+    //TODO use restService
     return this.http.get<Person>(environment.API_URL + "person/"+person.fatherId);
   }
 }

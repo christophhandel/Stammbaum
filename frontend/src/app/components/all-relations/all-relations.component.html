@@ -3,6 +3,7 @@
     <h1 class="text-gray-900 text-4xl font-medium mb-2 pl-10 pt-10">Relations</h1>
   </div>
 
+  <!--FIXME graph doesnt get displayed (but when I pressed F12 it suddenly was there idk why lol)-->
   <div class="overflow-hidden">
     <ngx-graph
       class="chart-container"
@@ -16,6 +17,10 @@
       [draggingEnabled]="false"
     >
 
+      <!--
+      TODO maybe actually use this arrow idk if it would look good; an example how these arrows work should be
+      on the official ngx-graph docu
+      -->
       <ng-template #defsTemplate>
         <svg:marker id="arrow" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="4" markerHeight="4" orient="auto">
           <svg:path d="M0,-5L10,0L0,5" class="arrow-head"/>

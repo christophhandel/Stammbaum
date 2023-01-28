@@ -48,6 +48,7 @@ export class PersonDetailComponent implements OnInit {
   onSubmit() {
     console.log(this.model)
 
+    //TODO use restService
     this.http.post<Person>(environment.API_URL + "Person", this.model).subscribe({
       next: d => {
         if (this.model.id == '') {
