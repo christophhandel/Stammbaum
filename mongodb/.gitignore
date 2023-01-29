@@ -34,4 +34,6 @@ Desktop.ini
 .DS_Store
 
 **/obj/
+**/bin/
 App/obj
+Test/obj
