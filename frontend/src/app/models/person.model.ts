@@ -6,10 +6,10 @@ export interface Person {
   firstname: string;
   lastname: string;
   sex: string|null;
-  job: Job | null;
+  jobId: string | null;
 
-  birthLocation: Location | null;
-  company: Company | null;
+  birthLocationId: string| null;
+  companyId: string| null;
 
 
   fatherId: string|null;

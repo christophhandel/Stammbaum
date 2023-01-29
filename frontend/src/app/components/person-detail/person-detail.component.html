@@ -40,7 +40,7 @@
                 <div class="relative">
                   <select
                     class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    id="birthlocation" [(ngModel)]="model.birthLocation" name="birthlocation" #birthlocation="ngModel">
+                    id="birthlocation" [(ngModel)]="model.birthLocationId" name="birthlocation" #birthlocation="ngModel">
                     <option [ngValue]="null" selected>Unknown</option>
                     <option *ngFor="let b of locations" [value]="b.id">{{b.city}}, {{b.country}}</option>
                   </select>
@@ -140,7 +140,7 @@
                 <div class="relative">
                   <select
                     class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    id="company" [(ngModel)]="model.company" name="company" #company="ngModel">
+                    id="company" [(ngModel)]="model.companyId" name="company" #company="ngModel">
                     <option [ngValue]="null" selected>None</option>
                     <option *ngFor="let c of companies" [value]="c.id">{{c.name}}</option>
                   </select>
@@ -158,7 +158,7 @@
                 <div class="relative">
                   <select
                     class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    id="job" [(ngModel)]="model.fatherId" name="job" #job="ngModel">
+                    id="job" [(ngModel)]="model.jobId" name="job" #job="ngModel">
                     <option [ngValue]="null" selected>Unemployed</option>
                     <option *ngFor="let j of jobs" [value]="j.id">{{j.name}}</option>
                   </select>

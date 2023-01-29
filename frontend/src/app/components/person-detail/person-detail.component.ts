@@ -24,9 +24,9 @@ export class PersonDetailComponent implements OnInit {
     motherId: null,
     fatherId: null,
     sex: null,
-    job: null,
-    birthLocation: null,
-    company: null
+    jobId: null,
+    birthLocationId: null,
+    companyId: null
   };
 
   mothers: Person[] = []
