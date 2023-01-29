@@ -69,23 +69,19 @@ export class PersonDetailComponent implements OnInit {
     console.log(this.model)
 
     //TODO use restService
-    this.http.post<Person>(environment.API_URL + "Person", this.model).subscribe({
-      next: d => {
-        if (this.model.id == '') {
-          this.http.post<Person>(environment.API_URL + "Person", this.model).subscribe({
-            next: d => {
-              console.log(d)
-            }
-          })
-        } else {
-          this.http.put<Person>(environment.API_URL + "Person/" + this.model.id, this.model).subscribe({
-            next: d => {
-              console.log(d)
-            }
-          })
+    if (this.model.id == '') {
+      this.http.post<Person>(environment.API_URL + "Person", this.model).subscribe({
+        next: d => {
+          console.log(d)
         }
-      }
-    })
+      })
+    } else {
+      this.http.put<Person>(environment.API_URL + "Person/" + this.model.id, this.model).subscribe({
+        next: d => {
+          console.log(d)
+        }
+      })
+    }
   }
 
   getParents() {
