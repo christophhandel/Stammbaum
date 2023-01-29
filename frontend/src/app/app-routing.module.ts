@@ -3,11 +3,15 @@ import {RouterModule, Routes} from '@angular/router';
 import {AllRelationsComponent} from "./components/all-relations/all-relations.component";
 import {PersonListComponent} from "./components/person-list/person-list.component";
 import {PersonDetailComponent} from "./components/person-detail/person-detail.component";
+import {JobsComponent} from "./components/jobs/jobs.component";
+import {CompaniesComponent} from "./components/companies/companies.component";
 
 const routes: Routes = [
   {path: 'relations', component: AllRelationsComponent},
   {path: 'person-detail', component: PersonDetailComponent},
   {path: 'people', component: PersonListComponent},
+  {path: 'jobs', component: JobsComponent},
+  {path: 'company', component: CompaniesComponent},
   {path: 'person/add', component: PersonDetailComponent},
   {path: 'person/:id', component: PersonDetailComponent},
   {path: '', redirectTo: 'relations', pathMatch: 'full'},
