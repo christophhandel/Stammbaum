@@ -26,7 +26,7 @@ public interface IPersonService
         ObjectId? motherId,
         ObjectId? fatherId,
         string personSex,
-        ObjectId? birthplace,
+        Location? birthplace,
         ObjectId? job,
         ObjectId? company);
         Task DeletePerson(ObjectId objectId);

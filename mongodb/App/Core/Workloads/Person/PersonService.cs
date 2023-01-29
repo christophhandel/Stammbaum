@@ -1,4 +1,5 @@
-﻿using FamilyTreeMongoApp.Core.Util;
+﻿using AutoMapper;
+using FamilyTreeMongoApp.Core.Util;
 using FamilyTreeMongoApp.Model.Person;
 using MongoDB.Bson;
 
@@ -8,11 +9,14 @@ public sealed class PersonService : IPersonService
 {
     private readonly IDateTimeProvider _dateTimeProvider;
     private readonly IPersonRepository _repository;
+    private readonly IMapper _mapper;
+    
 
-    public PersonService(IDateTimeProvider dateTimeProvider, IPersonRepository repository)
+    public PersonService(IDateTimeProvider dateTimeProvider, IPersonRepository repository, IMapper mapper)
     {
         _dateTimeProvider = dateTimeProvider;
         _repository = repository;
+        _mapper = mapper;
     }
 
     public async Task<Person> AddPerson(PersonDto request)
@@ -22,7 +26,8 @@ public sealed class PersonService : IPersonService
             Lastname = request.Lastname,
             Sex = request.Sex,
             Father = string.IsNullOrWhiteSpace(request.Father)?null: ObjectId.Parse(request.Father),
-            Mother = string.IsNullOrWhiteSpace(request.Mother)?null: ObjectId.Parse(request.Mother) 
+            Mother = string.IsNullOrWhiteSpace(request.Mother)?null: ObjectId.Parse(request.Mother),
+            BirthPlace = request.BirthLocation == null ? null : _mapper.Map<Location>(request.BirthLocation!)!
         });
     }
 
@@ -53,7 +58,7 @@ public sealed class PersonService : IPersonService
         ObjectId? motherId, 
         ObjectId? fatherId, 
         string personSex,
-        ObjectId? birthLocation,
+        Location? birthLocation,
         ObjectId? Job,
         ObjectId? Company)
     {

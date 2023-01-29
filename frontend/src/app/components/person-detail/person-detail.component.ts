@@ -25,7 +25,7 @@ export class PersonDetailComponent implements OnInit {
     fatherId: null,
     sex: null,
     jobId: null,
-    birthLocationId: null,
+    birthLocation: {id: null, city: "", country: ""},
     companyId: null
   };
 
@@ -59,7 +59,7 @@ export class PersonDetailComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       if (params["id"]) {
         this.restService.getPerson(params["id"]).subscribe(
-          p => this.model = p
+          p => {console.log(p);this.model = p}
         );
       }
     });

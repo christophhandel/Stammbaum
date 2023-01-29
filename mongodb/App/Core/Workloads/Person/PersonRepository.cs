@@ -65,7 +65,7 @@ public sealed class PersonRepository : RepositoryBase<Person>, IPersonRepository
         ObjectId? motherId,
         ObjectId? fatherId,
         string personSex,
-        ObjectId? birthplace,
+        Location? birthplace,
         ObjectId? job,
         ObjectId? company)
     {

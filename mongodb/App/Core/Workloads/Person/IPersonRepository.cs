@@ -11,6 +11,6 @@ public interface IPersonRepository : IRepositoryBase
     Task<Person?> GetPersonById(ObjectId objectId);
     Task<IReadOnlyCollection<Person>> GetPeopleWithNoParents();
     Task<IReadOnlyCollection<Person>> GetPeopleByParents(ObjectId? motherId, ObjectId? fatherId);
-    Task<Person> UpdatePerson(ObjectId id,string firstname,string lastname,ObjectId? motherId,ObjectId? fatherId,string personSex,ObjectId? BirthPlace,ObjectId? Job,ObjectId? Company);
+    Task<Person> UpdatePerson(ObjectId id,string firstname,string lastname,ObjectId? motherId,ObjectId? fatherId,string personSex,Location? BirthPlace,ObjectId? Job,ObjectId? Company);
     Task DeletePerson(ObjectId objectId);
 }

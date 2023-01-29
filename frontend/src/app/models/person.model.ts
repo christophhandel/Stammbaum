@@ -1,5 +1,6 @@
 import {Job} from "./job.model";
 import {Company} from "./company.model";
+import {Location} from "./location.model";
 
 export interface Person {
   id: string|null;
@@ -8,7 +9,7 @@ export interface Person {
   sex: string|null;
   jobId: string | null;
 
-  birthLocationId: string| null;
+  birthLocation: Location| null;
   companyId: string| null;
 
 
