@@ -118,4 +118,22 @@ public class PersonRepositroy
         updatedPerson!.Firstname.Should().Be(personToUpdate.Firstname);
 
     }
+
+
+    [Fact]
+    public async Task testDeletePerson()
+    {
+        Core.Workloads.Person.Person personToDelete = await _personRepository.AddPerson(new Core.Workloads.Person.Person()
+        {
+            Firstname = "delete",
+            Lastname = "person",
+        });
+
+
+        await _personRepository.DeletePerson(personToDelete.Id);
+
+        Core.Workloads.Person.Person? personToUpdate = await _personRepository.GetPersonById(personToDelete.Id);
+
+        personToUpdate.Should().BeNull();
+    }
 }
