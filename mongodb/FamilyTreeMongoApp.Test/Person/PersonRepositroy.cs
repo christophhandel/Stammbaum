@@ -93,4 +93,29 @@ public class PersonRepositroy
 
 
     }
+
+
+    [Fact]
+    public async Task testUpdatePerson()
+    {
+        Core.Workloads.Person.Person personToUpdate = await _personRepository.AddPerson(new Core.Workloads.Person.Person()
+        {
+            Firstname = "initial",
+            Lastname = "name",
+            Sex = "m",
+            BirthDate = DateTime.Now,
+        });
+
+
+        personToUpdate.Firstname = "updated";
+
+        await _personRepository.UpdatePerson(personToUpdate.Id, personToUpdate.Firstname, personToUpdate.Lastname, null, null, personToUpdate.Sex, null, null, null);
+
+
+        Core.Workloads.Person.Person? updatedPerson = await _personRepository.GetPersonById(personToUpdate.Id);
+
+        updatedPerson.Should().NotBeNull();
+        updatedPerson!.Firstname.Should().Be(personToUpdate.Firstname);
+
+    }
 }
