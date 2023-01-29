@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {Company} from "../../models/company.model";
+import {RestService} from "../../services/rest.service";
 
 @Component({
   selector: 'app-companies',
@@ -6,10 +8,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./companies.component.css']
 })
 export class CompaniesComponent implements OnInit {
+  companyList: Company[] = [];
 
-  constructor() { }
+  constructor(private restService: RestService) { }
 
   ngOnInit(): void {
+    this.companyList.push({id: "löadfk", name: "IBM", businessActivity: "lösdkfjöldsajaöslsdfjlakdsfj"})
+    this.companyList.push({id: "löadfk", name: "IBM", businessActivity: "lösdkfjöldsajaöslsdfjlakdsfj"})
+    this.companyList.push({id: "löadfk", name: "IBM", businessActivity: "lösdkfjöldsajaöslsdfjlakdsfj"})
+    this.companyList.push({id: "löadfk", name: "IBM", businessActivity: "lösdkfjöldsajaöslsdfjlakdsfj"})
+    this.companyList.push({id: "löadfk", name: "IBM", businessActivity: "lösdkfjöldsajaöslsdfjlakdsfj"})
+    this.companyList.push({id: "löadfk", name: "IBM", businessActivity: "lösdkfjöldsajaöslsdfjlakdsfj"})
+    this.companyList.push({id: "löadfk", name: "IBM", businessActivity: "lösdkfjöldsajaöslsdfjlakdsfj"})
+    // TODO get Data via RestService
   }
 
+  deleteCompany(company: Company) {
+    // TODO delete company via RestService
+  }
 }
