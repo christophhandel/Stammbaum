@@ -52,6 +52,7 @@ public sealed class PersonController : ControllerBase
                 return BadRequest();
             }
         }
+
         if(!string.IsNullOrWhiteSpace(request.Mother)) {
             var mother = await _personService.GetPersonById(MongoDB.Bson.ObjectId.Parse(request.Mother));
             if(mother == null) {
@@ -125,6 +126,7 @@ public sealed class PersonController : ControllerBase
     [Route("{personId}")]
     public async Task<ActionResult<IReadOnlyCollection<PersonDto>>> UpdatePerson(string personId, PersonDto person)
     {
+
         Person? p = await _personService.GetPersonById(new ObjectId(personId));
         if(p is null)
         {
@@ -136,7 +138,11 @@ public sealed class PersonController : ControllerBase
             person.Lastname,
             person.Mother == null ? null : new ObjectId(person.Mother),
             person.Father == null ? null : new ObjectId(person.Father),
-            person.Sex);
+            person.Sex,
+            person.Job == null ? null : new ObjectId(person.Job.Id),
+            person.Company == null ? null : new ObjectId(person.Company.Id),
+            person.BirthLocation == null ? null : new ObjectId(person.BirthLocation.Id)
+            );
         
         return Ok(_mapper.Map<PersonDto>(newPerson));
     }

@@ -5,6 +5,7 @@ using LeoMongo.Transaction;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
+using System.Runtime.CompilerServices;
 
 namespace FamilyTreeMongoApp.Core.Workloads.Person;
 
@@ -57,12 +58,16 @@ public sealed class PersonRepository : RepositoryBase<Person>, IPersonRepository
         return await query.ToListAsync();
     }
 
-    public async Task<Person> UpdatePerson(ObjectId id, 
-        string firstname, 
-        string lastname, 
-        ObjectId? motherId, 
-        ObjectId? fatherId, 
-        string personSex)
+    public async Task<Person> UpdatePerson(
+        ObjectId id,
+        string firstname,
+        string lastname,
+        ObjectId? motherId,
+        ObjectId? fatherId,
+        string personSex,
+        ObjectId? birthplace,
+        ObjectId? job,
+        ObjectId? company)
     {
         var updateDef = UpdateDefBuilder
             .Set(p => p.Firstname, firstname)
@@ -70,6 +75,20 @@ public sealed class PersonRepository : RepositoryBase<Person>, IPersonRepository
             .Set(p => p.Sex, personSex)
             .Set(p => p.Mother, motherId)
             .Set(p => p.Father, fatherId);
+
+        if(birthplace is not null)
+        {
+            updateDef = updateDef.Set(p => p.BirthPlace, birthplace);
+        }
+
+        if(job is not null)
+        {
+            updateDef = updateDef.Set(p => p.Job, job);
+        }
+
+        if(company is not null) { 
+            updateDef = updateDef.Set(p => p.Company, company);
+        }
 
         await UpdateOneAsync(id, updateDef);
         

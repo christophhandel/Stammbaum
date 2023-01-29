@@ -68,7 +68,16 @@ public class PersonRepositoryNeo : IPersonRepository
         throw new NotImplementedException();
     }
 
-    public Task<Person> UpdatePerson(ObjectId id, string firstname, string lastname, ObjectId? motherId, ObjectId? fatherId, string personSex)
+    public Task<Person> UpdatePerson(
+        ObjectId id,
+        string firstname,
+        string lastname,
+        ObjectId? motherId,
+        ObjectId? fatherId,
+        string personSex,
+        ObjectId? BirthPlace,
+        ObjectId? Job,
+        ObjectId? Company)
     {
         throw new NotImplementedException();
     }

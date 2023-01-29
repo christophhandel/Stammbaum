@@ -10,7 +10,8 @@ public sealed class Person : EntityBase
     public string Sex { get; set; } = default!; // m, f
     public DateTime BirthDate { get; set; } = default!;
     public DateTime? DeathTime { get; set; } = default!;
-    public Location BirthPlace { get; set; } = default!;
+
+    public ObjectId BirthPlace { get; set; } = default!;
     
     public ObjectId Job { get; set; } = default!;
 

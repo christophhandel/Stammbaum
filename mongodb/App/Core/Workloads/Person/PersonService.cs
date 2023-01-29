@@ -52,14 +52,20 @@ public sealed class PersonService : IPersonService
         string lastname, 
         ObjectId? motherId, 
         ObjectId? fatherId, 
-        string personSex)
+        string personSex,
+        ObjectId? birthLocation,
+        ObjectId? Job,
+        ObjectId? Company)
     {
         return await _repository.UpdatePerson(id, 
             firstname,
             lastname,
             motherId,
             fatherId,
-            personSex);
+            personSex,
+            birthLocation,
+            Job,
+            Company);
     }
 
     public async Task DeletePerson(ObjectId objectId)

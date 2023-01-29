@@ -10,13 +10,17 @@ import {AllRelationsComponent} from './components/all-relations/all-relations.co
 import {PersonDetailComponent} from './components/person-detail/person-detail.component';
 import {NgxGraphModule} from "@swimlane/ngx-graph";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { JobsComponent } from './components/jobs/jobs.component';
+import { CompaniesComponent } from './components/companies/companies.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PersonListComponent,
     AllRelationsComponent,
-    PersonDetailComponent
+    PersonDetailComponent,
+    JobsComponent,
+    CompaniesComponent
   ],
   imports: [
     BrowserModule,

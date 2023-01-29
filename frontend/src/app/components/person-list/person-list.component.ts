@@ -49,6 +49,8 @@ export class PersonListComponent implements OnInit {
   }
 
   deletePerson(person:Person) {
+
+    //TODO use restService
     this.http.delete<Person>(environment.API_URL + "person/"+person.id).subscribe({
       next: d=> {
         const index = this.personList.indexOf(person, 0);
