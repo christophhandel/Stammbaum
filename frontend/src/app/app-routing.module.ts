@@ -5,15 +5,16 @@ import {PersonListComponent} from "./components/person-list/person-list.componen
 import {PersonDetailComponent} from "./components/person-detail/person-detail.component";
 import {JobsComponent} from "./components/jobs/jobs.component";
 import {CompaniesComponent} from "./components/companies/companies.component";
+import {LocationsComponent} from "./components/locations/locations.component";
 
 const routes: Routes = [
   {path: 'relations', component: AllRelationsComponent},
-  {path: 'person-detail', component: PersonDetailComponent},
-  {path: 'people', component: PersonListComponent},
   {path: 'jobs', component: JobsComponent},
   {path: 'company', component: CompaniesComponent},
-  {path: 'person/add', component: PersonDetailComponent},
-  {path: 'person/:id', component: PersonDetailComponent},
+  {path: 'locations', component: LocationsComponent},
+  {path: 'people', component: PersonListComponent},
+  {path: 'people/add', component: PersonDetailComponent},
+  {path: 'people/:id', component: PersonDetailComponent},
   {path: '', redirectTo: 'relations', pathMatch: 'full'},
   {path: '**', component: AllRelationsComponent},
 ];

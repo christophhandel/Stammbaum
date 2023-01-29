@@ -12,6 +12,7 @@ import {NgxGraphModule} from "@swimlane/ngx-graph";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JobsComponent } from './components/jobs/jobs.component';
 import { CompaniesComponent } from './components/companies/companies.component';
+import { LocationsComponent } from './components/locations/locations.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { CompaniesComponent } from './components/companies/companies.component';
     AllRelationsComponent,
     PersonDetailComponent,
     JobsComponent,
-    CompaniesComponent
+    CompaniesComponent,
+    LocationsComponent
   ],
   imports: [
     BrowserModule,
