@@ -59,8 +59,7 @@ public class Startup
             options.AddPolicy(Origin,
                 builder =>
                 {
-                    builder.WithOrigins("http://localhost:5000",
-                            "http://localhost:4200") // Angular CLI
+                    builder.WithOrigins("*") // Angular CLI
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });

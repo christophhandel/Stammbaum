@@ -1,4 +1,5 @@
-﻿using FamilyTreeMongoApp.Core.Util;
+﻿using AutoMapper;
+using FamilyTreeMongoApp.Core.Util;
 using FamilyTreeMongoApp.Model.Person;
 using LeoMongo;
 using LeoMongo.Database;
@@ -15,14 +16,16 @@ public class PersonRepositoryNeo : IPersonRepository
 {
     private IDriver _driver;
     private ILogger<PersonRepository> _logger;
+    private readonly IMapper _mapper;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="PersonRepository"/> class.
     /// </summary>
-    public PersonRepositoryNeo(IDriver driver, ILogger<PersonRepository> logger)
+    public PersonRepositoryNeo(IDriver driver, ILogger<PersonRepository> logger, IMapper mapper)
     {
         _driver = driver;
         _logger = logger;
+        _mapper = mapper;
     }
 
     public string CollectionName => "person";
@@ -75,7 +78,7 @@ public class PersonRepositoryNeo : IPersonRepository
         ObjectId? motherId,
         ObjectId? fatherId,
         string personSex,
-        ObjectId? BirthPlace,
+        Location? BirthPlace,
         ObjectId? Job,
         ObjectId? Company)
     {

@@ -20,8 +20,8 @@ public sealed class PersonDto
     [JsonPropertyName("companyId")]
     public string? Company { get; set; }
 
-    [JsonPropertyName("birthLocationId")]
-    public string? BirthLocation { get; set; }
+    [JsonPropertyName("birthLocation")]
+    public LocationDto? BirthLocation { get; set; }
 
     [JsonPropertyName("motherId")]
     public string? Mother { get; set; } = default!;

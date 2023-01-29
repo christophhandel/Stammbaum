@@ -11,7 +11,7 @@ public sealed class Person : EntityBase
     public DateTime BirthDate { get; set; } = default!;
     public DateTime? DeathTime { get; set; } = default!;
 
-    public ObjectId BirthPlace { get; set; } = default!;
+    public Location? BirthPlace { get; set; } = default!;
     
     public ObjectId Job { get; set; } = default!;
 
