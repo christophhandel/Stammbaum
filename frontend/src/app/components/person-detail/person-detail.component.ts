@@ -5,6 +5,9 @@ import {Person} from "../../models/person.model";
 import {ActivatedRoute} from "@angular/router";
 import {Router} from "@angular/router";
 import {RestService} from "../../services/rest.service";
+import {Job} from "../../models/job.model";
+import {Company} from "../../models/company.model";
+import {Location} from "../../models/location.model";
 
 @Component({
   selector: 'app-person-detail',
@@ -14,10 +17,23 @@ import {RestService} from "../../services/rest.service";
 export class PersonDetailComponent implements OnInit {
 
   isEditing: boolean = true;
-  model: Person = {id: '', firstname: '', lastname: "", motherId: null, fatherId: null, sex: null};
+  model : Person = {
+    id: '',
+    firstname: '',
+    lastname: '',
+    motherId: null,
+    fatherId: null,
+    sex: null,
+    job: null,
+    birthLocation: null,
+    company: null
+  };
 
   mothers: Person[] = []
   fathers: Person[] = []
+  jobs: Job[] = [];
+  companies: Company[] = [];
+  locations: Location[] = [];
 
   constructor(private http: HttpClient,
               private activatedRoute: ActivatedRoute,
@@ -34,6 +50,10 @@ export class PersonDetailComponent implements OnInit {
 
     // get Parents for drop-downs
     this.getParents();
+
+    // get Jobs & Companies for drop-downs
+    this.getCompanyAndJobs()
+
 
     // get current Person if there is one
     this.activatedRoute.params.subscribe(params => {
@@ -82,5 +102,9 @@ export class PersonDetailComponent implements OnInit {
           this.fathers = value;
         }
       })
+  }
+
+  getCompanyAndJobs() {
+    // TODO get all Jobs and Companies via the restService and save them in the 'jobs' & 'companies' variables
   }
 }

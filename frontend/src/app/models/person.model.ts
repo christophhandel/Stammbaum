@@ -7,8 +7,11 @@ export interface Person {
   lastname: string;
   sex: string|null;
   job: Job | null;
+
   birthLocation: Location | null;
   company: Company | null;
+
+
   fatherId: string|null;
   motherId: string|null;
 }
