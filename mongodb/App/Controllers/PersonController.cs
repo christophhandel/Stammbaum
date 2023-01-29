@@ -147,8 +147,8 @@ public sealed class PersonController : ControllerBase
     /// </summary>
     /// <param name="personId">ID of Person to delete</param>
     /// <returns>Get by ID</returns>
-    [HttpPut]
-    [Route("/{personId}")]
+    [HttpDelete]
+    [Route("{personId}")]
     public async Task<ActionResult<IReadOnlyCollection<PersonDto>>> DeletePerson(string personId)
     {
         Person? p = await _personService.GetPersonById(new ObjectId(personId));
