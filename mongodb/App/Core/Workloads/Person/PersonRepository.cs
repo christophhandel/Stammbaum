@@ -83,4 +83,9 @@ public sealed class PersonRepository : RepositoryBase<Person>, IPersonRepository
         
         return (await GetPersonById(id))!;
     }
+
+    public async Task DeletePerson(ObjectId objectId)
+    {
+        await DeleteOneAsync(objectId);
+    }
 }

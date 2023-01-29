@@ -140,4 +140,25 @@ public sealed class PersonController : ControllerBase
         
         return Ok(_mapper.Map<PersonDto>(newPerson));
     }
+    
+    /// <summary>
+    ///     Delete Person
+    ///
+    /// </summary>
+    /// <param name="personId">ID of Person to delete</param>
+    /// <returns>Get by ID</returns>
+    [HttpPut]
+    [Route("/{personId}")]
+    public async Task<ActionResult<IReadOnlyCollection<PersonDto>>> DeletePerson(string personId)
+    {
+        Person? p = await _personService.GetPersonById(new ObjectId(personId));
+        if(p is null)
+        {
+            return NotFound();
+        }
+
+        await _personService.DeletePerson(new ObjectId(personId));
+        
+        return Ok(_mapper.Map<PersonDto>(p));
+    }
 }
