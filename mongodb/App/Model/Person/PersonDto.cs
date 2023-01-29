@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using FamilyTreeMongoApp.Model.PersonDetails;
 using Newtonsoft.Json;
 
 namespace FamilyTreeMongoApp.Model.Person;

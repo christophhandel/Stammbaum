@@ -19,15 +19,15 @@ public interface IPersonService
     /// <returns></returns>
     Task<IReadOnlyCollection<Person>> GetPeopleByParents(ObjectId? motherId, ObjectId? fatherId);
 
-    Task<Person> UpdatePerson(ObjectId id, 
-        string firstname, 
-        string lastname, 
-        ObjectId? motherId, 
-        ObjectId? fatherId, 
+    Task<Person> UpdatePerson(
+        ObjectId id,
+        string firstname,
+        string lastname,
+        ObjectId? motherId,
+        ObjectId? fatherId,
         string personSex,
-        ObjectId? BirthPlace,
-        ObjectId? Job,
-        ObjectId? Company);
-        string personSex);
-    Task DeletePerson(ObjectId objectId);
+        ObjectId? birthplace,
+        ObjectId? job,
+        ObjectId? company);
+        Task DeletePerson(ObjectId objectId);
 }
