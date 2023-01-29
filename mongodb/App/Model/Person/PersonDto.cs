@@ -14,11 +14,14 @@ public sealed class PersonDto
 
     public string Sex { get; set; } = default!;
 
-    public JobDto? Job { get; set; }
+    [JsonPropertyName("jobId")]
+    public string? Job { get; set; }
 
-    public CompanyDto? Company { get; set; }
+    [JsonPropertyName("companyId")]
+    public string? Company { get; set; }
 
-    public LocationDto? BirthLocation { get; set; }
+    [JsonPropertyName("birthLocationId")]
+    public string? BirthLocation { get; set; }
 
     [JsonPropertyName("motherId")]
     public string? Mother { get; set; } = default!;

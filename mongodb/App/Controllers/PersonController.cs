@@ -139,9 +139,9 @@ public sealed class PersonController : ControllerBase
             person.Mother == null ? null : new ObjectId(person.Mother),
             person.Father == null ? null : new ObjectId(person.Father),
             person.Sex,
-            person.Job == null ? null : new ObjectId(person.Job.Id),
-            person.Company == null ? null : new ObjectId(person.Company.Id),
-            person.BirthLocation == null ? null : new ObjectId(person.BirthLocation.Id)
+            person.Job == null ? null : new ObjectId(person.Job),
+            person.Company == null ? null : new ObjectId(person.Company),
+            person.BirthLocation == null ? null : new ObjectId(person.BirthLocation)
             );
         
         return Ok(_mapper.Map<PersonDto>(newPerson));
