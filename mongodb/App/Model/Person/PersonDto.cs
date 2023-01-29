@@ -1,5 +1,5 @@
 ﻿using System.Text.Json.Serialization;
-using FamilyTreeMongoApp.Model.PersonDetails;
+using Newtonsoft.Json;
 
 namespace FamilyTreeMongoApp.Model.Person;
 
@@ -19,10 +19,10 @@ public sealed class PersonDto
 
     public LocationDto? BirthLocation { get; set; }
 
-    [JsonPropertyName("MotherId")]
+    [JsonPropertyName("motherId")]
     public string? Mother { get; set; } = default!;
 
-    [JsonPropertyName("FatherId")]
+    [JsonPropertyName("fatherId")]
     public string? Father { get; set; } = default!;
 
 

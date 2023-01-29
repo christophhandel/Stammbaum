@@ -4029,19 +4029,23 @@
     ]
   },
   "packageFolders": {
-    "/home/ubuntu/.nuget/packages/": {}
+    "/Users/christoph/.nuget/packages/": {},
+    "/usr/local/share/dotnet/sdk/NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/ubuntu/tmp/Stammbaum-MongoDB-DBI-5ahif/mongodb/App/FamilyTreeMongoApp.csproj",
+      "projectUniqueName": "/Users/christoph/Documents/5Ahif/DBI/Stammbaum-MongoDB-DBI-5ahif/mongodb/App/FamilyTreeMongoApp.csproj",
       "projectName": "FamilyTreeMongoApp",
-      "projectPath": "/home/ubuntu/tmp/Stammbaum-MongoDB-DBI-5ahif/mongodb/App/FamilyTreeMongoApp.csproj",
-      "packagesPath": "/home/ubuntu/.nuget/packages/",
-      "outputPath": "/home/ubuntu/tmp/Stammbaum-MongoDB-DBI-5ahif/mongodb/App/obj/",
+      "projectPath": "/Users/christoph/Documents/5Ahif/DBI/Stammbaum-MongoDB-DBI-5ahif/mongodb/App/FamilyTreeMongoApp.csproj",
+      "packagesPath": "/Users/christoph/.nuget/packages/",
+      "outputPath": "/Users/christoph/Documents/5Ahif/DBI/Stammbaum-MongoDB-DBI-5ahif/mongodb/App/obj/",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "/home/ubuntu/.nuget/NuGet/NuGet.Config"
+        "/Users/christoph/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
@@ -4114,20 +4118,6 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[7.0.1, 7.0.1]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Host.linux-arm64",
-            "version": "[7.0.1, 7.0.1]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Ref",
-            "version": "[7.0.1, 7.0.1]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -4136,7 +4126,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/opt/dotnet-arm-64/sdk/7.0.101/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.101/RuntimeIdentifierGraph.json"
       }
     }
   }
