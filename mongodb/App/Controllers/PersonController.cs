@@ -122,7 +122,7 @@ public sealed class PersonController : ControllerBase
     /// <param name="person">New person</param>
     /// <returns>Get by ID</returns>
     [HttpPut]
-    [Route("/{personId}")]
+    [Route("{personId}")]
     public async Task<ActionResult<IReadOnlyCollection<PersonDto>>> UpdatePerson(string personId, PersonDto person)
     {
         Person? p = await _personService.GetPersonById(new ObjectId(personId));
