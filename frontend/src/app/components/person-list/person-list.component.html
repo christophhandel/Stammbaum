@@ -40,11 +40,17 @@
               </ng-container>
             </p>
           </div>
-          <!--      <p class="text-gray-600 text-xs">Last updated 3 mins ago</p>-->
-          <button [routerLink]="'/people/'+person.id" type="button"
-                  class=" inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
-            Detail
-          </button>
+          <div class="flex space-x-1">
+            <!--      <p class="text-gray-600 text-xs">Last updated 3 mins ago</p>-->
+            <button [routerLink]="'/people/'+person.id" type="button"
+                    class=" inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+              Detail
+            </button>
+            <button (click)="deletePerson(person)" type="button"
+                    class=" inline-block px-6 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out">
+              Delete
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -28,4 +28,6 @@ public interface IPersonService
         ObjectId? BirthPlace,
         ObjectId? Job,
         ObjectId? Company);
+        string personSex);
+    Task DeletePerson(ObjectId objectId);
 }

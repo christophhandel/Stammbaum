@@ -51,6 +51,7 @@ export class AllRelationsComponent implements OnInit {
         if (p.motherId != null){
           this.links.push({source: p.motherId, target: p.id!, label: "Mother"})
         }
+        this.getScreenSize();
       })
     })
 

@@ -67,4 +67,9 @@ public sealed class PersonService : IPersonService
             Job,
             Company);
     }
+
+    public async Task DeletePerson(ObjectId objectId)
+    {
+        await _repository.DeletePerson(objectId);
+    }
 }

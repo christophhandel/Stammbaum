@@ -72,17 +72,9 @@ public sealed class PersonRepository : RepositoryBase<Person>, IPersonRepository
         var updateDef = UpdateDefBuilder
             .Set(p => p.Firstname, firstname)
             .Set(p => p.Lastname, lastname)
-            .Set(p => p.Sex, personSex);
-
-        if (motherId is not null)
-        {
-            updateDef = updateDef.Set(p => p.Mother,  motherId);
-        }
-
-        if (fatherId is not null)
-        {
-            updateDef = updateDef.Set(p => p.Father, fatherId);
-        }
+            .Set(p => p.Sex, personSex)
+            .Set(p => p.Mother, motherId)
+            .Set(p => p.Father, fatherId);
 
         if(birthplace is not null)
         {
@@ -101,5 +93,10 @@ public sealed class PersonRepository : RepositoryBase<Person>, IPersonRepository
         await UpdateOneAsync(id, updateDef);
         
         return (await GetPersonById(id))!;
+    }
+
+    public async Task DeletePerson(ObjectId objectId)
+    {
+        await DeleteOneAsync(objectId);
     }
 }

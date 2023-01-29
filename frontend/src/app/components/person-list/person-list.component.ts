@@ -47,6 +47,17 @@ export class PersonListComponent implements OnInit {
     //TODO use restService
     return this.http.get<Person>(environment.API_URL + "person/"+person.fatherId);
   }
+
+  deletePerson(person:Person) {
+    this.http.delete<Person>(environment.API_URL + "person/"+person.id).subscribe({
+      next: d=> {
+        const index = this.personList.indexOf(person, 0);
+        if (index > -1) {
+          this.personList.splice(index, 1);
+        }
+      }
+    })
+  }
 }
 
 
