@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Person} from "../models/person.model";
 import {environment} from "../../environments/environment";
@@ -43,7 +43,7 @@ export class RestService {
     return this.http.post<Person>(environment.API_URL + "Person", p);
   }
 
-  getCompanys() {
+  getCompanies() {
     return this.http.get<Company[]>(environment.API_URL + "Company");
   }
   deletePerson(personId: string){
