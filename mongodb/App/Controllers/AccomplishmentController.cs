@@ -11,19 +11,19 @@ namespace FamilyTreeMongoApp.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public sealed class AchievementController : ControllerBase
+public sealed class AccomplishmentController : ControllerBase
 {
-    private readonly ILogger<AchievementController> _logger;
+    private readonly ILogger<AccomplishmentController> _logger;
     private readonly IMapper _mapper;
     private readonly IPersonService _personService;
     private readonly IAccomplishmentService _accomplishmentService;
     private readonly ITransactionProvider _transactionProvider;
 
-    public AchievementController(IMapper mapper, 
+    public AccomplishmentController(IMapper mapper, 
         IPersonService service, 
         IAccomplishmentService accomplishmentService, 
         ITransactionProvider transactionProvider, 
-        ILogger<AchievementController> logger)
+        ILogger<AccomplishmentController> logger)
     {
         _mapper = mapper;
         _transactionProvider = transactionProvider;
