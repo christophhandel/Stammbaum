@@ -1,6 +1,7 @@
 using LeoMongo;
 using FamilyTreeMongoApp.Core.Util;
-using FamilyTreeMongoApp.Core.Workloads.Person;
+using FamilyTreeMongoApp.Core.Workloads.CompanyWorkload;
+using FamilyTreeMongoApp.Core.Workloads.PersonWorkload;
 using Neo4j.Driver;
 using Neo4jClient;
 
@@ -48,6 +49,8 @@ public class Startup
         }
 
         services.AddScoped<IPersonService, PersonService>();
+        services.AddScoped<ICompanyService, CompanyService>();
+        services.AddScoped<ICompanyRepository, CompanyRepository>();
 
         services.AddTransient<IDateTimeProvider, DateTimeProvider>();
 

@@ -10,7 +10,7 @@ using MongoDB.Driver.Linq;
 using Neo4j.Driver;
 using Neo4jClient;
 
-namespace FamilyTreeMongoApp.Core.Workloads.Person;
+namespace FamilyTreeMongoApp.Core.Workloads.PersonWorkload;
 
 public class PersonRepositoryNeo : IPersonRepository
 {

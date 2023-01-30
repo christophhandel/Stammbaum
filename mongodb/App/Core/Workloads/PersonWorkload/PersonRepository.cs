@@ -7,7 +7,7 @@ using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using System.Runtime.CompilerServices;
 
-namespace FamilyTreeMongoApp.Core.Workloads.Person;
+namespace FamilyTreeMongoApp.Core.Workloads.PersonWorkload;
 
 public sealed class PersonRepository : RepositoryBase<Person>, IPersonRepository
 {

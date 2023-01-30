@@ -2,7 +2,7 @@
 using LeoMongo.Database;
 using MongoDB.Bson;
 
-namespace FamilyTreeMongoApp.Core.Workloads.Person;
+namespace FamilyTreeMongoApp.Core.Workloads.PersonWorkload;
 
 public interface IPersonRepository : IRepositoryBase
 {

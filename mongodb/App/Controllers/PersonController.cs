@@ -2,7 +2,7 @@
 using LeoMongo.Transaction;
 using Microsoft.AspNetCore.Mvc;
 using FamilyTreeMongoApp.Model.Person;
-using FamilyTreeMongoApp.Core.Workloads.Person;
+using FamilyTreeMongoApp.Core.Workloads.PersonWorkload;
 using MongoDB.Bson;
 
 namespace FamilyTreeMongoApp.Controllers;

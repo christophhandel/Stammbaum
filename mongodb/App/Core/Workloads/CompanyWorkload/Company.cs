@@ -1,6 +1,6 @@
 using LeoMongo.Database;
 
-namespace FamilyTreeMongoApp.Core.Workloads.Person;
+namespace FamilyTreeMongoApp.Core.Workloads.CompanyWorkload;
 
 public class Company : EntityBase
 {
