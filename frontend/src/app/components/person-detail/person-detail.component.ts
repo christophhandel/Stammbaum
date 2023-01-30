@@ -79,6 +79,9 @@ export class PersonDetailComponent implements OnInit {
         console.log(d)
       }
     })
+
+    //TODO check if form is valid
+    this.router.navigate(["persons"]);
   }
 
   getParents() {
@@ -100,12 +103,13 @@ export class PersonDetailComponent implements OnInit {
   getCompanyAndJobs() {
     this.restService.getCompanies().subscribe({
       next: value => {
-        this.companies=value
+        this.companies = value
       }
     })
     this.restService.getJobs().subscribe({
       next: value => {
-        this.jobs=value
-      }})
+        this.jobs = value
+      }
+    })
   }
 }

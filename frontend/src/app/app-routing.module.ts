@@ -5,7 +5,6 @@ import {PersonListComponent} from "./components/person-list/person-list.componen
 import {PersonDetailComponent} from "./components/person-detail/person-detail.component";
 import {JobsComponent} from "./components/jobs/jobs.component";
 import {CompaniesComponent} from "./components/companies/companies.component";
-import {LocationsComponent} from "./components/locations/locations.component";
 import {JobAddComponent} from "./components/job-add/job-add.component";
 import {CompanyAddComponent} from "./components/company-add/company-add.component";
 
