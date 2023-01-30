@@ -20,6 +20,7 @@
                 <input
                   class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                   id="first-name" type="text" placeholder="Max" required [(ngModel)]="model.firstname" name="firstname"
+                  autocomplete="given-name"
                   #firstname="ngModel">
                 <div [hidden]="firstname.valid || firstname.pristine">Firstname is required</div>
               </div>
@@ -30,6 +31,7 @@
                 <input
                   class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                   id="last-name" type="text" placeholder="Musterfrau" required [(ngModel)]="model.lastname" name="lastname"
+                  autocomplete="family-name"
                   #lastname="ngModel">
                 <div [hidden]="lastname.valid || lastname.pristine">Lastname is required</div>
               </div>
