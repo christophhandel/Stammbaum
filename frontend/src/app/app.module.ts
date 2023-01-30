@@ -13,6 +13,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JobsComponent } from './components/jobs/jobs.component';
 import { CompaniesComponent } from './components/companies/companies.component';
 import { LocationsComponent } from './components/locations/locations.component';
+import { CompanyAddComponent } from './components/company-add/company-add.component';
+import { JobAddComponent } from './components/job-add/job-add.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { LocationsComponent } from './components/locations/locations.component';
     PersonDetailComponent,
     JobsComponent,
     CompaniesComponent,
-    LocationsComponent
+    LocationsComponent,
+    CompanyAddComponent,
+    JobAddComponent
   ],
   imports: [
     BrowserModule,

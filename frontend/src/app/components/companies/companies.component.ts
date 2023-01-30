@@ -21,6 +21,11 @@ export class CompaniesComponent implements OnInit {
     this.companyList.push({id: "löadfk", name: "IBM", businessActivity: "lösdkfjöldsajaöslsdfjlakdsfj"})
     this.companyList.push({id: "löadfk", name: "IBM", businessActivity: "lösdkfjöldsajaöslsdfjlakdsfj"})
     // TODO get Data via RestService
+    this.restService.getCompanies().subscribe({
+      next: value => {
+        this.companyList=value;
+      }
+    })
   }
 
   deleteCompany(company: Company) {
