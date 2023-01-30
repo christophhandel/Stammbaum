@@ -6,14 +6,19 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using System.Runtime.CompilerServices;
+using FamilyTreeMongoApp.Core.Workloads.AccomplishmentWorkload;
 
-namespace FamilyTreeMongoApp.Core.Workloads.Person;
+namespace FamilyTreeMongoApp.Core.Workloads.PersonWorkload;
 
 public sealed class PersonRepository : RepositoryBase<Person>, IPersonRepository
 {
-    public PersonRepository(ITransactionProvider transactionProvider, IDatabaseProvider databaseProvider) : 
+    private readonly IAccomplishmentRepository _accomplishmentRepository;
+    
+    public PersonRepository(ITransactionProvider transactionProvider, IDatabaseProvider databaseProvider,
+        IAccomplishmentRepository accomplishmentRepository) : 
         base(transactionProvider, databaseProvider)
     {
+        _accomplishmentRepository = accomplishmentRepository;
     }
 
     public override string CollectionName { get; } = MongoUtil.GetCollectionName<Person>();
@@ -98,5 +103,13 @@ public sealed class PersonRepository : RepositoryBase<Person>, IPersonRepository
     public async Task DeletePerson(ObjectId objectId)
     {
         await DeleteOneAsync(objectId);
+    }
+
+    public async Task<int> GetAccomplishmentsCount(ObjectId objectId)
+    {
+        return await QueryIncludeDetail<Accomplishment>(_accomplishmentRepository,
+                acc => acc.Id,
+                pers => pers.Id.Equals(objectId))
+            .CountAsync();
     }
 }

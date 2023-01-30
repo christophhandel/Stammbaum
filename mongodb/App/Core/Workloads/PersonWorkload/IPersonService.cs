@@ -1,7 +1,7 @@
 ﻿using FamilyTreeMongoApp.Model.Person;
 using MongoDB.Bson;
 
-namespace FamilyTreeMongoApp.Core.Workloads.Person;
+namespace FamilyTreeMongoApp.Core.Workloads.PersonWorkload;
 
 public interface IPersonService
 {
@@ -30,4 +30,5 @@ public interface IPersonService
         ObjectId? job,
         ObjectId? company);
         Task DeletePerson(ObjectId objectId);
+        Task<int> GetAccomplishmentsCount(ObjectId objectId);
 }

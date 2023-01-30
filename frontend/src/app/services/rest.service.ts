@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Person} from "../models/person.model";
 import {environment} from "../../environments/environment";
+import {Company} from "../models/company.model";
 
 @Injectable({
   providedIn: 'root'
@@ -42,4 +43,7 @@ export class RestService {
     return this.http.post<Person>(environment.API_URL + "Person", p);
   }
 
+  getCompanys() {
+    return this.http.get<Company[]>(environment.API_URL + "Company");
+  }
 }

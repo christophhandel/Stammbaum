@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using FamilyTreeMongoApp.Core.Util;
+using FamilyTreeMongoApp.Core.Workloads.CompanyWorkload;
 using FamilyTreeMongoApp.Model.Person;
 using MongoDB.Bson;
 
-namespace FamilyTreeMongoApp.Core.Workloads.Person;
+namespace FamilyTreeMongoApp.Core.Workloads.PersonWorkload;
 
 public sealed class PersonService : IPersonService
 {
@@ -76,5 +77,10 @@ public sealed class PersonService : IPersonService
     public async Task DeletePerson(ObjectId objectId)
     {
         await _repository.DeletePerson(objectId);
+    }
+
+    public async Task<int> GetAccomplishmentsCount(ObjectId objectId)
+    {
+        return await _repository.GetAccomplishmentsCount(objectId);
     }
 }
