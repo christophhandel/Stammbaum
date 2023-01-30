@@ -43,6 +43,21 @@ export class PersonListComponent implements OnInit {
       }})
   }
 
+  getSexString(p:Person) {
+    switch (p.sex){
+      case 'm':
+      case 'male':
+        return 'Male'
+      case 'f':
+      case 'female':
+        return 'Female'
+      case 'o':
+      case 'other':
+        return 'Other'
+    }
+    return "Unknown;"
+  }
+
   deletePerson(person:Person) {
     if (person == null || person.id == null) return;
 

@@ -40,7 +40,7 @@ export class PersonDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.router.url.split("/"));
+    //console.log(this.router.url.split("/"));
 
     if (this.router.url.split("/")[2] == "add") {
       this.isEditing = false;

@@ -15,10 +15,9 @@ const routes: Routes = [
   {path: 'jobs/add', component: JobAddComponent},
   {path: 'company', component: CompaniesComponent},
   {path: 'company/add', component: CompanyAddComponent},
-  {path: 'locations', component: LocationsComponent},
-  {path: 'people', component: PersonListComponent},
-  {path: 'people/add', component: PersonDetailComponent},
-  {path: 'people/:id', component: PersonDetailComponent},
+  {path: 'persons', component: PersonListComponent},
+  {path: 'persons/add', component: PersonDetailComponent},
+  {path: 'persons/:id', component: PersonDetailComponent},
   {path: '', redirectTo: 'relations', pathMatch: 'full'},
   {path: '**', component: AllRelationsComponent},
 ];
