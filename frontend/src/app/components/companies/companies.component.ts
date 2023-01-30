@@ -13,13 +13,6 @@ export class CompaniesComponent implements OnInit {
   constructor(private restService: RestService) { }
 
   ngOnInit(): void {
-    this.companyList.push({id: "löadfk", name: "IBM", businessActivity: "lösdkfjöldsajaöslsdfjlakdsfj"})
-    this.companyList.push({id: "löadfk", name: "IBM", businessActivity: "lösdkfjöldsajaöslsdfjlakdsfj"})
-    this.companyList.push({id: "löadfk", name: "IBM", businessActivity: "lösdkfjöldsajaöslsdfjlakdsfj"})
-    this.companyList.push({id: "löadfk", name: "IBM", businessActivity: "lösdkfjöldsajaöslsdfjlakdsfj"})
-    this.companyList.push({id: "löadfk", name: "IBM", businessActivity: "lösdkfjöldsajaöslsdfjlakdsfj"})
-    this.companyList.push({id: "löadfk", name: "IBM", businessActivity: "lösdkfjöldsajaöslsdfjlakdsfj"})
-    this.companyList.push({id: "löadfk", name: "IBM", businessActivity: "lösdkfjöldsajaöslsdfjlakdsfj"})
     // TODO get Data via RestService
     this.restService.getCompanies().subscribe({
       next: value => {

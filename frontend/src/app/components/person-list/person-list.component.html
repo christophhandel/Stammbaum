@@ -5,6 +5,13 @@
 
   <div>
 
+    <div *ngIf="personList.length === 0" class="flex left-2 m-10">
+      <div class="md:max-w-xl rounded-lg bg-white shadow-lg w-full">
+        <div class="p-6 flex flex-col justify-center text-center">
+          <h5 class="text-gray-900 text-xl font-medium mb-2">No Persons found!</h5>
+        </div>
+      </div>
+    </div>
 
     <div *ngFor="let person of personList" class="flex left-2 m-10">
       <div class="flex flex-col md:flex-row md:max-w-xl rounded-lg bg-white shadow-lg w-full">
