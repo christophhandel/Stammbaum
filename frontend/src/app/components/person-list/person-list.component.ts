@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Person} from "../../models/person.model";
 import {HttpClient} from '@angular/common/http';
-import {environment} from '../../../environments/environment';
 import {RestService} from "../../services/rest.service";
+
 interface IDictionary {
   [index: string]: Person | null;
 }
