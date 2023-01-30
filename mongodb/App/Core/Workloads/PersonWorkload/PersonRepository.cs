@@ -1,12 +1,11 @@
-﻿using FamilyTreeMongoApp.Model.Person;
-using LeoMongo;
+﻿using LeoMongo;
 using LeoMongo.Database;
 using LeoMongo.Transaction;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
-using System.Runtime.CompilerServices;
 using FamilyTreeMongoApp.Core.Workloads.AccomplishmentWorkload;
+using FamilyTreeMongoApp.Core.Workloads.Person;
 
 namespace FamilyTreeMongoApp.Core.Workloads.PersonWorkload;
 
