@@ -23,6 +23,9 @@ public sealed class MapperProfile : Profile
             .ForMember(p => p.Id, c => c.MapFrom(p => p.Id!.ToString()));
         CreateMap<Company,CompanyDto>()
             .ForMember(p => p.Id, c => c.MapFrom(p => p.Id!.ToString()));
-
+        CreateMap<JobDto,JobDto>()
+            .ForMember(p => p.Id, c => c.MapFrom(p => p.Id!.ToString()));
+        CreateMap<Job,JobDto>()
+            .ForMember(p => p.Id, c => c.MapFrom(p => p.Id!.ToString()));
     }
 }

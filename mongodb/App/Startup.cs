@@ -2,6 +2,7 @@ using LeoMongo;
 using FamilyTreeMongoApp.Core.Util;
 using FamilyTreeMongoApp.Core.Workloads.AccomplishmentWorkload;
 using FamilyTreeMongoApp.Core.Workloads.CompanyWorkload;
+using FamilyTreeMongoApp.Core.Workloads.JobWorkload;
 using FamilyTreeMongoApp.Core.Workloads.PersonWorkload;
 using Neo4j.Driver;
 using Neo4jClient;
@@ -55,6 +56,10 @@ public class Startup
         services.AddScoped<ICompanyRepository, CompanyRepository>();
         services.AddScoped<IAccomplishmentRepository, AccomplishmentRepository>();
         services.AddScoped<IAccomplishmentService, AccomplishmentService>();
+        
+        services.AddScoped<IJobService, JobService>();
+        services.AddScoped<IJobRepository, JobRepository>();
+
         services.AddTransient<IDateTimeProvider, DateTimeProvider>();
 
         services.AddControllers();

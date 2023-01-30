@@ -1,4 +1,6 @@
-﻿namespace FamilyTreeMongoApp.Model.PersonDetails
+﻿using System.Text.Json.Serialization;
+
+namespace FamilyTreeMongoApp.Model.PersonDetails
 {
     public class JobDto
     {
@@ -6,7 +8,8 @@
 
         public string Name { get; set; } = default!;
 
-        public string Description { get; set; } = default!;
+        [JsonPropertyName("description")]
+        public string JobType { get; set; } = default!;
 
     }
 }
