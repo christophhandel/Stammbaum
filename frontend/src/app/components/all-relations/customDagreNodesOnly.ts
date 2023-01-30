@@ -1,4 +1,4 @@
-import { Graph, Layout, Edge } from '@swimlane/ngx-graph';
+import {Edge, Graph, Layout} from '@swimlane/ngx-graph';
 import * as dagre from 'dagre';
 
 export enum Orientation {

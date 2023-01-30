@@ -9,12 +9,12 @@ import {PersonListComponent} from './components/person-list/person-list.componen
 import {AllRelationsComponent} from './components/all-relations/all-relations.component';
 import {PersonDetailComponent} from './components/person-detail/person-detail.component';
 import {NgxGraphModule} from "@swimlane/ngx-graph";
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { JobsComponent } from './components/jobs/jobs.component';
-import { CompaniesComponent } from './components/companies/companies.component';
-import { LocationsComponent } from './components/locations/locations.component';
-import { CompanyAddComponent } from './components/company-add/company-add.component';
-import { JobAddComponent } from './components/job-add/job-add.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {JobsComponent} from './components/jobs/jobs.component';
+import {CompaniesComponent} from './components/companies/companies.component';
+import {LocationsComponent} from './components/locations/locations.component';
+import {CompanyAddComponent} from './components/company-add/company-add.component';
+import {JobAddComponent} from './components/job-add/job-add.component';
 
 @NgModule({
   declarations: [

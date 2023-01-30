@@ -1,4 +1,3 @@
-import {environment} from '../../../environments/environment';
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Person} from "../../models/person.model";
@@ -16,7 +15,7 @@ import {Location} from "../../models/location.model";
 export class PersonDetailComponent implements OnInit {
 
   isEditing: boolean = true;
-  model : Person = {
+  model: Person = {
     id: '',
     firstname: '',
     lastname: '',
@@ -58,7 +57,10 @@ export class PersonDetailComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       if (params["id"]) {
         this.restService.getPerson(params["id"]).subscribe(
-          p => {console.log(p);this.model = p}
+          p => {
+            console.log(p);
+            this.model = p
+          }
         );
       }
     });
