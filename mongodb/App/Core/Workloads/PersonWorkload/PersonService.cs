@@ -78,4 +78,9 @@ public sealed class PersonService : IPersonService
     {
         await _repository.DeletePerson(objectId);
     }
+
+    public async Task<int> GetAccomplishmentsCount(ObjectId objectId)
+    {
+        return await _repository.GetAccomplishmentsCount(objectId);
+    }
 }

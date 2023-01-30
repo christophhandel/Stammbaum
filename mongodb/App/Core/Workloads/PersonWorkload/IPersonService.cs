@@ -30,4 +30,5 @@ public interface IPersonService
         ObjectId? job,
         ObjectId? company);
         Task DeletePerson(ObjectId objectId);
+        Task<int> GetAccomplishmentsCount(ObjectId objectId);
 }

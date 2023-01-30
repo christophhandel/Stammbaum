@@ -40,6 +40,11 @@ public class PersonRepositoryNeo : IPersonRepository
         throw new NotImplementedException();
     }
 
+    public Task<int> GetAccomplishmentsCount(ObjectId objectId)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<IReadOnlyCollection<Person>> GetPeopleByParents(ObjectId? motherId, ObjectId? fatherId)
     {
         throw new NotImplementedException();
