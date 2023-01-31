@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Company} from "../../models/company.model";
 import {RestService} from "../../services/rest.service";
 
@@ -13,17 +13,23 @@ export class CompaniesComponent implements OnInit {
   constructor(private restService: RestService) { }
 
   ngOnInit(): void {
-    this.companyList.push({id: "löadfk", name: "IBM", businessActivity: "lösdkfjöldsajaöslsdfjlakdsfj"})
-    this.companyList.push({id: "löadfk", name: "IBM", businessActivity: "lösdkfjöldsajaöslsdfjlakdsfj"})
-    this.companyList.push({id: "löadfk", name: "IBM", businessActivity: "lösdkfjöldsajaöslsdfjlakdsfj"})
-    this.companyList.push({id: "löadfk", name: "IBM", businessActivity: "lösdkfjöldsajaöslsdfjlakdsfj"})
-    this.companyList.push({id: "löadfk", name: "IBM", businessActivity: "lösdkfjöldsajaöslsdfjlakdsfj"})
-    this.companyList.push({id: "löadfk", name: "IBM", businessActivity: "lösdkfjöldsajaöslsdfjlakdsfj"})
-    this.companyList.push({id: "löadfk", name: "IBM", businessActivity: "lösdkfjöldsajaöslsdfjlakdsfj"})
-    // TODO get Data via RestService
+    this.restService.getCompanies().subscribe({
+      next: value => {
+        this.companyList=value;
+      }
+    })
   }
 
   deleteCompany(company: Company) {
-    // TODO delete company via RestService
+    if (company == null || company.id == null) return;
+
+    return this.restService.deleteCompany(company.id).subscribe({
+      next: d=> {
+        const index = this.companyList.indexOf(company, 0);
+        if (index > -1) {
+          this.companyList.splice(index, 1);
+        }
+      }
+    })
   }
 }

@@ -1,5 +1,6 @@
 using FamilyTreeMongoApp.Core.Util;
 using FamilyTreeMongoApp.Core.Workloads.Person;
+using FamilyTreeMongoApp.Core.Workloads.PersonWorkload;
 using LeoMongo;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

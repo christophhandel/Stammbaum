@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Person} from "../../models/person.model";
 import {HttpClient} from '@angular/common/http';
-import {environment} from '../../../environments/environment';
+import {RestService} from "../../services/rest.service";
+
 interface IDictionary {
   [index: string]: Person | null;
 }
@@ -16,42 +17,51 @@ export class PersonListComponent implements OnInit {
   mother= {} as IDictionary;
   father={}as IDictionary;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private restService: RestService) { }
 
   ngOnInit(): void {
-    //TODO use restService
-    this.http.get<Person[]>(environment.API_URL + "person").subscribe({ next: value => {
-      this.personList = value
-      this.personList.forEach(p => {
-        if(p.fatherId){
-          this.getFatherString(p).subscribe({ next: value => { this.mother[p.id!] = value}})
-        }
-        else{
-          this.father[p.id!] = null
-        }
-        if(p.motherId){
-          this.getMotherString(p).subscribe({ next: value => { this.father[p.id!] = value}})
-        }
-        else{
-          this.mother[p.id!] = null
-        }
-      })
-    }})
+    this.getAllPeople();
+  }
+  getAllPeople(){
+    this.restService.getAllPeople().subscribe({next: value => {
+        this.personList = value
+        this.personList.forEach(p => {
+          if(p.fatherId){
+            this.restService.getPerson(p.fatherId).subscribe({ next: value => { this.mother[p.id!] = value}})
+          }
+          else{
+            this.father[p.id!] = null
+          }
+          if(p.motherId){
+            this.restService.getPerson(p.motherId).subscribe({ next: value => { this.father[p.id!] = value}})
+          }
+          else{
+            this.mother[p.id!] = null
+          }
+        })
+      }})
   }
 
-  getMotherString(person: Person) {
-    //TODO use restService
-     return this.http.get<Person>(environment.API_URL + "person/"+person.motherId);
-  }
-  getFatherString(person: Person) {
-    //TODO use restService
-    return this.http.get<Person>(environment.API_URL + "person/"+person.fatherId);
+  getSexString(p:Person) {
+    switch (p.sex){
+      case 'm':
+      case 'male':
+        return 'Male'
+      case 'f':
+      case 'female':
+        return 'Female'
+      case 'o':
+      case 'other':
+        return 'Other'
+    }
+    return "Unknown;"
   }
 
   deletePerson(person:Person) {
+    if (person == null || person.id == null) return;
 
-    //TODO use restService
-    this.http.delete<Person>(environment.API_URL + "person/"+person.id).subscribe({
+    this.restService.deletePerson(person.id).subscribe({
       next: d=> {
         const index = this.personList.indexOf(person, 0);
         if (index > -1) {

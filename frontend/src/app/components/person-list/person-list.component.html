@@ -5,6 +5,13 @@
 
   <div>
 
+    <div *ngIf="personList.length === 0" class="flex left-2 m-10">
+      <div class="md:max-w-xl rounded-lg bg-white shadow-lg w-full">
+        <div class="p-6 flex flex-col justify-center text-center">
+          <h5 class="text-gray-900 text-xl font-medium mb-2">No Persons found!</h5>
+        </div>
+      </div>
+    </div>
 
     <div *ngFor="let person of personList" class="flex left-2 m-10">
       <div class="flex flex-col md:flex-row md:max-w-xl rounded-lg bg-white shadow-lg w-full">
@@ -23,7 +30,7 @@
           <!--            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, quae.-->
           <!--          </p>-->
           <p class="text-gray-700 text-base mb-4">
-            Sex: {{person.sex}}
+            Sex: {{ getSexString(person) }}
           </p>
           <div class="mb-4">
             <p class="text-gray-700 text-base">
@@ -45,7 +52,7 @@
           </div>
           <div class="flex space-x-1">
             <!--      <p class="text-gray-600 text-xs">Last updated 3 mins ago</p>-->
-            <button [routerLink]="'/people/'+person.id" type="button"
+            <button [routerLink]="'/persons/'+person.id" type="button"
                     class=" inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
               Detail
             </button>
@@ -60,3 +67,15 @@
 
   </div>
 </div>
+
+<!--FAB-->
+<button
+  [routerLink]="'/persons/add'"
+  class="fixed bottom-0 right-0 p-0 m-10
+  w-12 h-12 bg-blue-600 rounded-full hover:bg-blue-700 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none">
+  <svg viewBox="0 0 20 20" enable-background="new 0 0 20 20" class="w-6 h-6 inline-block">
+    <path fill="#FFFFFF" d="M16,10c0,0.553-0.048,1-0.601,1H11v4.399C11,15.951,10.553,16,10,16c-0.553,0-1-0.049-1-0.601V11H4.601
+                                    C4.049,11,4,10.553,4,10c0-0.553,0.049-1,0.601-1H9V4.601C9,4.048,9.447,4,10,4c0.553,0,1,0.048,1,0.601V9h4.399
+                                    C15.952,9,16,9.447,16,10z"/>
+  </svg>
+</button>

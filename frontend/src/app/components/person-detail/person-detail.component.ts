@@ -1,9 +1,7 @@
-import {environment} from '../../../environments/environment';
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Person} from "../../models/person.model";
-import {ActivatedRoute} from "@angular/router";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {RestService} from "../../services/rest.service";
 import {Job} from "../../models/job.model";
 import {Company} from "../../models/company.model";
@@ -17,7 +15,7 @@ import {Location} from "../../models/location.model";
 export class PersonDetailComponent implements OnInit {
 
   isEditing: boolean = true;
-  model : Person = {
+  model: Person = {
     id: '',
     firstname: '',
     lastname: '',
@@ -42,7 +40,7 @@ export class PersonDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.router.url.split("/"));
+    //console.log(this.router.url.split("/"));
 
     if (this.router.url.split("/")[2] == "add") {
       this.isEditing = false;
@@ -59,7 +57,10 @@ export class PersonDetailComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       if (params["id"]) {
         this.restService.getPerson(params["id"]).subscribe(
-          p => {console.log(p);this.model = p}
+          p => {
+            console.log(p);
+            this.model = p
+          }
         );
       }
     });
@@ -68,20 +69,22 @@ export class PersonDetailComponent implements OnInit {
   onSubmit() {
     console.log(this.model)
 
-    //TODO use restService
-    if (this.model.id == '') {
-      this.http.post<Person>(environment.API_URL + "Person", this.model).subscribe({
+    if(this.model.id != ''){
+      this.restService.updatePerson(this.model).subscribe({
         next: d => {
-          console.log(d)
-        }
-      })
-    } else {
-      this.http.put<Person>(environment.API_URL + "Person/" + this.model.id, this.model).subscribe({
-        next: d => {
-          console.log(d)
+          this.router.navigate(["persons"]);
         }
       })
     }
+    else {
+      this.restService.addPerson(this.model).subscribe({
+        next: d => {
+          this.router.navigate(["persons"]);
+        }
+      })
+    }
+
+    //TODO check if form is valid
   }
 
   getParents() {
@@ -101,6 +104,15 @@ export class PersonDetailComponent implements OnInit {
   }
 
   getCompanyAndJobs() {
-    // TODO get all Jobs and Companies via the restService and save them in the 'jobs' & 'companies' variables
+    this.restService.getCompanies().subscribe({
+      next: value => {
+        this.companies = value
+      }
+    })
+    this.restService.getJobs().subscribe({
+      next: value => {
+        this.jobs = value
+      }
+    })
   }
 }
