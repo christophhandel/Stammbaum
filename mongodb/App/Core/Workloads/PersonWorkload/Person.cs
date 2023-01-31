@@ -13,12 +13,12 @@ public sealed class Person : EntityBase
 
     public Location? BirthPlace { get; set; } = default!;
     
-    public ObjectId Job { get; set; } = default!;
+    public ObjectId? Job { get; set; } = null;
 
-    public ObjectId Company { get; set; } = default!;
+    public ObjectId? Company { get; set; } = null;
 
     public List<ObjectId> Accomplishments { get; set; } = default!;
      
-    public ObjectId? Mother { get; set; } = default!;
-    public ObjectId? Father { get; set; } = default!;
+    public ObjectId? Mother { get; set; } = null;
+    public ObjectId? Father { get; set; } = null;
 }
