@@ -44,6 +44,13 @@ export class RestService {
     return this.http.post<Person>(environment.API_URL + "Person", p);
   }
 
+  updateCompany(p: Company){
+    return this.http.put<Company>(environment.API_URL + p.id, p);
+  }
+
+  addCompany(p: Company){
+    return this.http.post<Company>(environment.API_URL + "Company", p);
+  }
   getCompanies() {
     return this.http.get<Company[]>(environment.API_URL + "Company");
   }
@@ -59,4 +66,5 @@ export class RestService {
   }deleteJob(jobId: string){
     return this.http.delete<Job>(environment.API_URL + "job/"+jobId)
   }
+
 }
