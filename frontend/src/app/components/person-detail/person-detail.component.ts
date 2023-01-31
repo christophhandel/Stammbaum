@@ -69,19 +69,22 @@ export class PersonDetailComponent implements OnInit {
   onSubmit() {
     console.log(this.model)
 
-    this.restService.addPerson(this.model).subscribe({
-      next: d => {
-        console.log(d)
-      }
-    })
-    this.restService.updatePerson(this.model).subscribe({
-      next: d => {
-        console.log(d)
-      }
-    })
+    if(this.model.id != ''){
+      this.restService.updatePerson(this.model).subscribe({
+        next: d => {
+          this.router.navigate(["persons"]);
+        }
+      })
+    }
+    else {
+      this.restService.addPerson(this.model).subscribe({
+        next: d => {
+          this.router.navigate(["persons"]);
+        }
+      })
+    }
 
     //TODO check if form is valid
-    this.router.navigate(["persons"]);
   }
 
   getParents() {

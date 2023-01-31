@@ -1,4 +1,5 @@
-﻿using LeoMongo;
+﻿using FamilyTreeMongoApp.Core.Workloads.CompanyWorkload;
+using LeoMongo;
 using LeoMongo.Database;
 using LeoMongo.Transaction;
 using MongoDB.Bson;
@@ -17,7 +18,7 @@ public sealed class JobRepository : RepositoryBase<Job>, IJobRepository
     {
     }
 
-    public override string CollectionName { get; } = MongoUtil.GetCollectionName<Company>();
+    public override string CollectionName { get; } = MongoUtil.GetCollectionName<Job>();
     public async Task<Job?> GetJobById(ObjectId parse)
     {
         return await Query().FirstOrDefaultAsync(c=>c.Id==parse);
