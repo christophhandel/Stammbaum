@@ -54,4 +54,9 @@ export class RestService {
   deletePerson(personId: string){
     return this.http.delete<Person>(environment.API_URL + "person/"+personId)
   }
+  deleteCompany(companyId: string){
+    return this.http.delete<Company>(environment.API_URL + "company/"+companyId)
+  }deleteJob(jobId: string){
+    return this.http.delete<Job>(environment.API_URL + "job/"+jobId)
+  }
 }
