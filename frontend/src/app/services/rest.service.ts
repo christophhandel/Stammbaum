@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Person} from "../models/person.model";
 import {environment} from "../../environments/environment";
 import {Company} from "../models/company.model";
+import {Job} from "../models/job.model";
 
 @Injectable({
   providedIn: 'root'
@@ -43,7 +44,19 @@ export class RestService {
     return this.http.post<Person>(environment.API_URL + "Person", p);
   }
 
-  getCompanys() {
+  getCompanies() {
     return this.http.get<Company[]>(environment.API_URL + "Company");
+  }
+
+  getJobs() {
+    return this.http.get<Job[]>(environment.API_URL + "Job");
+  }
+  deletePerson(personId: string){
+    return this.http.delete<Person>(environment.API_URL + "person/"+personId)
+  }
+  deleteCompany(companyId: string){
+    return this.http.delete<Company>(environment.API_URL + "company/"+companyId)
+  }deleteJob(jobId: string){
+    return this.http.delete<Job>(environment.API_URL + "job/"+jobId)
   }
 }

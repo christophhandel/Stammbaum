@@ -1,8 +1,8 @@
 import {Component, HostListener, OnInit} from '@angular/core';
-import {Layout, Edge, Node} from '@swimlane/ngx-graph';
+import {Edge, Layout, Node} from '@swimlane/ngx-graph';
 import * as shape from 'd3-shape';
 import {Router} from "@angular/router";
-import { DagreNodesOnlyLayout } from './customDagreNodesOnly'
+import {DagreNodesOnlyLayout} from './customDagreNodesOnly'
 import {RestService} from "../../services/rest.service";
 
 @Component({

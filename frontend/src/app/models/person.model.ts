@@ -1,5 +1,3 @@
-import {Job} from "./job.model";
-import {Company} from "./company.model";
 import {Location} from "./location.model";
 
 export interface Person {
