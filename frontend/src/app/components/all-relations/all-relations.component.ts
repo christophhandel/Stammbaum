@@ -57,6 +57,6 @@ export class AllRelationsComponent implements OnInit {
   }
 
   onNodeClick($event: any, node: any) {
-    this.router.navigate(['/persons', node.id]);
+    this.router.navigate(['/relations/edit', node.id]);
   }
 }

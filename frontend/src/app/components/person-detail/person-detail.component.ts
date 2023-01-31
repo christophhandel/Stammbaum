@@ -81,7 +81,12 @@ export class PersonDetailComponent implements OnInit {
     })
 
     //TODO check if form is valid
-    this.router.navigate(["persons"]);
+
+    if (this.router.url.split("/")[2] == "edit") {
+      this.router.navigate(["/relations"]);
+    } else {
+      this.router.navigate(["persons"]);
+    }
   }
 
   getParents() {
