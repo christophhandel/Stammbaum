@@ -37,7 +37,7 @@ export class RestService {
   }
 
   updatePerson(p: Person){
-    return this.http.put<Person>(environment.API_URL + p.id, p);
+    return this.http.put<Person>(environment.API_URL + "Person/" + p.id, p);
   }
 
   addPerson(p: Person){
@@ -50,6 +50,14 @@ export class RestService {
 
   addCompany(p: Company){
     return this.http.post<Company>(environment.API_URL + "Company", p);
+  }
+
+  updateJob(p: Job){
+    return this.http.put<Job>(environment.API_URL + p.id, p);
+  }
+
+  addJob(p: Job){
+    return this.http.post<Job>(environment.API_URL + "Job", p);
   }
   getCompanies() {
     return this.http.get<Company[]>(environment.API_URL + "Company");
@@ -64,7 +72,7 @@ export class RestService {
   deleteCompany(companyId: string){
     return this.http.delete<Company>(environment.API_URL + "company/"+companyId)
   }deleteJob(jobId: string){
-    return this.http.delete<Job>(environment.API_URL + "job/"+jobId)
+    return this.http.delete<Job>(environment.API_URL + "Job/"+jobId)
   }
 
 }
