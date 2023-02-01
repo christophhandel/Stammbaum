@@ -32,6 +32,6 @@ public interface IPersonService
         ObjectId? company);
         Task DeletePerson(ObjectId objectId);
         Task<int> GetAccomplishmentsCount(ObjectId objectId);
-        Task<IEnumerable<ObjectId>> GetDescendantsInCompany(ObjectId objectId, Company company);
-        Task<IEnumerable<PersonDto>> GetDescendants(ObjectId objectId);
+        Task<IEnumerable<Person>> GetDescendantsInCompany(ObjectId objectId, Company company);
+        Task<IEnumerable<Person>> GetDescendants(ObjectId objectId);
 }

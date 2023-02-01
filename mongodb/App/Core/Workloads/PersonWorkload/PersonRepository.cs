@@ -123,18 +123,33 @@ public sealed class PersonRepository : RepositoryBase<Person>, IPersonRepository
             .CountAsync();
     }
     
-    public async Task<IEnumerable<PersonDto>> GetDescendants(ObjectId objectId)
+    public async Task<IEnumerable<Person>> GetDescendants(ObjectId objectId)
     {
         var descendants = await GraphLookup<Person, PersonWithParents>(
                 this,
-            "Father",
-            "_id",
-            "Father",
-            "Parents")
+            nameof(Person.Father),
+            nameof(Person.Id),
+            $"${nameof(Person.Father)}",
+            nameof(PersonWithParents.Parents))
             .Match(p => p.Parents.Any(parent => parent.Id.Equals(objectId)))
             .ToListAsync();
 
 
-        return descendants.Select(l => _mapper.Map<PersonDto>(l)).ToList();
+        return descendants.Select(l => _mapper.Map<Person>(l)).ToList();
+    }
+
+    public async Task<IEnumerable<Person>> GetDescendantsInCompany(ObjectId objectId, Company company)
+    {
+        var descendants = await GraphLookup<Person, PersonWithParents>(
+                this,
+                nameof(Person.Father),
+                nameof(Person.Id),
+                $"${nameof(Person.Father)}",
+                nameof(PersonWithParents.Parents))
+            .Match(p => p.Parents.Any(parent => parent.Id.Equals(objectId)) && 
+                        p.Company.Equals(company.Id))
+            .ToListAsync();
+        
+        return descendants.Select(l => _mapper.Map<Person>(l)).ToList();
     }
 }

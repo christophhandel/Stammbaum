@@ -46,7 +46,7 @@ public class PersonRepositoryNeo : IPersonRepository
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<PersonDto>> GetDescendants(ObjectId objectId)
+    public Task<IEnumerable<Person>> GetDescendants(ObjectId objectId)
     {
         throw new NotImplementedException();
     }
