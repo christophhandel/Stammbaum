@@ -1,23 +1,34 @@
-﻿using LeoMongo;
+﻿using AutoMapper;
+using LeoMongo;
 using LeoMongo.Database;
 using LeoMongo.Transaction;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using FamilyTreeMongoApp.Core.Workloads.AccomplishmentWorkload;
+using FamilyTreeMongoApp.Core.Workloads.CompanyWorkload;
 using FamilyTreeMongoApp.Core.Workloads.Person;
+using FamilyTreeMongoApp.Model.Person;
+using FamilyTreeMongoApp.Model.PersonDetails;
+using Neo4j.Driver;
 
 namespace FamilyTreeMongoApp.Core.Workloads.PersonWorkload;
 
 public sealed class PersonRepository : RepositoryBase<Person>, IPersonRepository
 {
     private readonly IAccomplishmentRepository _accomplishmentRepository;
+    private readonly ICompanyRepository _companyRepository;
+    private readonly IMapper _mapper;
     
     public PersonRepository(ITransactionProvider transactionProvider, IDatabaseProvider databaseProvider,
-        IAccomplishmentRepository accomplishmentRepository) : 
+        ICompanyRepository companyRepository,
+        IAccomplishmentRepository accomplishmentRepository,
+        IMapper mapper) : 
         base(transactionProvider, databaseProvider)
     {
+        this._companyRepository = companyRepository;
         _accomplishmentRepository = accomplishmentRepository;
+        _mapper = mapper;
     }
 
     public override string CollectionName { get; } = MongoUtil.GetCollectionName<Person>();
@@ -110,5 +121,35 @@ public sealed class PersonRepository : RepositoryBase<Person>, IPersonRepository
                 acc => acc.Id,
                 pers => pers.Id.Equals(objectId))
             .CountAsync();
+    }
+    
+    public async Task<IEnumerable<Person>> GetDescendants(ObjectId objectId)
+    {
+        var descendants = await GraphLookup<Person, PersonWithParents>(
+                this,
+            nameof(Person.Father),
+            nameof(Person.Id),
+            $"${nameof(Person.Father)}",
+            nameof(PersonWithParents.Parents))
+            .Match(p => p.Parents.Any(parent => parent.Id.Equals(objectId)))
+            .ToListAsync();
+
+
+        return descendants.Select(l => _mapper.Map<Person>(l)).ToList();
+    }
+
+    public async Task<IEnumerable<Person>> GetDescendantsInCompany(ObjectId objectId, Company company)
+    {
+        var descendants = await GraphLookup<Person, PersonWithParents>(
+                this,
+                nameof(Person.Father),
+                nameof(Person.Id),
+                $"${nameof(Person.Father)}",
+                nameof(PersonWithParents.Parents))
+            .Match(p => p.Parents.Any(parent => parent.Id.Equals(objectId)) && 
+                        p.Company.Equals(company.Id))
+            .ToListAsync();
+        
+        return descendants.Select(l => _mapper.Map<Person>(l)).ToList();
     }
 }

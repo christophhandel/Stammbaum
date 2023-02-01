@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FamilyTreeMongoApp.Core.Util;
+using FamilyTreeMongoApp.Core.Workloads.CompanyWorkload;
 using FamilyTreeMongoApp.Model.Person;
 using LeoMongo;
 using LeoMongo.Database;
@@ -41,6 +42,16 @@ public class PersonRepositoryNeo : IPersonRepository
     }
 
     public Task<int> GetAccomplishmentsCount(ObjectId objectId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<IEnumerable<Person>> GetDescendants(ObjectId objectId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<IEnumerable<Person>> GetDescendantsInCompany(ObjectId objectId, Company company)
     {
         throw new NotImplementedException();
     }

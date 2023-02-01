@@ -15,7 +15,16 @@ public sealed class MapperProfile : Profile
         CreateMap<Person, PersonDto>()
             .ForMember(p => p.BirthLocation, opt => opt.MapFrom(src => src.BirthPlace))
             .ForMember(p => p.Id, c => c.MapFrom(p => p.Id.ToString()));
-         CreateMap<Location,LocationDto>()
+        CreateMap<PersonDto,PersonWithParents>()
+            .ForMember(p => p.Id, c => c.MapFrom(p => p.Id!.ToString()));
+        CreateMap<PersonWithParents,PersonDto>()
+            .ForMember(p => p.Id, c => c.MapFrom(p => p.Id!.ToString()));
+        CreateMap<Person,PersonWithParents>()
+            .ForMember(p => p.Id, c => c.MapFrom(p => p.Id!.ToString()));
+        CreateMap<PersonWithParents,Person>()
+            .ForMember(p => p.Id, c => c.MapFrom(p => p.Id!.ToString()));
+
+        CreateMap<Location,LocationDto>()
             .ForMember(p => p.Id, c => c.MapFrom(p => p.Id.ToString()));
         CreateMap<LocationDto,Location>()
             .ForMember(p => p.Id, c => c.MapFrom(p => p.Id!.ToString()));

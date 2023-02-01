@@ -3,7 +3,7 @@ using MongoDB.Bson;
 
 namespace FamilyTreeMongoApp.Core.Workloads.PersonWorkload;
 
-public sealed class Person : EntityBase
+public class Person : EntityBase
 {
     public string Firstname { get; set; } = default!;
     public string Lastname { get; set; } = default!;
