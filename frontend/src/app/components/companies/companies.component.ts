@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Company} from "../../models/company.model";
 import {RestService} from "../../services/rest.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-companies',
@@ -10,7 +11,8 @@ import {RestService} from "../../services/rest.service";
 export class CompaniesComponent implements OnInit {
   companyList: Company[] = [];
 
-  constructor(private restService: RestService) { }
+  constructor(private restService: RestService,
+              private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.restService.getCompanies().subscribe({
@@ -28,7 +30,13 @@ export class CompaniesComponent implements OnInit {
         const index = this.companyList.indexOf(company, 0);
         if (index > -1) {
           this.companyList.splice(index, 1);
+          this.toastr.success("Successfully deleted company (" + company.name + ")!")
+        } else {
+          this.toastr.error("Couldn't delete company (" + company.name + ")!")
         }
+      },
+      error: err => {
+        this.toastr.error("Couldn't delete company (" + company.name + ")!" + err)
       }
     })
   }

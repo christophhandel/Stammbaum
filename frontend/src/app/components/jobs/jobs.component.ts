@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Job} from "../../models/job.model";
 import {RestService} from "../../services/rest.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-jobs',
@@ -10,12 +11,11 @@ import {RestService} from "../../services/rest.service";
 export class JobsComponent implements OnInit {
   jobs: Job[] = [];
 
-  constructor(private restService: RestService) { }
+  constructor(private restService: RestService,
+              private toastr: ToastrService) { }
 
   ngOnInit(): void {
-    // this.jobs.push({id: "löadfk", name: "Software Engineer", description: "0101001001000001"})
-    // this.jobs.push({id: "löadfk", name: "Accountant", description: "An accountant is a practitioner of accounting or accountancy. Accountants who have demonstrated competency through their professional associations' certification exams are certified to use titles such as Chartered Accountant, Chartered Certified Accountant or Certified Public Accountant, or Registered Public Accountant"})
-    // this.jobs.push({id: "löadfk", name: "Student", description: "Going to school and that kinda stuff"})
+
     this.restService.getJobs().subscribe({
       next: value => {
         this.jobs=value;
@@ -31,7 +31,14 @@ export class JobsComponent implements OnInit {
         const index = this.jobs.indexOf(job, 0);
         if (index > -1) {
           this.jobs.splice(index, 1);
+          this.toastr.success("Successfully deleted job (" + job.name + ")!")
         }
+        else {
+          this.toastr.error("Couldn't delete job (" + job.name + ")!")
+        }
+      },
+      error: err => {
+        this.toastr.error("Couldn't delete job (" + job.name + ")!" + err)
       }
     })
   }
