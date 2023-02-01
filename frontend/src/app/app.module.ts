@@ -14,6 +14,8 @@ import {JobsComponent} from './components/jobs/jobs.component';
 import {CompaniesComponent} from './components/companies/companies.component';
 import {CompanyAddComponent} from './components/company-add/company-add.component';
 import {JobAddComponent} from './components/job-add/job-add.component';
+import {ToastrModule} from "ngx-toastr";
+
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import {JobAddComponent} from './components/job-add/job-add.component';
     FormsModule,
     HttpClientModule,
     NgxGraphModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

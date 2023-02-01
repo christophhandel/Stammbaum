@@ -6,6 +6,7 @@ import {RestService} from "../../services/rest.service";
 import {Job} from "../../models/job.model";
 import {Company} from "../../models/company.model";
 import {Location} from "../../models/location.model";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-company-add',
@@ -30,7 +31,8 @@ export class CompanyAddComponent implements OnInit {
   constructor(private http: HttpClient,
               private activatedRoute: ActivatedRoute,
               private router: Router,
-              private restService: RestService) {
+              private restService: RestService,
+              private toastr: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -48,6 +50,10 @@ export class CompanyAddComponent implements OnInit {
       this.restService.updateCompany(this.model).subscribe({
         next: d => {
           this.router.navigate(["company"]);
+          this.toastr.success("Successfully updated company (" + this.model.name + ")!")
+        },
+        error: err => {
+          this.toastr.error("Couldn't update company (" + this.model.name + ")!" + err)
         }
       })
     }
@@ -55,6 +61,10 @@ export class CompanyAddComponent implements OnInit {
       this.restService.addCompany(this.model).subscribe({
         next: d => {
           this.router.navigate(["company"]);
+          this.toastr.success("Successfully added company (" + this.model.name + ")!")
+        },
+        error: err => {
+          this.toastr.error("Couldn't add company (" + this.model.name + ")!" + err)
         }
       })
     }

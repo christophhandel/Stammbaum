@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Person} from "../../models/person.model";
 import {HttpClient} from '@angular/common/http';
 import {RestService} from "../../services/rest.service";
+import {ToastrService} from "ngx-toastr";
 
 interface IDictionary {
   [index: string]: Person | null;
@@ -18,7 +19,8 @@ export class PersonListComponent implements OnInit {
   father={}as IDictionary;
 
   constructor(private http: HttpClient,
-              private restService: RestService) { }
+              private restService: RestService,
+              private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.getAllPeople();
@@ -66,7 +68,14 @@ export class PersonListComponent implements OnInit {
         const index = this.personList.indexOf(person, 0);
         if (index > -1) {
           this.personList.splice(index, 1);
+          this.toastr.success("Successfully deleted person (" + person.firstname + " " + person.lastname + ")!")
         }
+        else{
+          this.toastr.error("Couldn't delete person (" + person.firstname + " " + person.lastname + ")!")
+        }
+      },
+      error: err => {
+        this.toastr.error("Couldn't delete person (" + person.firstname + " " + person.lastname + ")!" + err)
       }
     })
   }

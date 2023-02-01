@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute, Router} from "@angular/router";
 import {RestService} from "../../services/rest.service";
 import {Job} from "../../models/job.model";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-job-add',
@@ -23,7 +24,8 @@ export class JobAddComponent implements OnInit {
   constructor(private http: HttpClient,
               private activatedRoute: ActivatedRoute,
               private router: Router,
-              private restService: RestService) {
+              private restService: RestService,
+              private toastr: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -41,6 +43,10 @@ export class JobAddComponent implements OnInit {
       this.restService.updateJob(this.model).subscribe({
         next: d => {
           this.router.navigate(["jobs"]);
+          this.toastr.success("Successfully updated job (" + this.model.name + ")!")
+        },
+        error: err => {
+          this.toastr.error("Couldn't updated job (" + this.model.name + ")!" + err)
         }
       })
     }
@@ -48,6 +54,10 @@ export class JobAddComponent implements OnInit {
       this.restService.addJob(this.model).subscribe({
         next: d => {
           this.router.navigate(["jobs"]);
+          this.toastr.success("Successfully added job (" + this.model.name + ")!")
+        },
+        error: err => {
+          this.toastr.error("Couldn't add job (" + this.model.name + ")!" + err)
         }
       })
     }

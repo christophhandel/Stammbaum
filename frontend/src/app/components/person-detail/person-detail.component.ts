@@ -6,6 +6,7 @@ import {RestService} from "../../services/rest.service";
 import {Job} from "../../models/job.model";
 import {Company} from "../../models/company.model";
 import {Location} from "../../models/location.model";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-person-detail',
@@ -36,7 +37,8 @@ export class PersonDetailComponent implements OnInit {
   constructor(private http: HttpClient,
               private activatedRoute: ActivatedRoute,
               private router: Router,
-              private restService: RestService) {
+              private restService: RestService,
+              private toastr: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -55,36 +57,49 @@ export class PersonDetailComponent implements OnInit {
 
     // get current Person if there is one
     this.activatedRoute.params.subscribe(params => {
-      if (params["id"]) {
-        this.restService.getPerson(params["id"]).subscribe(
-          p => {
-            console.log(p);
-            this.model = p
-            this.removeCurrentFromParentList();
-          }
-        );
-      }
-    });
+        if (params["id"]) {
+          this.restService.getPerson(params["id"]).subscribe(
+            {
+              next: (value) => {
+                console.log(value);
+                this.model = value
+                this.removeCurrentFromParentList();
+              },
+              error: (err) => {
+                this.toastr.error("Couldn't get person! " + err)
+              }
+            }
+          );
+        }
+      },
+    );
   }
 
   onSubmit() {
     console.log(this.model)
 
-    if(this.model.id != ''){
+    if (this.model.id != '') {
       this.restService.updatePerson(this.model).subscribe({
         next: d => {
+          this.toastr.success("Successfully updated person (" + this.model.firstname + " " + this.model.lastname + ")!")
           if (this.router.url.split("/")[2] == "edit") {
             this.router.navigate(["/relations"]);
           } else {
             this.router.navigate(["persons"]);
           }
+        },
+        error: (err) => {
+          this.toastr.error("Couldn't update person (" + this.model.firstname + " " + this.model.lastname + ")!" + err)
         }
       })
-    }
-    else {
+    } else {
       this.restService.addPerson(this.model).subscribe({
         next: d => {
           this.router.navigate(["persons"]);
+          this.toastr.success("Successfully added person (" + this.model.firstname + " " + this.model.lastname + ")!");
+        },
+        error: err => {
+          this.toastr.error("Couldn't add person (" + this.model.firstname + " " + this.model.lastname + ")!" + err);
         }
       })
     }
@@ -124,7 +139,6 @@ export class PersonDetailComponent implements OnInit {
   }
 
   removeCurrentFromParentList() {
-
     //Mothers
     let index = this.mothers.map(x => x.id).indexOf(this.model.id);
     if (index > -1) {
