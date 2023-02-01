@@ -1,10 +1,10 @@
 
-using FamilyTreeMongoApp.Core.Workloads.Person;
+using FamilyTreeMongoApp.Core.Workloads.PersonWorkload;
 using FluentAssertions;
 using Xunit;
 
 
-namespace FamilyTreeMongoApp.Test.Person;
+namespace FamilyTreeMongoApp.Test.PersonTest;
 
 public class PersonRepositroy
 {
@@ -18,13 +18,13 @@ public class PersonRepositroy
     [Fact]
     public async Task testCreate()
     {
-       Core.Workloads.Person.Person p = await _personRepository.AddPerson(new Core.Workloads.Person.Person()
+       Person p = await _personRepository.AddPerson(new Person()
         {
             Firstname = "Bob",
             Lastname = "Marley"
         });
 
-       Core.Workloads.Person.Person? testP = await _personRepository.GetPersonById(p.Id);
+       Person? testP = await _personRepository.GetPersonById(p.Id);
 
        testP.Should().NotBe(null);
        testP.Firstname.Should().Be("Bob");
@@ -42,7 +42,7 @@ public class PersonRepositroy
     {
         int cntMale = (await _personRepository.GetPeopleBySex("m")).Count();
 
-        Core.Workloads.Person.Person male = await _personRepository.AddPerson(new Core.Workloads.Person.Person()
+        Person male = await _personRepository.AddPerson(new Person()
         {
             Firstname = "male",
             Lastname = "person",
@@ -56,26 +56,26 @@ public class PersonRepositroy
     [Fact]
     public async Task testGetByParents()
     {
-        Core.Workloads.Person.Person father = await _personRepository.AddPerson(new Core.Workloads.Person.Person()
+        Person father = await _personRepository.AddPerson(new Person()
         {
             Firstname = "parent",
             Lastname = "father"
         });
 
-        Core.Workloads.Person.Person mother = await _personRepository.AddPerson(new Core.Workloads.Person.Person()
+        Person mother = await _personRepository.AddPerson(new Person()
         {
             Firstname = "parent",
             Lastname = "mother"
         });
 
-        Core.Workloads.Person.Person childFather = await _personRepository.AddPerson(new Core.Workloads.Person.Person()
+        Person childFather = await _personRepository.AddPerson(new Person()
         {
             Firstname = "child",
             Lastname = "father",
             Father = father.Id
         });
 
-        Core.Workloads.Person.Person childBoth = await _personRepository.AddPerson(new Core.Workloads.Person.Person()
+        Person childBoth = await _personRepository.AddPerson(new Person()
         {
             Firstname = "child",
             Lastname = "both",
@@ -83,11 +83,11 @@ public class PersonRepositroy
             Father = father.Id
         });
 
-        IReadOnlyCollection<Core.Workloads.Person.Person> childsFather = await _personRepository.GetPeopleByParents(null, father.Id);
+        IReadOnlyCollection<Person> childsFather = await _personRepository.GetPeopleByParents(null, father.Id);
 
         childsFather.Count().Should().Be(2);
 
-        IReadOnlyCollection<Core.Workloads.Person.Person> childsBoth = await _personRepository.GetPeopleByParents(mother.Id, father.Id);
+        IReadOnlyCollection<Person> childsBoth = await _personRepository.GetPeopleByParents(mother.Id, father.Id);
 
         childsBoth.Count().Should().Be(1);
 
@@ -98,7 +98,7 @@ public class PersonRepositroy
     [Fact]
     public async Task testUpdatePerson()
     {
-        Core.Workloads.Person.Person personToUpdate = await _personRepository.AddPerson(new Core.Workloads.Person.Person()
+        Person personToUpdate = await _personRepository.AddPerson(new Person()
         {
             Firstname = "initial",
             Lastname = "name",
@@ -112,7 +112,7 @@ public class PersonRepositroy
         await _personRepository.UpdatePerson(personToUpdate.Id, personToUpdate.Firstname, personToUpdate.Lastname, null, null, personToUpdate.Sex, null, null, null);
 
 
-        Core.Workloads.Person.Person? updatedPerson = await _personRepository.GetPersonById(personToUpdate.Id);
+        Person? updatedPerson = await _personRepository.GetPersonById(personToUpdate.Id);
 
         updatedPerson.Should().NotBeNull();
         updatedPerson!.Firstname.Should().Be(personToUpdate.Firstname);
@@ -123,7 +123,7 @@ public class PersonRepositroy
     [Fact]
     public async Task testDeletePerson()
     {
-        Core.Workloads.Person.Person personToDelete = await _personRepository.AddPerson(new Core.Workloads.Person.Person()
+        Person personToDelete = await _personRepository.AddPerson(new Person()
         {
             Firstname = "delete",
             Lastname = "person",
@@ -132,7 +132,7 @@ public class PersonRepositroy
 
         await _personRepository.DeletePerson(personToDelete.Id);
 
-        Core.Workloads.Person.Person? personToUpdate = await _personRepository.GetPersonById(personToDelete.Id);
+        Person? personToUpdate = await _personRepository.GetPersonById(personToDelete.Id);
 
         personToUpdate.Should().BeNull();
     }

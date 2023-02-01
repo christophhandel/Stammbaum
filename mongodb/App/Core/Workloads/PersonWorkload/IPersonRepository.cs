@@ -1,4 +1,5 @@
-﻿using FamilyTreeMongoApp.Model.Person;
+﻿using FamilyTreeMongoApp.Core.Workloads.CompanyWorkload;
+using FamilyTreeMongoApp.Model.Person;
 using LeoMongo.Database;
 using MongoDB.Bson;
 
@@ -14,4 +15,6 @@ public interface IPersonRepository : IRepositoryBase
     Task<Person> UpdatePerson(ObjectId id,string firstname,string lastname,ObjectId? motherId,ObjectId? fatherId,string personSex,Location? BirthPlace,ObjectId? Job,ObjectId? Company);
     Task DeletePerson(ObjectId objectId);
     Task<int> GetAccomplishmentsCount(ObjectId objectId);
+    Task<IEnumerable<Person>> GetDescendants(ObjectId objectId);
+    Task<IEnumerable<Person>> GetDescendantsInCompany(ObjectId objectId, Company company);
 }

@@ -2,6 +2,9 @@
 {
     public class AccomplishmentDto
     {
+
+        public string? Id { get; set; } = default!;
+
         public string Time { get; set; } = default!;
 
         public string Description { get; set; } = default!;

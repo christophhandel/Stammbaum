@@ -60,6 +60,7 @@ export class PersonDetailComponent implements OnInit {
           p => {
             console.log(p);
             this.model = p
+            this.removeCurrentFromParentList();
           }
         );
       }
@@ -69,24 +70,26 @@ export class PersonDetailComponent implements OnInit {
   onSubmit() {
     console.log(this.model)
 
-    this.restService.addPerson(this.model).subscribe({
-      next: d => {
-        console.log(d)
-      }
-    })
-    this.restService.updatePerson(this.model).subscribe({
-      next: d => {
-        console.log(d)
-      }
-    })
+    if(this.model.id != ''){
+      this.restService.updatePerson(this.model).subscribe({
+        next: d => {
+          if (this.router.url.split("/")[2] == "edit") {
+            this.router.navigate(["/relations"]);
+          } else {
+            this.router.navigate(["persons"]);
+          }
+        }
+      })
+    }
+    else {
+      this.restService.addPerson(this.model).subscribe({
+        next: d => {
+          this.router.navigate(["persons"]);
+        }
+      })
+    }
 
     //TODO check if form is valid
-
-    if (this.router.url.split("/")[2] == "edit") {
-      this.router.navigate(["/relations"]);
-    } else {
-      this.router.navigate(["persons"]);
-    }
   }
 
   getParents() {
@@ -94,6 +97,7 @@ export class PersonDetailComponent implements OnInit {
       .subscribe({
         next: value => {
           this.mothers = value;
+          this.removeCurrentFromParentList();
         }
       })
 
@@ -101,6 +105,7 @@ export class PersonDetailComponent implements OnInit {
       .subscribe({
         next: value => {
           this.fathers = value;
+          this.removeCurrentFromParentList();
         }
       })
   }
@@ -116,5 +121,20 @@ export class PersonDetailComponent implements OnInit {
         this.jobs = value
       }
     })
+  }
+
+  removeCurrentFromParentList() {
+
+    //Mothers
+    let index = this.mothers.map(x => x.id).indexOf(this.model.id);
+    if (index > -1) {
+      this.mothers.splice(index, 1);
+    }
+
+    //Fathers
+    index = this.fathers.map(x => x.id).indexOf(this.model.id);
+    if (index > -1) {
+      this.fathers.splice(index, 1);
+    }
   }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FamilyTreeMongoApp.Core.Workloads.CompanyWorkload;
 using LeoMongo.Transaction;
 using Microsoft.AspNetCore.Mvc;
 using FamilyTreeMongoApp.Model.Person;
@@ -14,16 +15,19 @@ public sealed class PersonController : ControllerBase
     private readonly ILogger<PersonController> _logger;
     private readonly IMapper _mapper;
     private readonly IPersonService _personService;
+    private readonly ICompanyService _companyService;
     private readonly ITransactionProvider _transactionProvider;
 
     public PersonController(IMapper mapper, 
-        IPersonService service, 
+        IPersonService service,
+        ICompanyService companyService,
         ITransactionProvider transactionProvider, 
         ILogger<PersonController> logger)
     {
         _mapper = mapper;
         _transactionProvider = transactionProvider;
         _personService = service;
+        _companyService = companyService;
         _logger = logger;
     }
 
@@ -166,5 +170,59 @@ public sealed class PersonController : ControllerBase
         await _personService.DeletePerson(new ObjectId(personId));
         
         return Ok(_mapper.Map<PersonDto>(p));
+    }
+    
+    /// <summary>
+    ///    Return descendants who worked in same company
+    ///
+    /// </summary>
+    /// <param name="personId">ID of Person to delete</param>
+    /// <returns>Get by ID</returns>
+    [HttpGet]
+    [Route("/descendants-in-same-company/{personId}")]
+    public async Task<ActionResult<IReadOnlyCollection<PersonDto>>> GetDescendantsInSameCompany(string personId)
+    {
+        Person? p = await _personService.GetPersonById(new ObjectId(personId));
+        if(p is null)
+        {
+            return NotFound();
+        }
+
+        if (p.Company is null)
+        {
+            return BadRequest();
+        }
+
+        Company? company = await _companyService.GetCompanyById(p.Company.Value);
+
+        if (company is null)
+        {
+            return BadRequest();
+        }
+
+        var descendants = await _personService.GetDescendantsInCompany(new ObjectId(personId), company);
+        
+        return Ok(_mapper.Map<IEnumerable<PersonDto>>(descendants));
+    }
+    
+    /// <summary>
+    ///    Return descendants
+    ///
+    /// </summary>
+    /// <param name="personId">ID of Person to delete</param>
+    /// <returns>Get by ID</returns>
+    [HttpGet]
+    [Route("/descendants/{personId}")]
+    public async Task<ActionResult<IReadOnlyCollection<PersonDto>>> GetDescendants(string personId)
+    {
+        Person? p = await _personService.GetPersonById(new ObjectId(personId));
+        if(p is null)
+        {
+            return NotFound();
+        }
+
+        var descendants = await _personService.GetDescendants(new ObjectId(personId));
+        
+        return Ok(_mapper.Map<IEnumerable<PersonDto>>(descendants));
     }
 }
