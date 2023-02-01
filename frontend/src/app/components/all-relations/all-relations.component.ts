@@ -13,6 +13,7 @@ import {RestService} from "../../services/rest.service";
 export class AllRelationsComponent implements OnInit {
   view: [number, number] = [10, 10];
   curve = shape.curveBundle.beta(1);
+  //curve = shape.curveLinear;
 
   public layout: Layout = new DagreNodesOnlyLayout();
   public links: Edge[] = [];
@@ -23,13 +24,13 @@ export class AllRelationsComponent implements OnInit {
   };
 
 
-  constructor(private router : Router,
+  constructor(private router: Router,
               private restService: RestService) {
   }
 
   @HostListener('window:resize', ['$event'])
   getScreenSize(event?: any) {
-    this.view = [window.innerWidth * 10 / 12, window.innerHeight * 10 /12];
+    this.view = [window.innerWidth * 10 / 12, window.innerHeight * 10 / 12];
   }
 
 
@@ -42,14 +43,24 @@ export class AllRelationsComponent implements OnInit {
 
     this.restService.getAllPeople().subscribe(people => {
       people.forEach(p => {
-        this.nodes.push({id: p.id!, label: p.firstname + " " +  p.lastname})
+        let childNode = p.id!;
+        let fatherNode = p.fatherId!;
+        let motherNode = p.motherId!;
+        let clusterNode = motherNode + fatherNode;
 
-        if (p.fatherId != null){
-          this.links.push({source: p.fatherId, target: p.id!, label: "Father"})
-        }
+        // CHILD TO CLUSTER CONNECTION
+        this.nodes.push({id: childNode, label: p.firstname + " " + p.lastname, data: {sex: p.sex}})
 
-        if (p.motherId != null){
-          this.links.push({source: p.motherId, target: p.id!, label: "Mother"})
+        if(p.fatherId != null ||p.motherId != null){
+          this.nodes.push({id: clusterNode, label: ".", data: {sex: "cluster"}})
+          this.links.push({source: clusterNode, target: childNode, label: "Cluster", data: {type: "cluster"}})
+
+          if (p.fatherId != null) {
+            this.links.push({source: fatherNode, target: clusterNode, label: "Father", data: {type: "father"}})
+          }
+          if (p.motherId != null) {
+            this.links.push({source: motherNode, target: clusterNode, label: "Mother", data: {type: "mother"}})
+          }
         }
         this.getScreenSize();
       })
@@ -60,3 +71,27 @@ export class AllRelationsComponent implements OnInit {
     this.router.navigate(['/relations/edit', node.id]);
   }
 }
+
+
+/*
+*
+        let childNode = p.id!;
+        let fatherNode = p.fatherId!;
+        let motherNode = p.motherId!;
+        let clusterNode = motherNode + fatherNode;
+
+        // CHILD TO CLUSTER CONNECTION
+        this.nodes.push({id: childNode, label: p.firstname + " " + p.lastname, data: {sex: p.sex}})
+
+        if(p.fatherId != null ||p.motherId != null){
+          this.nodes.push({id: clusterNode, label: ".", data: {sex: "cluster"}})
+          this.links.push({source: clusterNode, target: childNode, label: "Cluster"})
+
+          if (p.fatherId != null) {
+            this.links.push({source: fatherNode, target: clusterNode, label: "Father"})
+          }
+          if (p.motherId != null) {
+            this.links.push({source: motherNode, target: clusterNode, label: "Mother"})
+          }
+        }
+* */
