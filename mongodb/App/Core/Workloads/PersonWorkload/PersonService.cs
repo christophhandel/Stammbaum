@@ -83,4 +83,14 @@ public sealed class PersonService : IPersonService
     {
         return await _repository.GetAccomplishmentsCount(objectId);
     }
+
+    public Task<IEnumerable<ObjectId>> GetDescendantsInCompany(ObjectId objectId, Company company)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<IEnumerable<PersonDto>> GetDescendants(ObjectId objectId)
+    {
+        return await _repository.GetDescendants(objectId);
+    }
 }

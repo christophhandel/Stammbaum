@@ -1,4 +1,5 @@
-﻿using FamilyTreeMongoApp.Model.Person;
+﻿using FamilyTreeMongoApp.Core.Workloads.CompanyWorkload;
+using FamilyTreeMongoApp.Model.Person;
 using MongoDB.Bson;
 
 namespace FamilyTreeMongoApp.Core.Workloads.PersonWorkload;
@@ -31,4 +32,6 @@ public interface IPersonService
         ObjectId? company);
         Task DeletePerson(ObjectId objectId);
         Task<int> GetAccomplishmentsCount(ObjectId objectId);
+        Task<IEnumerable<ObjectId>> GetDescendantsInCompany(ObjectId objectId, Company company);
+        Task<IEnumerable<PersonDto>> GetDescendants(ObjectId objectId);
 }

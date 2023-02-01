@@ -14,4 +14,5 @@ public interface IPersonRepository : IRepositoryBase
     Task<Person> UpdatePerson(ObjectId id,string firstname,string lastname,ObjectId? motherId,ObjectId? fatherId,string personSex,Location? BirthPlace,ObjectId? Job,ObjectId? Company);
     Task DeletePerson(ObjectId objectId);
     Task<int> GetAccomplishmentsCount(ObjectId objectId);
+    Task<IEnumerable<PersonDto>> GetDescendants(ObjectId objectId);
 }
