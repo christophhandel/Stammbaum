@@ -10,6 +10,7 @@ import {CompanyAddComponent} from "./components/company-add/company-add.componen
 
 const routes: Routes = [
   {path: 'relations', component: AllRelationsComponent},
+  {path: 'relations/edit/:id', component: PersonDetailComponent},
   {path: 'jobs', component: JobsComponent},
   {path: 'jobs/add', component: JobAddComponent},
   {path: 'company', component: CompaniesComponent},

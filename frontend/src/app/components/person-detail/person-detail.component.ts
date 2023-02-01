@@ -73,7 +73,11 @@ export class PersonDetailComponent implements OnInit {
     if(this.model.id != ''){
       this.restService.updatePerson(this.model).subscribe({
         next: d => {
-          this.router.navigate(["persons"]);
+          if (this.router.url.split("/")[2] == "edit") {
+            this.router.navigate(["/relations"]);
+          } else {
+            this.router.navigate(["persons"]);
+          }
         }
       })
     }
@@ -120,7 +124,7 @@ export class PersonDetailComponent implements OnInit {
   }
 
   removeCurrentFromParentList() {
-    
+
     //Mothers
     let index = this.mothers.map(x => x.id).indexOf(this.model.id);
     if (index > -1) {
