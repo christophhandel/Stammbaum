@@ -48,11 +48,15 @@ export class AllRelationsComponent implements OnInit {
         let motherNode = p.motherId!;
         let clusterNode = motherNode + fatherNode;
 
-        // CHILD TO CLUSTER CONNECTION
         this.nodes.push({id: childNode, label: p.firstname + " " + p.lastname, data: {sex: p.sex}})
 
         if(p.fatherId != null ||p.motherId != null){
-          this.nodes.push({id: clusterNode, label: ".", data: {sex: "cluster"}})
+
+          if (!this.nodes.map(n => n.id).includes(clusterNode)){
+            this.nodes.push({id: clusterNode, label: ".", data: {sex: "cluster"}})
+          }
+
+
           this.links.push({source: clusterNode, target: childNode, label: "Cluster", data: {type: "cluster"}})
 
           if (p.fatherId != null) {
@@ -71,27 +75,3 @@ export class AllRelationsComponent implements OnInit {
     this.router.navigate(['/relations/edit', node.id]);
   }
 }
-
-
-/*
-*
-        let childNode = p.id!;
-        let fatherNode = p.fatherId!;
-        let motherNode = p.motherId!;
-        let clusterNode = motherNode + fatherNode;
-
-        // CHILD TO CLUSTER CONNECTION
-        this.nodes.push({id: childNode, label: p.firstname + " " + p.lastname, data: {sex: p.sex}})
-
-        if(p.fatherId != null ||p.motherId != null){
-          this.nodes.push({id: clusterNode, label: ".", data: {sex: "cluster"}})
-          this.links.push({source: clusterNode, target: childNode, label: "Cluster"})
-
-          if (p.fatherId != null) {
-            this.links.push({source: fatherNode, target: clusterNode, label: "Father"})
-          }
-          if (p.motherId != null) {
-            this.links.push({source: motherNode, target: clusterNode, label: "Mother"})
-          }
-        }
-* */
