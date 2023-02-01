@@ -60,6 +60,7 @@ export class PersonDetailComponent implements OnInit {
           p => {
             console.log(p);
             this.model = p
+            this.removeCurrentFromParentList();
           }
         );
       }
@@ -92,6 +93,7 @@ export class PersonDetailComponent implements OnInit {
       .subscribe({
         next: value => {
           this.mothers = value;
+          this.removeCurrentFromParentList();
         }
       })
 
@@ -99,6 +101,7 @@ export class PersonDetailComponent implements OnInit {
       .subscribe({
         next: value => {
           this.fathers = value;
+          this.removeCurrentFromParentList();
         }
       })
   }
@@ -114,5 +117,20 @@ export class PersonDetailComponent implements OnInit {
         this.jobs = value
       }
     })
+  }
+
+  removeCurrentFromParentList() {
+    
+    //Mothers
+    let index = this.mothers.map(x => x.id).indexOf(this.model.id);
+    if (index > -1) {
+      this.mothers.splice(index, 1);
+    }
+
+    //Fathers
+    index = this.fathers.map(x => x.id).indexOf(this.model.id);
+    if (index > -1) {
+      this.fathers.splice(index, 1);
+    }
   }
 }
