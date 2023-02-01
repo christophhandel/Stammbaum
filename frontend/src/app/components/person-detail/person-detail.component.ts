@@ -151,4 +151,18 @@ export class PersonDetailComponent implements OnInit {
       this.fathers.splice(index, 1);
     }
   }
+
+  delete() {
+    if(this.model.id == null){
+      this.toastr.error("Couldn't delete Person!");
+      return;
+    }
+
+    this.restService.deletePerson(this.model.id).subscribe({
+      next: v => {
+        this.toastr.success("Successfully deleted person (" + this.model.firstname + " " + this.model.lastname + ")!")
+        this.router.navigate(["persons"]);
+      }
+    })
+  }
 }

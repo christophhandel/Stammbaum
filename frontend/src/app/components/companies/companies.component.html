@@ -3,8 +3,7 @@
     <h1 class="text-gray-900 text-4xl font-medium mb-2 pl-10 pt-10">Companies</h1>
   </div>
   <div class="bg-gray-100">
-
-    <div *ngIf="companyList.length === 0" class="flex left-2 m-10">
+    <div *ngIf="companyList.length === 0 && loading == false" class="flex left-2 m-10">
       <div class="md:max-w-xl rounded-lg bg-white shadow-lg w-full">
         <div class="p-6 flex flex-col justify-center text-center">
           <h5 class="text-gray-900 text-xl font-medium mb-2">No Companies found!</h5>
@@ -13,7 +12,7 @@
     </div>
 
 
-
+    <div *ngIf="!loading" @cardAnimation>
       <div *ngFor="let company of companyList" class="flex left-2 m-10">
         <div class="flex flex-col md:flex-row md:max-w-xl rounded-lg bg-white shadow-lg w-full">
           <div class="p-6 flex flex-col justify-start">
@@ -30,6 +29,7 @@
           </div>
         </div>
       </div>
+    </div>
   </div>
 </div>
 
