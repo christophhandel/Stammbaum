@@ -15,6 +15,7 @@ import {CompaniesComponent} from './components/companies/companies.component';
 import {CompanyAddComponent} from './components/company-add/company-add.component';
 import {JobAddComponent} from './components/job-add/job-add.component';
 import {ToastrModule} from "ngx-toastr";
+import { SettingsComponent } from './components/settings/settings.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import {ToastrModule} from "ngx-toastr";
     JobsComponent,
     CompaniesComponent,
     CompanyAddComponent,
-    JobAddComponent
+    JobAddComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
