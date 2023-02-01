@@ -32,7 +32,7 @@
           <svg:rect *ngIf="node.data.sex != 'cluster'"
                     [attr.width]="node.dimension.width"
                     [attr.height]="node.dimension.height"
-                    [attr.fill]="node.data.sex == 'm' ? '#3B82F6' : '#F87171'"
+                    [attr.fill]="node.data.sex == 'm' ?  '#3B82F6' :  node.data.sex == 'f' ? '#F87171' : '#d671f8'"
           />
           <svg *ngIf="node.data.sex == 'cluster'"
                [attr.width]="node.dimension.width"
