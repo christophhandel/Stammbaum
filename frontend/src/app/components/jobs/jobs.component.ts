@@ -2,14 +2,20 @@ import {Component, OnInit} from '@angular/core';
 import {Job} from "../../models/job.model";
 import {RestService} from "../../services/rest.service";
 import {ToastrService} from "ngx-toastr";
+import {cardAnimation, fadeIn} from "../../utils/animations";
 
 @Component({
   selector: 'app-jobs',
   templateUrl: './jobs.component.html',
-  styleUrls: ['./jobs.component.css']
+  styleUrls: ['./jobs.component.css'],
+  animations: [
+    cardAnimation
+  ]
 })
 export class JobsComponent implements OnInit {
   jobs: Job[] = [];
+
+  loading: boolean = true;
 
   constructor(private restService: RestService,
               private toastr: ToastrService) { }
@@ -19,6 +25,10 @@ export class JobsComponent implements OnInit {
     this.restService.getJobs().subscribe({
       next: value => {
         this.jobs=value;
+        this.loading = false;
+      },
+      error: err => {
+        this.loading = false;
       }
     })
   }
