@@ -38,7 +38,7 @@ export class JobsComponent implements OnInit {
         }
       },
       error: err => {
-        this.toastr.error("Couldn't delete job (" + job.name + ")!" + err)
+        this.toastr.error("Couldn't delete job (" + job.name + ")!")
       }
     })
   }

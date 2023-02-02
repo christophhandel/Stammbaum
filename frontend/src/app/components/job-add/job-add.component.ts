@@ -46,7 +46,7 @@ export class JobAddComponent implements OnInit {
           this.toastr.success("Successfully updated job (" + this.model.name + ")!")
         },
         error: err => {
-          this.toastr.error("Couldn't updated job (" + this.model.name + ")!" + err)
+          this.toastr.error("Couldn't updated job (" + this.model.name + ")!")
         }
       })
     }
@@ -57,7 +57,7 @@ export class JobAddComponent implements OnInit {
           this.toastr.success("Successfully added job (" + this.model.name + ")!")
         },
         error: err => {
-          this.toastr.error("Couldn't add job (" + this.model.name + ")!" + err)
+          this.toastr.error("Couldn't add job (" + this.model.name + ")!")
         }
       })
     }

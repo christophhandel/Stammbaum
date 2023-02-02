@@ -66,7 +66,7 @@ export class PersonDetailComponent implements OnInit {
                 this.removeCurrentFromParentList();
               },
               error: (err) => {
-                this.toastr.error("Couldn't get person! " + err)
+                this.toastr.error("Couldn't get person!")
               }
             }
           );
@@ -85,7 +85,7 @@ export class PersonDetailComponent implements OnInit {
           this.toastr.success("Successfully updated person (" + this.model.firstname + " " + this.model.lastname + ")!")
         },
         error: (err) => {
-          this.toastr.error("Couldn't update person (" + this.model.firstname + " " + this.model.lastname + ")!" + err)
+          this.toastr.error("Couldn't update person (" + this.model.firstname + " " + this.model.lastname + ")!")
         }
       })
     } else {
@@ -95,7 +95,7 @@ export class PersonDetailComponent implements OnInit {
           this.toastr.success("Successfully added person (" + this.model.firstname + " " + this.model.lastname + ")!");
         },
         error: err => {
-          this.toastr.error("Couldn't add person (" + this.model.firstname + " " + this.model.lastname + ")!" + err);
+          this.toastr.error("Couldn't add person (" + this.model.firstname + " " + this.model.lastname + ")!");
         }
       })
     }

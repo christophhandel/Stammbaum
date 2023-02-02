@@ -75,7 +75,7 @@ export class PersonListComponent implements OnInit {
         }
       },
       error: err => {
-        this.toastr.error("Couldn't delete person (" + person.firstname + " " + person.lastname + ")!" + err)
+        this.toastr.error("Couldn't delete person (" + person.firstname + " " + person.lastname + ")!")
       }
     })
   }
