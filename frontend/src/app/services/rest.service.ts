@@ -90,4 +90,7 @@ export class RestService {
     return this.http.get(environment.API_URL + "delete-collections")
   }
 
+  getDescendants(id: string) {
+    return this.http.get<Person[]>(environment.API_URL + "person/descendants/"+ id)
+  }
 }
