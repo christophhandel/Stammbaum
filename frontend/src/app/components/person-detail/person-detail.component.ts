@@ -16,9 +16,10 @@ import {ToastrService} from "ngx-toastr";
 export class PersonDetailComponent implements OnInit {
   type: string = "overview";
 
-  constructor() {
+  constructor(private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit(): void {
+
   }
 }

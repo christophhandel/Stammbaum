@@ -54,7 +54,6 @@ export class OverviewComponent implements OnInit {
     // get Jobs & Companies for drop-downs
     this.getCompanyAndJobs()
 
-
     // get current Person if there is one
     this.activatedRoute.params.subscribe(params => {
         if (params["id"]) {
