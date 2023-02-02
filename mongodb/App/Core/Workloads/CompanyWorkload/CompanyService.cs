@@ -48,4 +48,9 @@ public sealed class CompanyService : ICompanyService
     {
         await _repository.DeleteCompany(objectId);
     }
+
+    public async Task DeleteCollection()
+    {
+        await _repository.DeleteColletion();
+    }
 }

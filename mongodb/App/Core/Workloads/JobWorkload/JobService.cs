@@ -49,4 +49,9 @@ public sealed class JobService : IJobService
     {
         await _repository.DeleteJob(objectId);
     }
+
+    public async Task DeleteCollection()
+    {
+        await _repository.DeleteCollection();
+    }
 }

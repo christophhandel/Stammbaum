@@ -47,4 +47,9 @@ public sealed class AccomplishmentService : IAccomplishmentService
     {
         return await _repository.UpdateAccomplishment(objectId,description,time);
     }
+
+    public async Task DeleteCollection()
+    {
+        await _repository.DeleteCollection();
+    }
 }

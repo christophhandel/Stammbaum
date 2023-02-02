@@ -152,4 +152,9 @@ public sealed class PersonRepository : RepositoryBase<Person>, IPersonRepository
         
         return descendants.Select(l => _mapper.Map<Person>(l)).ToList();
     }
+
+    public async Task DeleteCollection()
+    {
+        await DeleteManyAsync(p => 1 == 1);
+    }
 }

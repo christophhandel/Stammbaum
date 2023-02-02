@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FamilyTreeMongoApp.Core.Workloads.AccomplishmentWorkload;
 using FamilyTreeMongoApp.Core.Workloads.CompanyWorkload;
 using FamilyTreeMongoApp.Core.Workloads.JobWorkload;
 using FamilyTreeMongoApp.Core.Workloads.PersonWorkload;
@@ -21,6 +22,7 @@ namespace FamilyTreeMongoApp.Controllers
         private readonly IPersonService _personService;
         private readonly ICompanyService _companyService;
         private readonly IJobService _jobService;
+        private readonly IAccomplishmentService _accomplishmentService;
         private readonly ITransactionProvider _transactionProvider;
 
         public TestDataController(
@@ -28,6 +30,7 @@ namespace FamilyTreeMongoApp.Controllers
             IMapper mapper,
             IPersonService personService,
             ICompanyService companyService,
+            IAccomplishmentService accomplishmentService,
             IJobService jobService,
             ITransactionProvider transactionProvider)
         {
@@ -36,23 +39,28 @@ namespace FamilyTreeMongoApp.Controllers
             _personService = personService;
             _companyService = companyService;
             _jobService = jobService;
+            _accomplishmentService = accomplishmentService;
             _transactionProvider = transactionProvider;
         }
 
 
 
-
-        // POST api/<TestDataController>
         [HttpGet]
         public async Task Get()
         {
-            await _jobService.AddJob(new JobDto() { Name = "King", JobType = "The one who sits on the Iron-Throne" });
-            await _jobService.AddJob(new JobDto() { Name = "King of the North", JobType = "The one who sits on the throne in winterfell" });
-            await _jobService.AddJob(new JobDto() { Name = "Mother of the Dragons", JobType = "A person who raised dragons" });
+            await _personService.DeleteCollection();
+            await _jobService.DeleteCollection();
+            await _companyService.DeleteCollection();
+            await _accomplishmentService.DeleteCollection();
+
 
             await _jobService.AddJob(new JobDto() { Name = "King", JobType = "The one who sits on the Iron-Throne" });
             await _jobService.AddJob(new JobDto() { Name = "King of the North", JobType = "The one who sits on the throne in winterfell" });
             await _jobService.AddJob(new JobDto() { Name = "Mother of the Dragons", JobType = "A person who raised dragons" });
+
+            await _companyService.AddCompany(new CompanyDto() { Name = "Golden Army", BusinessActivity = "Paid army which is said to be super strong but is actually super weak" });
+            await _companyService.AddCompany(new CompanyDto() { Name = "White Walkers", BusinessActivity = "Zombie alike white dudes" });
+            await _companyService.AddCompany(new CompanyDto() { Name = "Faceless Men", BusinessActivity = "Assassins who can change their face at will" });
 
             #region Test Data
 
@@ -365,11 +373,18 @@ namespace FamilyTreeMongoApp.Controllers
             await _personService.UpdatePerson(ned.Id, ned.Firstname, ned.Lastname, yara.Id, rickard.Id, ned.Sex, ned.BirthPlace, null, null);
             await _personService.UpdatePerson(lyanna.Id, lyanna.Firstname, lyanna.Lastname, yara.Id, rickard.Id, lyanna.Sex, lyanna.BirthPlace, null, null);
 
-            await _companyService.AddCompany(new CompanyDto() { Name = "Golden Army", BusinessActivity = "Paid army which is said to be super strong but is actually super weak" });
-            await _companyService.AddCompany(new CompanyDto() { Name = "White Walkers", BusinessActivity = "Zombie alike white dudes" });
-            await _companyService.AddCompany(new CompanyDto() { Name = "Faceless Men", BusinessActivity = "Assassins who can change their face at will" });
-
             return;
+        }
+
+
+        [HttpGet]
+        [Route("/delete-collections")]
+        public async Task DeleteCollections()
+        {
+            await _personService.DeleteCollection();
+            await _jobService.DeleteCollection();
+            await _companyService.DeleteCollection();
+            await _accomplishmentService.DeleteCollection();
         }
     }
 }
