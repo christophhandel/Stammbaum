@@ -93,4 +93,8 @@ export class RestService {
   getDescendants(id: string) {
     return this.http.get<Person[]>(environment.API_URL + "person/descendants/"+ id)
   }
+
+  getAncestors(id: string) {
+    return this.http.get<Person[]>(environment.API_URL + "person/ancestors/"+ id)
+  }
 }

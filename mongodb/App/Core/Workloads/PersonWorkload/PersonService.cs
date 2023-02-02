@@ -98,4 +98,9 @@ public sealed class PersonService : IPersonService
     {
         await _repository.DeleteCollection();
     }
+
+    public async Task<IEnumerable<Person>> GetAncestors(Person person)
+    {
+        return await _repository.GetAncestors(person);
+    }
 }

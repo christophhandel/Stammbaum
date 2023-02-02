@@ -181,4 +181,25 @@ public sealed class PersonRepository : RepositoryBase<Person>, IPersonRepository
     {
         await DeleteManyAsync(p => 1 == 1);
     }
+
+    public async Task<IEnumerable<Person>> GetAncestors(Person person)
+    {
+        var ancestors = new List<Person> { person };
+        var stack = new Stack<Person>(ancestors);
+
+        while (stack.Count > 0)
+        {
+            var current = stack.Pop();
+            var parents = await Query()
+                .Where(p => p.Id == current.Mother || p.Id == current.Father)
+                .ToListAsync();
+            ancestors.AddRange(parents);
+            foreach (var child in parents)
+            {
+                stack.Push(child);
+            }
+        }
+
+        return ancestors;
+    }
 }

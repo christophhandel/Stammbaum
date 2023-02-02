@@ -3,7 +3,7 @@ using MongoDB.Bson;
 
 namespace FamilyTreeMongoApp.Core.Workloads.PersonWorkload;
 
-public class Person : EntityBase
+public class Person : EntityBase,IComparable<Person>
 {
     public string Firstname { get; set; } = default!;
     public string Lastname { get; set; } = default!;
@@ -21,4 +21,8 @@ public class Person : EntityBase
      
     public ObjectId? Mother { get; set; } = null;
     public ObjectId? Father { get; set; } = null;
+    public int CompareTo(Person? other)
+    {
+        return this.CompareTo(other);
+    }
 }

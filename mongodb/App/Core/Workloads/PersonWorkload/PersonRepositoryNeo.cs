@@ -105,4 +105,9 @@ public class PersonRepositoryNeo : IPersonRepository
     {
         throw new NotImplementedException();
     }
+
+    public Task<IEnumerable<Person>> GetAncestors(Person person)
+    {
+        throw new NotImplementedException();
+    }
 }

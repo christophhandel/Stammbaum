@@ -18,4 +18,5 @@ public interface IPersonRepository : IRepositoryBase
     Task<IEnumerable<Person>> GetDescendants(Person objectId);
     Task<IEnumerable<Person>> GetDescendantsInCompany(Person objectId, Company company);
     Task DeleteCollection();
+    Task<IEnumerable<Person>> GetAncestors(Person person);
 }
