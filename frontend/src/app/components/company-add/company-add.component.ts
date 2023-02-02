@@ -53,7 +53,7 @@ export class CompanyAddComponent implements OnInit {
           this.toastr.success("Successfully updated company (" + this.model.name + ")!")
         },
         error: err => {
-          this.toastr.error("Couldn't update company (" + this.model.name + ")!" + err)
+          this.toastr.error("Couldn't update company (" + this.model.name + ")!")
         }
       })
     }
@@ -64,7 +64,7 @@ export class CompanyAddComponent implements OnInit {
           this.toastr.success("Successfully added company (" + this.model.name + ")!")
         },
         error: err => {
-          this.toastr.error("Couldn't add company (" + this.model.name + ")!" + err)
+          this.toastr.error("Couldn't add company (" + this.model.name + ")!")
         }
       })
     }

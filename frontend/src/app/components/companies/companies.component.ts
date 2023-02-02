@@ -42,7 +42,7 @@ export class CompaniesComponent implements OnInit {
         }
       },
       error: err => {
-        this.toastr.error("Couldn't delete company (" + company.name + ")!" + err)
+        this.toastr.error("Couldn't delete company (" + company.name + ")!")
       }
     })
   }
