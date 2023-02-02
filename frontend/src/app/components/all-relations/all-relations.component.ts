@@ -30,7 +30,7 @@ export class AllRelationsComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   getScreenSize(event?: any) {
-    this.view = [window.innerWidth * 11 / 12, window.innerHeight * 10.56 / 12];
+    this.view=[window.innerWidth,window.innerHeight]
   }
 
 
