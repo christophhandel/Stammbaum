@@ -46,12 +46,12 @@ public class PersonRepositoryNeo : IPersonRepository
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<Person>> GetDescendants(ObjectId objectId)
+    public Task<IEnumerable<Person>> GetDescendants(Person objectId)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<Person>> GetDescendantsInCompany(ObjectId objectId, Company company)
+    public Task<IEnumerable<Person>> GetDescendantsInCompany(Person objectId, Company company)
     {
         throw new NotImplementedException();
     }

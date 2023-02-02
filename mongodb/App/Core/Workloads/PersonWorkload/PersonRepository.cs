@@ -123,9 +123,9 @@ public sealed class PersonRepository : RepositoryBase<Person>, IPersonRepository
             .CountAsync();
     }
     
-    public async Task<IEnumerable<Person>> GetDescendants(ObjectId objectId)
+    public async Task<IEnumerable<Person>> GetDescendants(Person person)
     {
-        var descendants = await GraphLookup<Person, PersonWithParents>(
+        /*var descendants = await GraphLookup<Person, PersonWithParents>(
                 this,
             nameof(Person.Father),
             nameof(Person.Id),
@@ -135,22 +135,46 @@ public sealed class PersonRepository : RepositoryBase<Person>, IPersonRepository
             .ToListAsync();
 
 
-        return descendants.Select(l => _mapper.Map<Person>(l)).ToList();
+        return descendants.Select(l => _mapper.Map<Person>(l)).ToList();*/
+        var descendants = new List<Person> { person };
+        var stack = new Stack<Person>(descendants);
+
+        while (stack.Count > 0)
+        {
+            var current = stack.Pop();
+            var children = await Query()
+                .Where(p => p.Mother == current.Id || p.Father == current.Id)
+                .ToListAsync();
+            descendants.AddRange(children);
+            foreach (var child in children)
+            {
+                stack.Push(child);
+            }
+        }
+
+        return descendants;
     }
 
-    public async Task<IEnumerable<Person>> GetDescendantsInCompany(ObjectId objectId, Company company)
+    public async Task<IEnumerable<Person>> GetDescendantsInCompany(Person person, Company company)
     {
-        var descendants = await GraphLookup<Person, PersonWithParents>(
-                this,
-                nameof(Person.Father),
-                nameof(Person.Id),
-                $"${nameof(Person.Father)}",
-                nameof(PersonWithParents.Parents))
-            .Match(p => p.Parents.Any(parent => parent.Id.Equals(objectId)) && 
-                        p.Company.Equals(company.Id))
-            .ToListAsync();
-        
-        return descendants.Select(l => _mapper.Map<Person>(l)).ToList();
+        var descendants = new List<Person> { person };
+        var stack = new Stack<Person>(descendants);
+
+        while (stack.Count > 0)
+        {
+            var current = stack.Pop();
+            var children = await Query()
+                .Where(p => p.Mother == current.Id || p.Father == current.Id)
+                .Where(p => p.Company == company.Id)
+                .ToListAsync();
+            descendants.AddRange(children);
+            foreach (var child in children)
+            {
+                stack.Push(child);
+            }
+        }
+
+        return descendants;
     }
 
     public async Task DeleteCollection()

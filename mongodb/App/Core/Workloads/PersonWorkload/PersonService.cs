@@ -84,12 +84,12 @@ public sealed class PersonService : IPersonService
         return await _repository.GetAccomplishmentsCount(objectId);
     }
 
-    public async Task<IEnumerable<Person>> GetDescendantsInCompany(ObjectId objectId, Company company)
+    public async Task<IEnumerable<Person>> GetDescendantsInCompany(Person objectId, Company company)
     {
         return await _repository.GetDescendantsInCompany( objectId,  company);
     }
 
-    public async Task<IEnumerable<Person>> GetDescendants(ObjectId objectId)
+    public async Task<IEnumerable<Person>> GetDescendants(Person objectId)
     {
         return await _repository.GetDescendants(objectId);
     }
