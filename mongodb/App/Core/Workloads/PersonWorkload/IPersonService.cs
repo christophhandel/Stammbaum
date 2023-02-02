@@ -35,4 +35,5 @@ public interface IPersonService
         Task<IEnumerable<Person>> GetDescendantsInCompany(Person objectId, Company company);
         Task<IEnumerable<Person>> GetDescendants(Person objectId);
         Task DeleteCollection();
+        Task<IEnumerable<Person>> GetAncestors(Person person);
 }

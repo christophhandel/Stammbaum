@@ -207,7 +207,6 @@ public sealed class PersonController : ControllerBase
     
     /// <summary>
     ///    Return descendants
-    ///
     /// </summary>
     /// <param name="personId">ID of Person to delete</param>
     /// <returns>Get by ID</returns>
@@ -223,6 +222,24 @@ public sealed class PersonController : ControllerBase
 
         var descendants = await _personService.GetDescendants(p);
         
-        return Ok(_mapper.Map<IEnumerable<PersonDto>>(descendants));
+        return Ok(_mapper.Map<IEnumerable<PersonDto>>(descendants.DistinctBy(p => p.Id)));
+    }
+    
+    /// <summary>
+    ///    Return ancestors
+    /// </summary>
+    [HttpGet]
+    [Route("ancestors/{personId}")]
+    public async Task<ActionResult<IReadOnlyCollection<PersonDto>>> GetAncestors(string personId)
+    {
+        Person? p = await _personService.GetPersonById(new ObjectId(personId));
+        if(p is null)
+        {
+            return NotFound();
+        }
+
+        var ancestors = await _personService.GetAncestors(p);
+        
+        return Ok(_mapper.Map<IEnumerable<PersonDto>>(ancestors.DistinctBy(p => p.Id)));
     }
 }
