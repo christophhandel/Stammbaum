@@ -49,4 +49,9 @@ public sealed class JobRepository : RepositoryBase<Job>, IJobRepository
     {
         await DeleteOneAsync(objectId);
     }
+
+    public async Task DeleteCollection()
+    {
+        await DeleteManyAsync(j => 1 == 1);
+    }
 }

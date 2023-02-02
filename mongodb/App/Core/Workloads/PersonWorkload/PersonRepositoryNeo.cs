@@ -100,4 +100,9 @@ public class PersonRepositoryNeo : IPersonRepository
     {
         throw new NotImplementedException();
     }
+
+    public Task DeleteCollection()
+    {
+        throw new NotImplementedException();
+    }
 }

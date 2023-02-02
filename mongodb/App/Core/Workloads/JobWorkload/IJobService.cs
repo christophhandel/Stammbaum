@@ -12,4 +12,5 @@ public interface IJobService
     Task<IEnumerable<Job>> GetAllJobs();
     Task<Job> UpdateJob(ObjectId objectId, string jobName, string jobDescription);
     Task DeleteJob(ObjectId objectId);
+    Task DeleteCollection();
 }

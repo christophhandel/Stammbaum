@@ -11,4 +11,5 @@ public interface ICompanyService
     Task<IEnumerable<Company>> GetAllCompanies();
     Task<Company> UpdateCompany(ObjectId objectId, string companyName, string companyBusinessActivity);
     Task DeleteCompany(ObjectId objectId);
+    Task DeleteCollection();
 }

@@ -93,4 +93,9 @@ public sealed class PersonService : IPersonService
     {
         return await _repository.GetDescendants(objectId);
     }
+
+    public async Task DeleteCollection()
+    {
+        await _repository.DeleteCollection();
+    }
 }

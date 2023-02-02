@@ -86,4 +86,8 @@ export class RestService {
     return this.http.get(environment.API_URL + "TestData")
   }
 
+  deleteAllData(){
+    return this.http.get(environment.API_URL + "delete-collections")
+  }
+
 }

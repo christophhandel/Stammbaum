@@ -48,4 +48,9 @@ public sealed class AccomplishmentRepository : RepositoryBase<Accomplishment>, I
 
         return (await GetAccomplishmentById(objectId))!;
     }
+
+    public async Task DeleteCollection()
+    {
+        await DeleteManyAsync(a => 1 == 1); 
+    }
 }

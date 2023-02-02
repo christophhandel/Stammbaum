@@ -20,7 +20,7 @@ public sealed class CompanyRepository : RepositoryBase<Company>, ICompanyReposit
     public override string CollectionName { get; } = MongoUtil.GetCollectionName<Company>();
     public async Task<Company?> GetCompanyById(ObjectId parse)
     {
-        return await Query().FirstOrDefaultAsync(c=>c.Id==parse);
+        return await Query().FirstOrDefaultAsync(c => c.Id == parse);
 
     }
 
@@ -39,14 +39,19 @@ public sealed class CompanyRepository : RepositoryBase<Company>, ICompanyReposit
         var updateDef = UpdateDefBuilder
             .Set(p => p.Name, companyName)
             .Set(p => p.BusinessActivity, companyBusinessActivity);
-        
+
         await UpdateOneAsync(objectId, updateDef);
-        
+
         return (await GetCompanyById(objectId))!;
     }
 
     public async Task DeleteCompany(ObjectId objectId)
     {
         await DeleteOneAsync(objectId);
+    }
+
+    public async Task DeleteColletion()
+    {
+        await DeleteManyAsync(c => 1 == 1);
     }
 }
