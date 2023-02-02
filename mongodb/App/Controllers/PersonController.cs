@@ -200,7 +200,7 @@ public sealed class PersonController : ControllerBase
             return BadRequest();
         }
 
-        var descendants = await _personService.GetDescendantsInCompany(new ObjectId(personId), company);
+        var descendants = await _personService.GetDescendantsInCompany(p, company);
         
         return Ok(_mapper.Map<IEnumerable<PersonDto>>(descendants));
     }
@@ -221,7 +221,7 @@ public sealed class PersonController : ControllerBase
             return NotFound();
         }
 
-        var descendants = await _personService.GetDescendants(new ObjectId(personId));
+        var descendants = await _personService.GetDescendants(p);
         
         return Ok(_mapper.Map<IEnumerable<PersonDto>>(descendants));
     }
