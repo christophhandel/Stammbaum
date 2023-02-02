@@ -179,7 +179,7 @@ public sealed class PersonController : ControllerBase
     /// <param name="personId">ID of Person to delete</param>
     /// <returns>Get by ID</returns>
     [HttpGet]
-    [Route("/descendants-in-same-company/{personId}")]
+    [Route("descendants-in-same-company/{personId}")]
     public async Task<ActionResult<IReadOnlyCollection<PersonDto>>> GetDescendantsInSameCompany(string personId)
     {
         Person? p = await _personService.GetPersonById(new ObjectId(personId));
@@ -212,7 +212,7 @@ public sealed class PersonController : ControllerBase
     /// <param name="personId">ID of Person to delete</param>
     /// <returns>Get by ID</returns>
     [HttpGet]
-    [Route("/descendants/{personId}")]
+    [Route("descendants/{personId}")]
     public async Task<ActionResult<IReadOnlyCollection<PersonDto>>> GetDescendants(string personId)
     {
         Person? p = await _personService.GetPersonById(new ObjectId(personId));
