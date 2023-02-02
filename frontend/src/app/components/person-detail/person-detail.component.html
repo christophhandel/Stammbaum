@@ -1,194 +1,25 @@
 <div class="divide-y divide-double">
   <div>
-    <h1 class="text-gray-900 text-4xl font-medium mb-2 pl-10 pt-10">{{isEditing == true ? 'Edit Person' : 'Add Person'}}</h1>
+    <h1 class="text-gray-900 text-4xl font-medium mb-2 pl-10 pt-10">Add Person</h1>
   </div>
   <div>
     <div class="flex m-10 w-10/12">
       <div class="flex flex-col rounded-lg bg-white shadow-lg w-10/12">
+        <ul class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
+          <li class="mr-2">
+            <button (click)="type='overview'" [ngClass]="{'active text-blue-600 bg-gray-100':type=='overview'}" class="inline-block p-4 rounded-t-lg">Overview</button>
+          </li>
+          <li class="mr-2">
+            <button (click)="type='descendants'" [ngClass]="{'active text-blue-600 bg-gray-100':type=='descendants'}" class="inline-block p-4 rounded-t-lg">Descendants</button>
+          </li>
+          <li class="mr-2">
+            <button (click)="type='ancestors'" [ngClass]="{'active text-blue-600 bg-gray-100':type=='ancestors'}" class="inline-block p-4 rounded-t-lg ">Ancestors</button>
+          </li>
+        </ul>
         <div class="flex">
-
-          <form class="w-full max-w-lg m-20" action="" method="post" #personForm="ngForm" (submit)="onSubmit()">
-
-            <!-- TODO make the lines take up the full width of the cards (so that the 'Name' line spans across the full card) -->
-
-            <!--NAME LINE -->
-            <div class="flex flex-wrap w-full -mx-3 mb-6">
-              <div class="w-full md:w-1/3 px-3">
-                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="first-name">
-                  First Name
-                </label>
-                <input
-                  class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                  id="first-name" type="text" placeholder="Max" required [(ngModel)]="model.firstname" name="firstname"
-                  autocomplete="given-name"
-                  #firstname="ngModel">
-                <div [hidden]="firstname.valid || firstname.pristine">Firstname is required</div>
-              </div>
-              <div class="w-full md:w-1/2 px-3">
-                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="last-name">
-                  Last Name
-                </label>
-                <input
-                  class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                  id="last-name" type="text" placeholder="Musterfrau" required [(ngModel)]="model.lastname" name="lastname"
-                  autocomplete="family-name"
-                  #lastname="ngModel">
-                <div [hidden]="lastname.valid || lastname.pristine">Lastname is required</div>
-              </div>
-              <div class="w-full md:w-1/2 px-3 mt-6">
-                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="first-name">
-                  Country
-                </label>
-                <input
-                  class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                  id="country" type="text" placeholder="Austria" required [(ngModel)]="model.birthLocation!.country" name="country"
-                  #country="ngModel">
-                <div [hidden]="country.valid || country.pristine">Firstname is required</div>
-              </div>
-              <div class="w-full md:w-1/3 px-3 mt-6">
-                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="last-name">
-                  City
-                </label>
-                <input
-                  class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                  id="city" type="text" placeholder="Linz" required [(ngModel)]="model.birthLocation!.city" name="city"
-                  #city="ngModel">
-                <div [hidden]="city.valid || city.pristine">Lastname is required</div>
-              </div>
-            </div>
-
-            <!-- SEX LINE -->
-            <div class="flex flex-wrap -mx-3 mb-2">
-              <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="sex">
-                  Sex
-                </label>
-                <div class="flex space-x-4" id="sex">
-                  <div class="form-check">
-                    <input #malesex="ngModel" id="sex-male" type="radio" value="m" name="sex-male" [(ngModel)]="model.sex"
-                           required
-                           class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer">
-                    <label class="form-check-label inline-block text-gray-800" for="sex-male">
-                      Male
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input #femalesex="ngModel" type="radio" value="f" name="sex-female" [(ngModel)]="model.sex" required
-                           class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                           id="sex-female" checked>
-                    <label class="form-check-label inline-block text-gray-800" for="sex-female">
-                      Female
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input #othersex="ngModel" type="radio" value="o" name="sex-other" [(ngModel)]="model.sex" required
-                           class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                           id="sex-other" checked>
-                    <label class="form-check-label inline-block text-gray-800" for="sex-other">
-                      Other
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-
-            <!-- PARENTS LINE  -->
-            <div class="flex flex-wrap -mx-3 mb-2 pt-6">
-              <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="mother">
-                  Mother
-                </label>
-                <div class="relative">
-                  <select
-                    class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    id="mother" [(ngModel)]="model.motherId" name="mother" #mother="ngModel">
-                    <option [ngValue]="null" selected>Unknown</option>
-                    <option *ngFor="let m of mothers" [value]="m.id">{{m.firstname}} {{m.lastname}}</option>
-                  </select>
-                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
-                    </svg>
-                  </div>
-                </div>
-              </div>
-              <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="father">
-                  Father
-                </label>
-                <div class="relative">
-                  <select
-                    class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    id="father" [(ngModel)]="model.fatherId" name="father" #father="ngModel">
-                    <option [ngValue]="null" selected>Unknown</option>
-                    <option *ngFor="let f of fathers" [value]="f.id">{{f.firstname}} {{f.lastname}}</option>
-                  </select>
-                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-
-
-            <!-- JOB & COMPANY LINE -->
-            <div class="flex flex-wrap -mx-3 mb-6 pt-10">
-              <div class="w-full md:w-1/2 px-3">
-                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="company">
-                  Company
-                </label>
-                <div class="relative">
-                  <select
-                    class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    id="company" [(ngModel)]="model.companyId" name="company" #company="ngModel">
-                    <option [ngValue]="null" selected>None</option>
-                    <option *ngFor="let c of companies" [value]="c.id">{{c.name}}</option>
-                  </select>
-                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
-                    </svg>
-                  </div>
-                </div>
-             </div>
-              <div class="w-full md:w-1/2 px-3">
-                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="job">
-                  Job
-                </label>
-                <div class="relative">
-                  <select
-                    class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    id="job" [(ngModel)]="model.jobId" name="job" #job="ngModel">
-                    <option [ngValue]="null" selected>Unemployed</option>
-                    <option *ngFor="let j of jobs" [value]="j.id">{{j.name}}</option>
-                  </select>
-                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-
-
-            <!--SUBMIT BUTTON-->
-            <div class="flex items-center justify-center m-10 space-x-11">
-              <button type="submit"
-                      class=" inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
-                {{isEditing == true ? 'Save' : 'Add Person'}}
-              </button>
-              <button *ngIf="isEditing == true" (click)="delete()" type="button"
-                      class=" inline-block px-6 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out">
-                Delete
-              </button>
-            </div>
-          </form>
+          <app-overview *ngIf="type=='overview'"></app-overview>
+          <app-descendants *ngIf="type=='descendants'"></app-descendants>
+          <app-ancestors *ngIf="type=='ancestors'"></app-ancestors>
         </div>
       </div>
     </div>
