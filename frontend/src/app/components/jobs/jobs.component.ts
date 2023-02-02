@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Job} from "../../models/job.model";
 import {RestService} from "../../services/rest.service";
 import {ToastrService} from "ngx-toastr";
-import {cardAnimation, fadeIn} from "../../utils/animations";
+import {cardAnimation} from "../../utils/animations";
 
 @Component({
   selector: 'app-jobs',

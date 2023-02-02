@@ -3,7 +3,7 @@ import {Person} from "../../models/person.model";
 import {HttpClient} from '@angular/common/http';
 import {RestService} from "../../services/rest.service";
 import {ToastrService} from "ngx-toastr";
-import {cardAnimation, fadeIn} from "../../utils/animations";
+import {cardAnimation} from "../../utils/animations";
 
 interface IDictionary {
   [index: string]: Person | null;

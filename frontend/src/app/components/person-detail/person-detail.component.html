@@ -1,25 +1,25 @@
 <div class="divide-y divide-double">
   <div>
-    <h1 class="text-gray-900 text-4xl font-medium mb-2 pl-10 pt-10">Add Person</h1>
+    <h1 class="text-gray-900 text-4xl font-medium mb-2 pl-10 pt-10">{{getTitleString()}}</h1>
   </div>
   <div>
     <div class="flex m-10 w-10/12">
       <div class="flex flex-col rounded-lg bg-white shadow-lg w-10/12">
-        <ul class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
+        <ul *ngIf="isEditing" class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
           <li class="mr-2">
             <button (click)="type='overview'" [ngClass]="{'active text-blue-600 bg-gray-100':type=='overview'}" class="inline-block p-4 rounded-t-lg">Overview</button>
           </li>
-          <li class="mr-2">
+          <li class="mr-2" *ngIf="descendants.length > 1">
             <button (click)="type='descendants'" [ngClass]="{'active text-blue-600 bg-gray-100':type=='descendants'}" class="inline-block p-4 rounded-t-lg">Descendants</button>
           </li>
-          <li class="mr-2">
+          <li class="mr-2" *ngIf="ancestors.length > 1 ">
             <button (click)="type='ancestors'" [ngClass]="{'active text-blue-600 bg-gray-100':type=='ancestors'}" class="inline-block p-4 rounded-t-lg ">Ancestors</button>
           </li>
         </ul>
         <div class="flex">
-          <app-overview *ngIf="type=='overview'"></app-overview>
-          <app-descendants *ngIf="type=='descendants'"></app-descendants>
-          <app-ancestors *ngIf="type=='ancestors'"></app-ancestors>
+          <app-overview *ngIf="type=='overview'" [currentPerson]="selectedPerson" [isEditing]="isEditing"></app-overview>
+          <app-family-tree *ngIf="type=='descendants'" [people]="descendants" [view]="view" ></app-family-tree>
+          <app-family-tree *ngIf="type=='ancestors'" [people]="ancestors" [view]="view"></app-family-tree>
         </div>
       </div>
     </div>

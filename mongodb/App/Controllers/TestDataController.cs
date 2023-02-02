@@ -55,7 +55,7 @@ namespace FamilyTreeMongoApp.Controllers
 
 
             await _jobService.AddJob(new JobDto() { Name = "King", JobType = "The one who sits on the Iron-Throne" });
-            await _jobService.AddJob(new JobDto() { Name = "King of the North", JobType = "The one who sits on the throne in winterfell" });
+            await _jobService.AddJob(new JobDto() { Name = "King in the North", JobType = "The one who sits on the throne in winterfell" });
             await _jobService.AddJob(new JobDto() { Name = "Mother of the Dragons", JobType = "A person who raised dragons" });
 
             await _companyService.AddCompany(new CompanyDto() { Name = "Golden Army", BusinessActivity = "Paid army which is said to be super strong but is actually super weak" });

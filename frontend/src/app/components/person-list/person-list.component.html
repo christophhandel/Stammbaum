@@ -3,7 +3,7 @@
     <h1 class="text-gray-900 text-4xl font-medium mb-2 pl-10 pt-10">Person List</h1>
   </div>
 
-  <div>
+  <div class="overflow-hidden">
     <div *ngIf="personList.length === 0 && loading == false" @fadeIn class="flex left-2 m-10">
       <div class="md:max-w-xl rounded-lg bg-white shadow-lg w-full">
         <div class="p-6 flex flex-col justify-center text-center">
@@ -29,26 +29,38 @@
             <!--          <p class="text-gray-700 text-base mb-4">-->
             <!--            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam, quae.-->
             <!--          </p>-->
-            <p class="text-gray-700 text-base mb-4">
-              Sex: {{ getSexString(person) }}
-            </p>
-            <div class="mb-4">
-              <p class="text-gray-700 text-base">
+
+
+            <div class="columns-2 pb-3">
+              <p class="text-gray-700 text-base">Sex:</p>
+              <p *ngIf="person.sex == 'm'" style="color: #3B82F6">{{ getSexString(person) }}</p>
+              <p *ngIf="person.sex == 'f'" style="color: #F87171">{{ getSexString(person) }}</p>
+              <p *ngIf="person.sex == 'o'" style="color: #d671f8">{{ getSexString(person) }}</p>
+            </div>
+
+            <div class="mb-5">
+              <div class="columns-2">
                 <ng-container *ngIf="mother[person.id!]">
-                  Mother: {{mother[person.id!]?.firstname}} {{mother[person.id!]?.lastname}}
+                  <p class="text-gray-700 text-base">Father:</p>
+                  <p>{{mother[person.id!]?.firstname}} {{mother[person.id!]?.lastname}}</p>
                 </ng-container>
                 <ng-container *ngIf="!mother[person.id!]">
-                  Mother: Unknown
+                  <p class="text-gray-700 text-base">Mother:</p>
+                  <p>Unknown</p>
                 </ng-container>
-              </p>
-              <p class="text-gray-700 text-base">
+              </div>
+
+              <div class="columns-2">
                 <ng-container *ngIf="father[person.id!]">
-                  Father: {{father[person.id!]?.firstname}} {{father[person.id!]?.lastname}}
+                  <p class="text-gray-700 text-base">Mother:</p>
+                  <p>{{father[person.id!]?.firstname}} {{father[person.id!]?.lastname}}</p>
                 </ng-container>
                 <ng-container *ngIf="!father[person.id!]">
-                  Father: Unknown
+                  <p class="text-gray-700 text-base">Father:</p>
+                  <p>Unknown</p>
                 </ng-container>
-              </p>
+              </div>
+
             </div>
             <div class="flex space-x-1">
               <!--      <p class="text-gray-600 text-xs">Last updated 3 mins ago</p>-->

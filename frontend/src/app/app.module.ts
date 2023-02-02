@@ -15,10 +15,9 @@ import {CompaniesComponent} from './components/companies/companies.component';
 import {CompanyAddComponent} from './components/company-add/company-add.component';
 import {JobAddComponent} from './components/job-add/job-add.component';
 import {ToastrModule} from "ngx-toastr";
-import { SettingsComponent } from './components/settings/settings.component';
-import { OverviewComponent } from './components/person-detail/overview/overview.component';
-import { DescendantsComponent } from './components/person-detail/descendants/descendants.component';
-import { AncestorsComponent } from './components/person-detail/ancestors/ancestors.component';
+import {SettingsComponent} from './components/settings/settings.component';
+import {OverviewComponent} from './components/person-detail/overview/overview.component';
+import {FamilyTreeComponent} from './components/family-tree/family-tree.component';
 
 
 @NgModule({
@@ -33,8 +32,7 @@ import { AncestorsComponent } from './components/person-detail/ancestors/ancesto
     JobAddComponent,
     SettingsComponent,
     OverviewComponent,
-    DescendantsComponent,
-    AncestorsComponent
+    FamilyTreeComponent
   ],
   imports: [
     BrowserModule,

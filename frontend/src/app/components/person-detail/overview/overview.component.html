@@ -10,7 +10,7 @@
       </label>
       <input
         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-        id="first-name" type="text" placeholder="Max" required [(ngModel)]="model.firstname" name="firstname"
+        id="first-name" type="text" placeholder="Max" required [(ngModel)]="currentPerson.firstname" name="firstname"
         autocomplete="given-name"
         #firstname="ngModel">
       <div [hidden]="firstname.valid || firstname.pristine">Firstname is required</div>
@@ -21,7 +21,7 @@
       </label>
       <input
         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-        id="last-name" type="text" placeholder="Musterfrau" required [(ngModel)]="model.lastname" name="lastname"
+        id="last-name" type="text" placeholder="Musterfrau" required [(ngModel)]="currentPerson.lastname" name="lastname"
         autocomplete="family-name"
         #lastname="ngModel">
       <div [hidden]="lastname.valid || lastname.pristine">Lastname is required</div>
@@ -32,7 +32,7 @@
       </label>
       <input
         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-        id="country" type="text" placeholder="Austria" required [(ngModel)]="model.birthLocation!.country"
+        id="country" type="text" placeholder="Austria" required [(ngModel)]="currentPerson.birthLocation!.country"
         name="country"
         #country="ngModel">
       <div [hidden]="country.valid || country.pristine">Firstname is required</div>
@@ -43,7 +43,7 @@
       </label>
       <input
         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-        id="city" type="text" placeholder="Linz" required [(ngModel)]="model.birthLocation!.city" name="city"
+        id="city" type="text" placeholder="Linz" required [(ngModel)]="currentPerson.birthLocation!.city" name="city"
         #city="ngModel">
       <div [hidden]="city.valid || city.pristine">Lastname is required</div>
     </div>
@@ -57,7 +57,7 @@
       </label>
       <div class="flex space-x-4" id="sex">
         <div class="form-check">
-          <input #malesex="ngModel" id="sex-male" type="radio" value="m" name="sex-male" [(ngModel)]="model.sex"
+          <input #malesex="ngModel" id="sex-male" type="radio" value="m" name="sex-male" [(ngModel)]="currentPerson.sex"
                  required
                  class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer">
           <label class="form-check-label inline-block text-gray-800" for="sex-male">
@@ -65,7 +65,7 @@
           </label>
         </div>
         <div class="form-check">
-          <input #femalesex="ngModel" type="radio" value="f" name="sex-female" [(ngModel)]="model.sex" required
+          <input #femalesex="ngModel" type="radio" value="f" name="sex-female" [(ngModel)]="currentPerson.sex" required
                  class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                  id="sex-female" checked>
           <label class="form-check-label inline-block text-gray-800" for="sex-female">
@@ -73,7 +73,7 @@
           </label>
         </div>
         <div class="form-check">
-          <input #othersex="ngModel" type="radio" value="o" name="sex-other" [(ngModel)]="model.sex" required
+          <input #othersex="ngModel" type="radio" value="o" name="sex-other" [(ngModel)]="currentPerson.sex" required
                  class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                  id="sex-other" checked>
           <label class="form-check-label inline-block text-gray-800" for="sex-other">
@@ -94,7 +94,7 @@
       <div class="relative">
         <select
           class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-          id="mother" [(ngModel)]="model.motherId" name="mother" #mother="ngModel">
+          id="mother" [(ngModel)]="currentPerson.motherId" name="mother" #mother="ngModel">
           <option [ngValue]="null" selected>Unknown</option>
           <option *ngFor="let m of mothers" [value]="m.id">{{m.firstname}} {{m.lastname}}</option>
         </select>
@@ -112,7 +112,7 @@
       <div class="relative">
         <select
           class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-          id="father" [(ngModel)]="model.fatherId" name="father" #father="ngModel">
+          id="father" [(ngModel)]="currentPerson.fatherId" name="father" #father="ngModel">
           <option [ngValue]="null" selected>Unknown</option>
           <option *ngFor="let f of fathers" [value]="f.id">{{f.firstname}} {{f.lastname}}</option>
         </select>
@@ -135,7 +135,7 @@
       <div class="relative">
         <select
           class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-          id="company" [(ngModel)]="model.companyId" name="company" #company="ngModel">
+          id="company" [(ngModel)]="currentPerson.companyId" name="company" #company="ngModel">
           <option [ngValue]="null" selected>None</option>
           <option *ngFor="let c of companies" [value]="c.id">{{c.name}}</option>
         </select>
@@ -153,7 +153,7 @@
       <div class="relative">
         <select
           class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-          id="job" [(ngModel)]="model.jobId" name="job" #job="ngModel">
+          id="job" [(ngModel)]="currentPerson.jobId" name="job" #job="ngModel">
           <option [ngValue]="null" selected>Unemployed</option>
           <option *ngFor="let j of jobs" [value]="j.id">{{j.name}}</option>
         </select>

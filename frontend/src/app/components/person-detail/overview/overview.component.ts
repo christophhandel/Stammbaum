@@ -1,11 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Person} from "../../../models/person.model";
 import {ActivatedRoute, Router} from "@angular/router";
 import {RestService} from "../../../services/rest.service";
 import {Job} from "../../../models/job.model";
 import {Company} from "../../../models/company.model";
-import {Location} from "../../../models/location.model";
 import {ToastrService} from "ngx-toastr";
 
 @Component({
@@ -14,9 +13,7 @@ import {ToastrService} from "ngx-toastr";
   styleUrls: ['./overview.component.css']
 })
 export class OverviewComponent implements OnInit {
-
-  isEditing: boolean = true;
-  model: Person = {
+  @Input() currentPerson: Person = {
     id: '',
     firstname: '',
     lastname: '',
@@ -27,12 +24,12 @@ export class OverviewComponent implements OnInit {
     birthLocation: {id: null, city: "", country: ""},
     companyId: null
   };
+  @Input() isEditing: boolean = false;
 
   mothers: Person[] = []
   fathers: Person[] = []
   jobs: Job[] = [];
   companies: Company[] = [];
-  locations: Location[] = [];
 
   constructor(private http: HttpClient,
               private activatedRoute: ActivatedRoute,
@@ -42,45 +39,19 @@ export class OverviewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //console.log(this.router.url.split("/"));
-
-    if (this.router.url.split("/")[2] == "add") {
-      this.isEditing = false;
-    }
-
     // get Parents for drop-downs
     this.getParents();
 
     // get Jobs & Companies for drop-downs
     this.getCompanyAndJobs()
-
-    // get current Person if there is one
-    this.activatedRoute.params.subscribe(params => {
-        if (params["id"]) {
-          this.restService.getPerson(params["id"]).subscribe(
-            {
-              next: (value) => {
-                console.log(value);
-                this.model = value
-                this.removeCurrentFromParentList();
-              },
-              error: (err) => {
-                this.toastr.error("Couldn't get person!")
-              }
-            }
-          );
-        }
-      },
-    );
   }
 
   onSubmit() {
-    console.log(this.model)
 
-    if (this.model.id != '') {
-      this.restService.updatePerson(this.model).subscribe({
+    if (this.currentPerson.id != '') {
+      this.restService.updatePerson(this.currentPerson).subscribe({
         next: d => {
-          this.toastr.success("Successfully updated person (" + this.model.firstname + " " + this.model.lastname + ")!")
+          this.toastr.success("Successfully updated person (" + this.currentPerson.firstname + " " + this.currentPerson.lastname + ")!")
           if (this.router.url.split("/")[2] == "edit") {
             this.router.navigate(["/relations"]);
           } else {
@@ -88,17 +59,17 @@ export class OverviewComponent implements OnInit {
           }
         },
         error: (err) => {
-          this.toastr.error("Couldn't update person (" + this.model.firstname + " " + this.model.lastname + ")!")
+          this.toastr.error("Couldn't update person (" + this.currentPerson.firstname + " " + this.currentPerson.lastname + ")!")
         }
       })
     } else {
-      this.restService.addPerson(this.model).subscribe({
+      this.restService.addPerson(this.currentPerson).subscribe({
         next: d => {
           this.router.navigate(["persons"]);
-          this.toastr.success("Successfully added person (" + this.model.firstname + " " + this.model.lastname + ")!");
+          this.toastr.success("Successfully added person (" + this.currentPerson.firstname + " " + this.currentPerson.lastname + ")!");
         },
         error: err => {
-          this.toastr.error("Couldn't add person (" + this.model.firstname + " " + this.model.lastname + ")!");
+          this.toastr.error("Couldn't add person (" + this.currentPerson.firstname + " " + this.currentPerson.lastname + ")!");
         }
       })
     }
@@ -139,27 +110,27 @@ export class OverviewComponent implements OnInit {
 
   removeCurrentFromParentList() {
     //Mothers
-    let index = this.mothers.map(x => x.id).indexOf(this.model.id);
+    let index = this.mothers.map(x => x.id).indexOf(this.currentPerson.id);
     if (index > -1) {
       this.mothers.splice(index, 1);
     }
 
     //Fathers
-    index = this.fathers.map(x => x.id).indexOf(this.model.id);
+    index = this.fathers.map(x => x.id).indexOf(this.currentPerson.id);
     if (index > -1) {
       this.fathers.splice(index, 1);
     }
   }
 
   delete() {
-    if(this.model.id == null){
+    if(this.currentPerson.id == null){
       this.toastr.error("Couldn't delete Person!");
       return;
     }
 
-    this.restService.deletePerson(this.model.id).subscribe({
+    this.restService.deletePerson(this.currentPerson.id).subscribe({
       next: v => {
-        this.toastr.success("Successfully deleted person (" + this.model.firstname + " " + this.model.lastname + ")!")
+        this.toastr.success("Successfully deleted person (" + this.currentPerson.firstname + " " + this.currentPerson.lastname + ")!")
         this.router.navigate(["persons"]);
       }
     })
