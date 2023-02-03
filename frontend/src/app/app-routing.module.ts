@@ -8,11 +8,13 @@ import {CompaniesComponent} from "./components/companies/companies.component";
 import {JobAddComponent} from "./components/job-add/job-add.component";
 import {CompanyAddComponent} from "./components/company-add/company-add.component";
 import {SettingsComponent} from "./components/settings/settings.component";
+import {StatsComponent} from "./components/stats/stats.component";
 
 const routes: Routes = [
   {path: 'settings', component: SettingsComponent},
   {path: 'relations', component: AllRelationsComponent},
   {path: 'relations/edit/:id', component: PersonDetailComponent},
+  {path: 'stats', component: StatsComponent},
   {path: 'jobs', component: JobsComponent},
   {path: 'jobs/add', component: JobAddComponent},
   {path: 'company', component: CompaniesComponent},

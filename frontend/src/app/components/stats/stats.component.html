@@ -1,0 +1,23 @@
+<div class="divide-y divide-double">
+  <div>
+    <h1 class="text-gray-900 text-4xl font-medium mb-2 pl-10 pt-10">Statistik</h1>
+  </div>
+  <div>
+    <div class="flex m-10 w-10/12">
+      <div class="flex flex-col rounded-lg bg-white shadow-lg w-10/12">
+        <ul class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
+          <li class="mr-2">
+            <button (click)="type='company-chart'" [ngClass]="{'active text-blue-600 bg-gray-100':type=='company-chart'}" class="inline-block p-4 rounded-t-lg">Company Stats</button>
+          </li>
+          <li class="mr-2">
+            <button (click)="type='job-chart'" [ngClass]="{'active text-blue-600 bg-gray-100':type=='job-chart'}" class="inline-block p-4 rounded-t-lg">Job Stats</button>
+          </li>
+        </ul>
+        <div class="flex">
+          <app-company-chart *ngIf="type=='company-chart'"></app-company-chart>
+          <app-job-chart *ngIf="type=='job-chart'"></app-job-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
