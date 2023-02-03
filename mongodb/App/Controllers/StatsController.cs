@@ -44,7 +44,7 @@ namespace FamilyTreeMongoApp.Controllers
         }
 
         [HttpGet]
-        [Route("/job-stats")]
+        [Route("job-stats")]
         public async Task<IEnumerable<JobStatDto>> GetJobStats()
         {
             return await _jobService.GetJobsStats();

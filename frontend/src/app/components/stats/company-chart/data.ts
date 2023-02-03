@@ -41,4 +41,3 @@ export var multi = [
     ]
   }
 ];
-

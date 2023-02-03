@@ -4,6 +4,7 @@ import {Person} from "../models/person.model";
 import {environment} from "../../environments/environment";
 import {Company} from "../models/company.model";
 import {Job} from "../models/job.model";
+import {JobStatDto} from "../models/job-stat-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -96,5 +97,9 @@ export class RestService {
 
   getAncestors(id: string) {
     return this.http.get<Person[]>(environment.API_URL + "person/ancestors/"+ id)
+  }
+
+  getAllJobs() {
+    return this.http.get<JobStatDto[]>(environment.API_URL + "stats/job-stats")
   }
 }

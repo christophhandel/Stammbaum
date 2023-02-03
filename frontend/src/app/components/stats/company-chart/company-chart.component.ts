@@ -35,6 +35,8 @@ export class CompanyChartComponent implements OnInit{
 
   ngOnInit(): void {
     this.multi = multiA
+
+
     }
 
   onSelect(data: any[]): void {
