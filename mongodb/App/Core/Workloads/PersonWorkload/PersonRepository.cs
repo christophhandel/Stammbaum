@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using LeoMongo;
 using LeoMongo.Database;
 using LeoMongo.Transaction;
@@ -10,6 +11,7 @@ using FamilyTreeMongoApp.Core.Workloads.CompanyWorkload;
 using FamilyTreeMongoApp.Core.Workloads.Person;
 using FamilyTreeMongoApp.Model.Person;
 using FamilyTreeMongoApp.Model.PersonDetails;
+using FamilyTreeMongoApp.Model.Statistics;
 using Neo4j.Driver;
 
 namespace FamilyTreeMongoApp.Core.Workloads.PersonWorkload;
