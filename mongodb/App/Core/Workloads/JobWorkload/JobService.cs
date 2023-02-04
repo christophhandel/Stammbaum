@@ -60,4 +60,5 @@ public sealed class JobService : IJobService
     {
         return await _repository.GetJobsStats();
     }
+
 }

@@ -49,5 +49,12 @@ namespace FamilyTreeMongoApp.Controllers
         {
             return await _jobService.GetJobsStats();
         }
+        
+        [HttpGet]
+        [Route("company-stats")]
+        public async Task<IEnumerable<CompanyStatDto>> GetCompanyStats()
+        {
+            return await _companyService.GetCompanyStats();
+        }
     }
 }

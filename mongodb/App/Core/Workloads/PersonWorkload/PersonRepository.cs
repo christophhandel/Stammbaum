@@ -19,16 +19,13 @@ namespace FamilyTreeMongoApp.Core.Workloads.PersonWorkload;
 public sealed class PersonRepository : RepositoryBase<Person>, IPersonRepository
 {
     private readonly IAccomplishmentRepository _accomplishmentRepository;
-    private readonly ICompanyRepository _companyRepository;
     private readonly IMapper _mapper;
     
     public PersonRepository(ITransactionProvider transactionProvider, IDatabaseProvider databaseProvider,
-        ICompanyRepository companyRepository,
         IAccomplishmentRepository accomplishmentRepository,
         IMapper mapper) : 
         base(transactionProvider, databaseProvider)
     {
-        this._companyRepository = companyRepository;
         _accomplishmentRepository = accomplishmentRepository;
         _mapper = mapper;
     }
