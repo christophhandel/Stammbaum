@@ -5,6 +5,7 @@ import {environment} from "../../environments/environment";
 import {Company} from "../models/company.model";
 import {Job} from "../models/job.model";
 import {JobStatDto} from "../models/job-stat-dto";
+import {CompanyStatDto} from "../models/company-stat-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -101,5 +102,9 @@ export class RestService {
 
   getAllJobs() {
     return this.http.get<JobStatDto[]>(environment.API_URL + "stats/job-stats")
+  }
+
+  getAllCompanies() {
+    return this.http.get<CompanyStatDto[]>(environment.API_URL + "stats/company-stats")
   }
 }

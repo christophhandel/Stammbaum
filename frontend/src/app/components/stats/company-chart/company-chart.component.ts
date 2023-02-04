@@ -1,6 +1,8 @@
 import {ChangeDetectionStrategy, Component, NgModule, OnInit} from '@angular/core';
 import {multi, multi as multiA} from './data';
 import {Color, ScaleType} from "@swimlane/ngx-charts";
+import {RestService} from "../../../services/rest.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-company-chart',
@@ -9,7 +11,8 @@ import {Color, ScaleType} from "@swimlane/ngx-charts";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CompanyChartComponent implements OnInit{
-  multi = multiA;
+  multi: {name: string,series: {name:string,value:number}[]}[] = []
+
   view: [number,number] = [700, 400];
 
   // options
@@ -30,12 +33,33 @@ export class CompanyChartComponent implements OnInit{
     name: 'Customer Usage',
   };
 
-  constructor() {
+  constructor(private restService: RestService,private  toastrService: ToastrService) {
   }
 
   ngOnInit(): void {
-    this.multi = multiA
-
+    this.restService.getAllCompanies().subscribe({
+      next: value =>
+      {
+        value.forEach(s => this.multi.push({
+          name: s.companyName,
+          series: [
+            {
+              name: "female",
+              value: s.femaleWorkers
+            },
+            {
+              name: "male",
+              value: s.maleWorkers
+            }
+          ]
+        }))
+        console.log(this.multi)
+        this.multi = [...this.multi]
+      },
+      error:()=>{
+        this.toastrService.error("Die Daten konnten nicht geladen werden!")
+      }
+    })
 
     }
 
