@@ -6,15 +6,21 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using System.Runtime.CompilerServices;
+using FamilyTreeMongoApp.Core.Workloads.PersonWorkload;
+using FamilyTreeMongoApp.Model.Statistics;
 
 
 namespace FamilyTreeMongoApp.Core.Workloads.CompanyWorkload;
 
 public sealed class CompanyRepository : RepositoryBase<Company>, ICompanyRepository
 {
-    public CompanyRepository(ITransactionProvider transactionProvider, IDatabaseProvider databaseProvider) :
+    private IPersonRepository _personRepository;
+
+    public CompanyRepository(ITransactionProvider transactionProvider, IDatabaseProvider databaseProvider,
+        IPersonRepository personRepository) :
         base(transactionProvider, databaseProvider)
     {
+        _personRepository = personRepository;
     }
 
     public override string CollectionName { get; } = MongoUtil.GetCollectionName<Company>();
@@ -53,5 +59,21 @@ public sealed class CompanyRepository : RepositoryBase<Company>, ICompanyReposit
     public async Task DeleteColletion()
     {
         await DeleteManyAsync(c => 1 == 1);
+    }
+
+    public async Task<IEnumerable<CompanyStatDto>> GetCompanyStats()
+    {
+         return (await QueryIncludeDetail<PersonWorkload.Person, String, String>(_personRepository,
+                            p => p.Company!.Value,
+                            (p, l) => new MasterDetails<String, String>()
+                            {
+                                Master = p.Name,
+                                Details = l.Select(pers => pers.Sex)
+                            })
+                        .ToListAsync())
+                    .Select(mD => new CompanyStatDto(
+                        mD.Master,
+                        mD.Details == null ? 0 : mD.Details!.Count(p => p == "f"),
+                        mD.Details == null ? 0 : mD.Details!.Count(p => p == "m")));
     }
 }

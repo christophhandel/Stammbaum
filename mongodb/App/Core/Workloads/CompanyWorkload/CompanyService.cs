@@ -2,6 +2,7 @@
 using FamilyTreeMongoApp.Core.Util;
 using FamilyTreeMongoApp.Model.Person;
 using FamilyTreeMongoApp.Model.PersonDetails;
+using FamilyTreeMongoApp.Model.Statistics;
 using MongoDB.Bson;
 
 namespace FamilyTreeMongoApp.Core.Workloads.CompanyWorkload;
@@ -52,5 +53,10 @@ public sealed class CompanyService : ICompanyService
     public async Task DeleteCollection()
     {
         await _repository.DeleteColletion();
+    }
+
+    public async Task<IEnumerable<CompanyStatDto>> GetCompanyStats()
+    {
+        return await _repository.GetCompanyStats();
     }
 }

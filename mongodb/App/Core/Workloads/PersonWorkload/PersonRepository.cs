@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using LeoMongo;
 using LeoMongo.Database;
 using LeoMongo.Transaction;
@@ -10,6 +11,7 @@ using FamilyTreeMongoApp.Core.Workloads.CompanyWorkload;
 using FamilyTreeMongoApp.Core.Workloads.Person;
 using FamilyTreeMongoApp.Model.Person;
 using FamilyTreeMongoApp.Model.PersonDetails;
+using FamilyTreeMongoApp.Model.Statistics;
 using Neo4j.Driver;
 
 namespace FamilyTreeMongoApp.Core.Workloads.PersonWorkload;
@@ -17,16 +19,13 @@ namespace FamilyTreeMongoApp.Core.Workloads.PersonWorkload;
 public sealed class PersonRepository : RepositoryBase<Person>, IPersonRepository
 {
     private readonly IAccomplishmentRepository _accomplishmentRepository;
-    private readonly ICompanyRepository _companyRepository;
     private readonly IMapper _mapper;
     
     public PersonRepository(ITransactionProvider transactionProvider, IDatabaseProvider databaseProvider,
-        ICompanyRepository companyRepository,
         IAccomplishmentRepository accomplishmentRepository,
         IMapper mapper) : 
         base(transactionProvider, databaseProvider)
     {
-        this._companyRepository = companyRepository;
         _accomplishmentRepository = accomplishmentRepository;
         _mapper = mapper;
     }

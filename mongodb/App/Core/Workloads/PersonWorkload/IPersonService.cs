@@ -1,5 +1,6 @@
 ﻿using FamilyTreeMongoApp.Core.Workloads.CompanyWorkload;
 using FamilyTreeMongoApp.Model.Person;
+using FamilyTreeMongoApp.Model.Statistics;
 using MongoDB.Bson;
 
 namespace FamilyTreeMongoApp.Core.Workloads.PersonWorkload;

@@ -2,6 +2,7 @@
 using FamilyTreeMongoApp.Core.Util;
 using FamilyTreeMongoApp.Core.Workloads.PersonWorkload;
 using FamilyTreeMongoApp.Model.PersonDetails;
+using FamilyTreeMongoApp.Model.Statistics;
 using MongoDB.Bson;
 
 namespace FamilyTreeMongoApp.Core.Workloads.JobWorkload;
@@ -54,4 +55,10 @@ public sealed class JobService : IJobService
     {
         await _repository.DeleteCollection();
     }
+
+    public async Task<IEnumerable<JobStatDto>> GetJobsStats()
+    {
+        return await _repository.GetJobsStats();
+    }
+
 }

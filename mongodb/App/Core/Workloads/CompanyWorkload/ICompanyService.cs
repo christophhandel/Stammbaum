@@ -1,5 +1,6 @@
 ﻿using FamilyTreeMongoApp.Model.Person;
 using FamilyTreeMongoApp.Model.PersonDetails;
+using FamilyTreeMongoApp.Model.Statistics;
 using MongoDB.Bson;
 
 namespace FamilyTreeMongoApp.Core.Workloads.CompanyWorkload;
@@ -12,4 +13,5 @@ public interface ICompanyService
     Task<Company> UpdateCompany(ObjectId objectId, string companyName, string companyBusinessActivity);
     Task DeleteCompany(ObjectId objectId);
     Task DeleteCollection();
+    Task<IEnumerable<CompanyStatDto>> GetCompanyStats();
 }

@@ -18,6 +18,10 @@ import {ToastrModule} from "ngx-toastr";
 import {SettingsComponent} from './components/settings/settings.component';
 import {OverviewComponent} from './components/person-detail/overview/overview.component';
 import {FamilyTreeComponent} from './components/family-tree/family-tree.component';
+import {CompanyChartComponent} from "./components/stats/company-chart/company-chart.component";
+import {NgxChartsModule} from "@swimlane/ngx-charts";
+import {StatsComponent} from "./components/stats/stats.component";
+import {JobChartComponent} from "./components/stats/job-chart/job-chart.component";
 
 
 @NgModule({
@@ -27,6 +31,9 @@ import {FamilyTreeComponent} from './components/family-tree/family-tree.componen
     AllRelationsComponent,
     PersonDetailComponent,
     JobsComponent,
+    StatsComponent,
+    CompanyChartComponent,
+    JobChartComponent,
     CompaniesComponent,
     CompanyAddComponent,
     JobAddComponent,
@@ -40,6 +47,7 @@ import {FamilyTreeComponent} from './components/family-tree/family-tree.componen
     FormsModule,
     HttpClientModule,
     NgxGraphModule,
+    NgxChartsModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot()
   ],

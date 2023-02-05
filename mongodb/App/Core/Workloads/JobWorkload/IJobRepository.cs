@@ -1,6 +1,7 @@
 ﻿using FamilyTreeMongoApp.Core.Workloads.PersonWorkload;
 using FamilyTreeMongoApp.Model.Person;
 using FamilyTreeMongoApp.Model.PersonDetails;
+using FamilyTreeMongoApp.Model.Statistics;
 using LeoMongo.Database;
 using MongoDB.Bson;
 
@@ -14,4 +15,5 @@ public interface IJobRepository : IRepositoryBase
     Task<Job> UpdateJob(ObjectId objectId, string jobName, string jobDescription);
     Task DeleteJob(ObjectId objectId);
     Task DeleteCollection();
+    Task<IEnumerable<JobStatDto>> GetJobsStats();
 }

@@ -2,6 +2,7 @@
 using FamilyTreeMongoApp.Core.Util;
 using FamilyTreeMongoApp.Core.Workloads.CompanyWorkload;
 using FamilyTreeMongoApp.Model.Person;
+using FamilyTreeMongoApp.Model.Statistics;
 using LeoMongo;
 using LeoMongo.Database;
 using LeoMongo.Transaction;
@@ -107,6 +108,11 @@ public class PersonRepositoryNeo : IPersonRepository
     }
 
     public Task<IEnumerable<Person>> GetAncestors(Person person)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<IEnumerable<JobStatDto>> GetJobsStats()
     {
         throw new NotImplementedException();
     }
