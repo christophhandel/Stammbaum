@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 
 import {Color, ScaleType} from '@swimlane/ngx-charts';
 import {RestService} from "../../../services/rest.service";
@@ -9,8 +9,8 @@ import {ToastrService} from "ngx-toastr";
   templateUrl: './job-chart.component.html',
   styleUrls: ['./job-chart.component.css']
 })
-export class JobChartComponent implements OnInit {
-  single: {name: string,value:number}[]= [];
+export class JobChartComponent implements OnInit, OnChanges {
+  single: { name: string, value: number }[] = [];
   view: [number, number] = [900, 400];
   gradient: boolean = true;
 
@@ -21,24 +21,32 @@ export class JobChartComponent implements OnInit {
     name: 'Customer Usage',
   };
 
-  constructor(private restService: RestService,private  toastrService: ToastrService) {
+  constructor(private restService: RestService, private toastrService: ToastrService) {
   }
-  ngOnInit(): void {
 
-   this.restService.getAllJobs().subscribe({
-     next: value =>
-     {
-       value.forEach(s => this.single.push({
-         name: s.jobName,
-         value: s.maleWorkers+s.femaleWorkers
-       }))
-       console.log(this.single)
-       this.single = [...this.single]
-     },
-     error:()=>{
+  ngOnChanges(changes: SimpleChanges): void {
+        this.loadData();
+    }
+  ngOnInit(): void {
+    this.loadData();
+  }
+
+  loadData(): void {
+    this.restService.getAllJobs().subscribe({
+      next: value =>
+      {
+        this.single = [];
+        value.forEach(s => this.single.push({
+          name: s.jobName,
+          value: s.maleWorkers+s.femaleWorkers
+        }))
+        console.log(this.single)
+        this.single = [...this.single]
+      },
+      error:()=>{
         this.toastrService.error("Die Daten konnten nicht geladen werden!")
-     }
-   })
+      }
+    })
   }
 
   onSelect(data: any[]): void {
