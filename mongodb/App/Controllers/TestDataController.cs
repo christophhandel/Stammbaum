@@ -16,7 +16,6 @@ namespace FamilyTreeMongoApp.Controllers
     [ApiController]
     public class TestDataController : ControllerBase
     {
-
         private readonly ILogger<PersonController> _logger;
         private readonly IMapper _mapper;
         private readonly IPersonService _personService;
@@ -44,7 +43,6 @@ namespace FamilyTreeMongoApp.Controllers
         }
 
 
-
         [HttpGet]
         public async Task Get()
         {
@@ -54,13 +52,22 @@ namespace FamilyTreeMongoApp.Controllers
             await _accomplishmentService.DeleteCollection();
 
 
-            await _jobService.AddJob(new JobDto() { Name = "King", JobType = "The one who sits on the Iron-Throne" });
-            await _jobService.AddJob(new JobDto() { Name = "King in the North", JobType = "The one who sits on the throne in winterfell" });
-            await _jobService.AddJob(new JobDto() { Name = "Mother of the Dragons", JobType = "A person who raised dragons" });
+            var kingJob = await _jobService.AddJob(new JobDto()
+                {Name = "King", JobType = "The one who sits on the Iron-Throne"});
+            var nKingJob = await _jobService.AddJob(new JobDto()
+                {Name = "King in the North", JobType = "The one who sits on the throne in winterfell"});
+            var motherDJob = await _jobService.AddJob(new JobDto()
+                {Name = "Mother of the Dragons", JobType = "A person who raised dragons"});
 
-            await _companyService.AddCompany(new CompanyDto() { Name = "Golden Army", BusinessActivity = "Paid army which is said to be super strong but is actually super weak" });
-            await _companyService.AddCompany(new CompanyDto() { Name = "White Walkers", BusinessActivity = "Zombie alike white dudes" });
-            await _companyService.AddCompany(new CompanyDto() { Name = "Faceless Men", BusinessActivity = "Assassins who can change their face at will" });
+            var goldenComp = await _companyService.AddCompany(new CompanyDto()
+            {
+                Name = "Golden Army",
+                BusinessActivity = "Paid army which is said to be super strong but is actually super weak"
+            });
+            var whiteComp = await _companyService.AddCompany(new CompanyDto()
+                {Name = "White Walkers", BusinessActivity = "Zombie alike white dudes"});
+            var facelessComp = await _companyService.AddCompany(new CompanyDto()
+                {Name = "Faceless Men", BusinessActivity = "Assassins who can change their face at will"});
 
             #region Test Data
 
@@ -69,7 +76,7 @@ namespace FamilyTreeMongoApp.Controllers
             {
                 Firstname = "Tywin",
                 Lastname = "Lannister",
-                BirthLocation = new LocationDto() { City = "Casterly", Country = "Rock" },
+                BirthLocation = new LocationDto() {City = "Casterly", Country = "Rock"},
                 Sex = "m",
                 Company = null,
                 Father = null,
@@ -80,7 +87,7 @@ namespace FamilyTreeMongoApp.Controllers
             {
                 Firstname = "Joanna",
                 Lastname = "Lannister",
-                BirthLocation = new LocationDto() { City = "Casterly", Country = "Rock" },
+                BirthLocation = new LocationDto() {City = "Casterly", Country = "Rock"},
                 Sex = "f",
                 Company = null,
                 Father = null,
@@ -91,7 +98,7 @@ namespace FamilyTreeMongoApp.Controllers
             {
                 Firstname = "Cersei",
                 Lastname = "Lannister",
-                BirthLocation = new LocationDto() { City = "Rock", Country = "Casterly" },
+                BirthLocation = new LocationDto() {City = "Rock", Country = "Casterly"},
                 Sex = "f",
                 Company = null,
                 Father = null,
@@ -102,7 +109,7 @@ namespace FamilyTreeMongoApp.Controllers
             {
                 Firstname = "Jaime",
                 Lastname = "Lannister",
-                BirthLocation = new LocationDto() { City = "Rock", Country = "Casterly" },
+                BirthLocation = new LocationDto() {City = "Rock", Country = "Casterly"},
                 Sex = "m",
                 Company = null,
                 Father = null,
@@ -113,7 +120,7 @@ namespace FamilyTreeMongoApp.Controllers
             {
                 Firstname = "Tyrion",
                 Lastname = "Lannister",
-                BirthLocation = new LocationDto() { City = "Rock", Country = "Casterly" },
+                BirthLocation = new LocationDto() {City = "Rock", Country = "Casterly"},
                 Sex = "m",
                 Company = null,
                 Father = null,
@@ -124,7 +131,7 @@ namespace FamilyTreeMongoApp.Controllers
             {
                 Firstname = "Lancel",
                 Lastname = "Lannister",
-                BirthLocation = new LocationDto() { City = "Rock", Country = "Casterly" },
+                BirthLocation = new LocationDto() {City = "Rock", Country = "Casterly"},
                 Sex = "m",
                 Company = null,
                 Father = null,
@@ -137,7 +144,7 @@ namespace FamilyTreeMongoApp.Controllers
             {
                 Firstname = "Robert",
                 Lastname = "Baratheon",
-                BirthLocation = new LocationDto() { City = "Storm's End", Country = "Westeros" },
+                BirthLocation = new LocationDto() {City = "Storm's End", Country = "Westeros"},
                 Sex = "m",
                 Company = null,
                 Father = null,
@@ -148,7 +155,7 @@ namespace FamilyTreeMongoApp.Controllers
             {
                 Firstname = "Joffrey",
                 Lastname = "Baratheon",
-                BirthLocation = new LocationDto() { City = "Storm's End", Country = "Westeros" },
+                BirthLocation = new LocationDto() {City = "Storm's End", Country = "Westeros"},
                 Sex = "m",
                 Company = null,
                 Father = null,
@@ -159,7 +166,7 @@ namespace FamilyTreeMongoApp.Controllers
             {
                 Firstname = "Myrcella",
                 Lastname = "Baratheon",
-                BirthLocation = new LocationDto() { City = "Storm's End", Country = "Westeros" },
+                BirthLocation = new LocationDto() {City = "Storm's End", Country = "Westeros"},
                 Sex = "f",
                 Company = null,
                 Father = null,
@@ -170,7 +177,7 @@ namespace FamilyTreeMongoApp.Controllers
             {
                 Firstname = "Tommen",
                 Lastname = "Baratheon",
-                BirthLocation = new LocationDto() { City = "Storm's End", Country = "Westeros" },
+                BirthLocation = new LocationDto() {City = "Storm's End", Country = "Westeros"},
                 Sex = "m",
                 Company = null,
                 Father = null,
@@ -183,7 +190,7 @@ namespace FamilyTreeMongoApp.Controllers
             {
                 Firstname = "Rhaella",
                 Lastname = "Targaryen",
-                BirthLocation = new LocationDto() { City = "Valyria", Country = "Essos" },
+                BirthLocation = new LocationDto() {City = "Valyria", Country = "Essos"},
                 Sex = "f",
                 Company = null,
                 Father = null,
@@ -194,7 +201,7 @@ namespace FamilyTreeMongoApp.Controllers
             {
                 Firstname = "Aerys 2.",
                 Lastname = "Targaryen",
-                BirthLocation = new LocationDto() { City = "Valyria", Country = "Essos" },
+                BirthLocation = new LocationDto() {City = "Valyria", Country = "Essos"},
                 Sex = "m",
                 Company = null,
                 Father = null,
@@ -205,7 +212,7 @@ namespace FamilyTreeMongoApp.Controllers
             {
                 Firstname = "Rhaegar",
                 Lastname = "Targaryen",
-                BirthLocation = new LocationDto() { City = "Valyria", Country = "Essos" },
+                BirthLocation = new LocationDto() {City = "Valyria", Country = "Essos"},
                 Sex = "m",
                 Company = null,
                 Father = null,
@@ -216,7 +223,7 @@ namespace FamilyTreeMongoApp.Controllers
             {
                 Firstname = "Viserys",
                 Lastname = "Targaryen",
-                BirthLocation = new LocationDto() { City = "Valyria", Country = "Essos" },
+                BirthLocation = new LocationDto() {City = "Valyria", Country = "Essos"},
                 Sex = "m",
                 Company = null,
                 Father = null,
@@ -227,7 +234,7 @@ namespace FamilyTreeMongoApp.Controllers
             {
                 Firstname = "Daenerys",
                 Lastname = "Targaryen",
-                BirthLocation = new LocationDto() { City = "Valyria", Country = "Essos" },
+                BirthLocation = new LocationDto() {City = "Valyria", Country = "Essos"},
                 Sex = "f",
                 Company = null,
                 Father = null,
@@ -238,7 +245,7 @@ namespace FamilyTreeMongoApp.Controllers
             {
                 Firstname = "Drogon",
                 Lastname = "Dragon",
-                BirthLocation = new LocationDto() { City = "Valyria", Country = "Essos" },
+                BirthLocation = new LocationDto() {City = "Valyria", Country = "Essos"},
                 Sex = "m",
                 Company = null,
                 Father = null,
@@ -249,7 +256,7 @@ namespace FamilyTreeMongoApp.Controllers
             {
                 Firstname = "Rhaegal",
                 Lastname = "Dragon",
-                BirthLocation = new LocationDto() { City = "Valyria", Country = "Essos" },
+                BirthLocation = new LocationDto() {City = "Valyria", Country = "Essos"},
                 Sex = "m",
                 Company = null,
                 Father = null,
@@ -262,7 +269,7 @@ namespace FamilyTreeMongoApp.Controllers
             {
                 Firstname = "Lyanna",
                 Lastname = "Stark",
-                BirthLocation = new LocationDto() { City = "Winterfell", Country = "The North" },
+                BirthLocation = new LocationDto() {City = "Winterfell", Country = "The North"},
                 Sex = "f",
                 Company = null,
                 Father = null,
@@ -273,7 +280,7 @@ namespace FamilyTreeMongoApp.Controllers
             {
                 Firstname = "Jon",
                 Lastname = "Snow",
-                BirthLocation = new LocationDto() { City = "Winterfell", Country = "The North" },
+                BirthLocation = new LocationDto() {City = "Winterfell", Country = "The North"},
                 Sex = "m",
                 Company = null,
                 Father = null,
@@ -284,7 +291,7 @@ namespace FamilyTreeMongoApp.Controllers
             {
                 Firstname = "Sansa",
                 Lastname = "Stark",
-                BirthLocation = new LocationDto() { City = "Winterfell", Country = "The North" },
+                BirthLocation = new LocationDto() {City = "Winterfell", Country = "The North"},
                 Sex = "f",
                 Company = null,
                 Father = null,
@@ -295,7 +302,7 @@ namespace FamilyTreeMongoApp.Controllers
             {
                 Firstname = "Catelyn",
                 Lastname = "Stark",
-                BirthLocation = new LocationDto() { City = "Winterfell", Country = "The North" },
+                BirthLocation = new LocationDto() {City = "Winterfell", Country = "The North"},
                 Sex = "f",
                 Company = null,
                 Father = null,
@@ -306,7 +313,7 @@ namespace FamilyTreeMongoApp.Controllers
             {
                 Firstname = "Ned",
                 Lastname = "Stark",
-                BirthLocation = new LocationDto() { City = "Winterfell", Country = "The North" },
+                BirthLocation = new LocationDto() {City = "Winterfell", Country = "The North"},
                 Sex = "m",
                 Company = null,
                 Father = null,
@@ -317,7 +324,7 @@ namespace FamilyTreeMongoApp.Controllers
             {
                 Firstname = "Yara",
                 Lastname = "Stark",
-                BirthLocation = new LocationDto() { City = "Winterfell", Country = "The North" },
+                BirthLocation = new LocationDto() {City = "Winterfell", Country = "The North"},
                 Sex = "f",
                 Company = null,
                 Father = null,
@@ -328,7 +335,7 @@ namespace FamilyTreeMongoApp.Controllers
             {
                 Firstname = "Rickard",
                 Lastname = "Stark",
-                BirthLocation = new LocationDto() { City = "Winterfell", Country = "The North" },
+                BirthLocation = new LocationDto() {City = "Winterfell", Country = "The North"},
                 Sex = "m",
                 Company = null,
                 Father = null,
@@ -339,7 +346,7 @@ namespace FamilyTreeMongoApp.Controllers
             {
                 Firstname = "Arya",
                 Lastname = "Stark",
-                BirthLocation = new LocationDto() { City = "Winterfell", Country = "The North" },
+                BirthLocation = new LocationDto() {City = "Winterfell", Country = "The North"},
                 Sex = "f",
                 Company = null,
                 Father = null,
@@ -350,28 +357,45 @@ namespace FamilyTreeMongoApp.Controllers
             #endregion
 
             // ADDING RELATIONS 
-            await _personService.UpdatePerson(cersei.Id, cersei.Firstname, cersei.Lastname, joanna.Id, tywin.Id, cersei.Sex, cersei.BirthPlace, null, null);
-            await _personService.UpdatePerson(jaime.Id, jaime.Firstname, jaime.Lastname, joanna.Id, tywin.Id, jaime.Sex, jaime.BirthPlace, null, null);
-            await _personService.UpdatePerson(tyrion.Id, tyrion.Firstname, tyrion.Lastname, joanna.Id, tywin.Id, tyrion.Sex, tyrion.BirthPlace, null, null);
+            await _personService.UpdatePerson(cersei.Id, cersei.Firstname, cersei.Lastname, joanna.Id, tywin.Id,
+                cersei.Sex, cersei.BirthPlace, motherDJob!.Id, null);
+            await _personService.UpdatePerson(jaime.Id, jaime.Firstname, jaime.Lastname, joanna.Id, tywin.Id, jaime.Sex,
+                jaime.BirthPlace, kingJob!.Id, null);
+            await _personService.UpdatePerson(tyrion.Id, tyrion.Firstname, tyrion.Lastname, joanna.Id, tywin.Id,
+                tyrion.Sex, tyrion.BirthPlace, nKingJob!.Id, whiteComp!.Id);
 
-            await _personService.UpdatePerson(joffrey.Id, joffrey.Firstname, joffrey.Lastname, cersei.Id, jaime.Id, joffrey.Sex, joffrey.BirthPlace, null, null);
-            await _personService.UpdatePerson(myrcella.Id, myrcella.Firstname, myrcella.Lastname, cersei.Id, jaime.Id, myrcella.Sex, myrcella.BirthPlace, null, null);
-            await _personService.UpdatePerson(tommen.Id, tommen.Firstname, tommen.Lastname, cersei.Id, robert.Id, tommen.Sex, tommen.BirthPlace, null, null);
+            await _personService.UpdatePerson(joffrey.Id, joffrey.Firstname, joffrey.Lastname, cersei.Id, jaime.Id,
+                joffrey.Sex, joffrey.BirthPlace, null, goldenComp!.Id);
+            await _personService.UpdatePerson(myrcella.Id, myrcella.Firstname, myrcella.Lastname, cersei.Id, jaime.Id,
+                myrcella.Sex, myrcella.BirthPlace, motherDJob!.Id, whiteComp!.Id);
+            await _personService.UpdatePerson(tommen.Id, tommen.Firstname, tommen.Lastname, cersei.Id, robert.Id,
+                tommen.Sex, tommen.BirthPlace, null, goldenComp!.Id);
 
-            await _personService.UpdatePerson(rhaegar.Id, rhaegar.Firstname, rhaegar.Lastname, rhaella.Id, aerys.Id, rhaegar.Sex, rhaegar.BirthPlace, null, null);
-            await _personService.UpdatePerson(viserys.Id, viserys.Firstname, viserys.Lastname, rhaella.Id, aerys.Id, viserys.Sex, viserys.BirthPlace, null, null);
-            await _personService.UpdatePerson(daenerys.Id, daenerys.Firstname, daenerys.Lastname, rhaella.Id, aerys.Id, daenerys.Sex, daenerys.BirthPlace, null, null);
+            await _personService.UpdatePerson(rhaegar.Id, rhaegar.Firstname, rhaegar.Lastname, rhaella.Id, aerys.Id,
+                rhaegar.Sex, rhaegar.BirthPlace, null, whiteComp!.Id);
+            await _personService.UpdatePerson(viserys.Id, viserys.Firstname, viserys.Lastname, rhaella.Id, aerys.Id,
+                viserys.Sex, viserys.BirthPlace, null, goldenComp!.Id);
+            await _personService.UpdatePerson(daenerys.Id, daenerys.Firstname, daenerys.Lastname, rhaella.Id, aerys.Id,
+                daenerys.Sex, daenerys.BirthPlace, kingJob!.Id, whiteComp!.Id);
 
-            await _personService.UpdatePerson(jon.Id, jon.Firstname, jon.Lastname, lyanna.Id, rhaegar.Id, jon.Sex, jon.BirthPlace, null, null);
-            await _personService.UpdatePerson(drogon.Id, drogon.Firstname, drogon.Lastname, daenerys.Id, jon.Id, drogon.Sex, drogon.BirthPlace, null, null);
-            await _personService.UpdatePerson(rhaegal.Id, rhaegal.Firstname, rhaegal.Lastname, daenerys.Id, jon.Id, rhaegal.Sex, rhaegal.BirthPlace, null, null);
+            await _personService.UpdatePerson(jon.Id, jon.Firstname, jon.Lastname, lyanna.Id, rhaegar.Id, jon.Sex,
+                jon.BirthPlace, null, null);
+            await _personService.UpdatePerson(drogon.Id, drogon.Firstname, drogon.Lastname, daenerys.Id, jon.Id,
+                drogon.Sex, drogon.BirthPlace, null, goldenComp!.Id);
+            await _personService.UpdatePerson(rhaegal.Id, rhaegal.Firstname, rhaegal.Lastname, daenerys.Id, jon.Id,
+                rhaegal.Sex, rhaegal.BirthPlace, kingJob!.Id, whiteComp!.Id);
 
-            await _personService.UpdatePerson(lancel.Id, lancel.Firstname, lancel.Lastname, sansa.Id, tyrion.Id, lancel.Sex, lancel.BirthPlace, null, null);
-            await _personService.UpdatePerson(sansa.Id, sansa.Firstname, sansa.Lastname, catelyn.Id, ned.Id, sansa.Sex, sansa.BirthPlace, null, null);
-            await _personService.UpdatePerson(arya.Id, arya.Firstname, arya.Lastname, catelyn.Id, ned.Id, arya.Sex, arya.BirthPlace, null, null);
+            await _personService.UpdatePerson(lancel.Id, lancel.Firstname, lancel.Lastname, sansa.Id, tyrion.Id,
+                lancel.Sex, lancel.BirthPlace, null, facelessComp!.Id);
+            await _personService.UpdatePerson(sansa.Id, sansa.Firstname, sansa.Lastname, catelyn.Id, ned.Id, sansa.Sex,
+                sansa.BirthPlace, motherDJob!.Id, facelessComp!.Id);
+            await _personService.UpdatePerson(arya.Id, arya.Firstname, arya.Lastname, catelyn.Id, ned.Id, arya.Sex,
+                arya.BirthPlace, null, facelessComp!.Id);
 
-            await _personService.UpdatePerson(ned.Id, ned.Firstname, ned.Lastname, yara.Id, rickard.Id, ned.Sex, ned.BirthPlace, null, null);
-            await _personService.UpdatePerson(lyanna.Id, lyanna.Firstname, lyanna.Lastname, yara.Id, rickard.Id, lyanna.Sex, lyanna.BirthPlace, null, null);
+            await _personService.UpdatePerson(ned.Id, ned.Firstname, ned.Lastname, yara.Id, rickard.Id, ned.Sex,
+                ned.BirthPlace, kingJob!.Id, null);
+            await _personService.UpdatePerson(lyanna.Id, lyanna.Firstname, lyanna.Lastname, yara.Id, rickard.Id,
+                lyanna.Sex, lyanna.BirthPlace, null, facelessComp!.Id);
 
             return;
         }
