@@ -32,14 +32,38 @@ public class PersonRepositoryNeo : IPersonRepository
 
     public string CollectionName => "person";
 
-    public Task<Person> AddPerson(Person request)
+    public async Task<Person> AddPerson(Person request)
     {
-        throw new NotImplementedException();
+        // Generate ID for Neo4J
+        var toAdd = _mapper.Map<PersonDto>(request);
+        toAdd.Id = ObjectId.GenerateNewId().ToString();
+
+        await using var session = _driver.AsyncSession();
+        return await session.ExecuteWriteAsync(async tx =>
+        {
+            var result = await tx.RunAsync("MERGE (p:Person {" +
+                                           "id: $Id," +
+                                           "firstname: $Firstname," +
+                                           "lastname: $Lastname," +
+                                           "sex: $Sex" +
+                                           ((toAdd.Job != null) ? ",jobId: $Job" : "") +
+                                           ((toAdd.Company != null) ? ",companyId: $Company" : "") +
+                                           ((toAdd.Mother != null) ? ",motherId: $Mother" : "") +
+                                           ((toAdd.Father != null) ? ",fatherId: $Father" : "") +
+                                           "}) " +
+                                           Neo4JUtil.personReturnAllFieldsQuery + ";", toAdd);
+            return await result.SingleAsync(Neo4JUtil.convertIRecordToPerson);
+        });
     }
 
-    public Task DeletePerson(ObjectId objectId)
+    public async Task DeletePerson(ObjectId objectId)
     {
-        throw new NotImplementedException();
+        await using var session = _driver.AsyncSession();
+        await session.ExecuteWriteAsync(async tx =>
+        {
+            await tx.RunAsync("MATCH (p:Person {id: $Id}) DETACH DELETE p;",
+                new {Id = objectId.ToString()});
+        });
     }
 
     public Task<int> GetAccomplishmentsCount(ObjectId objectId)
@@ -57,35 +81,68 @@ public class PersonRepositoryNeo : IPersonRepository
         throw new NotImplementedException();
     }
 
-    public Task<IReadOnlyCollection<Person>> GetPeopleByParents(ObjectId? motherId, ObjectId? fatherId)
+    public async Task<IReadOnlyCollection<Person>> GetPeopleByParents(ObjectId? motherId, ObjectId? fatherId)
     {
-        throw new NotImplementedException();
+        string filter = "";
+        
+        if (motherId is null && fatherId is null)
+        {
+            return await GetPeopleWithNoParents();
+        }
+        
+        if (motherId is null)
+        {
+            filter = "{fatherId:$fatherId}";
+        }
+        else if (fatherId is null)
+        {
+            filter = "{motherId:$motherId}";
+        }
+        else
+        {
+            filter = "{motherId:$motherId,fatherId:$fatherId}";
+        }
+        
+        await using var session = _driver.AsyncSession();
+        return await session.ExecuteReadAsync(async tx =>
+        {
+            var result = await tx.RunAsync("MATCH (p:Person "+ filter +") " +
+                                           Neo4JUtil.personReturnAllFieldsQuery + ";", 
+                new {motherId=motherId.ToString(), fatherId=fatherId.ToString()});
+            return await result.ToListAsync(Neo4JUtil.convertIRecordToPerson);
+        });
     }
 
     public async Task<IEnumerable<Person>> GetPeopleBySex(string? sex)
     {
-        using (var session = _driver.AsyncSession())
+        await using var session = _driver.AsyncSession();
+        return await session.ExecuteReadAsync(async tx =>
         {
-            return await session.ExecuteReadAsync(async tx => {
-                var result = await tx.RunAsync("MATCH (p:Person) RETURN p.firstname AS firstname, p.lastname AS lastname, p.sex AS sex;");
-                return await result.ToListAsync(p=> {
-                    return new Person() {
-                    Firstname = p["firstname"].As<string>(), 
-                    Lastname = p["lastname"].As<string>(), 
-                    Sex = p["sex"].As<string>(), 
-                };});
-            });
-        }
+            var result = await tx.RunAsync("MATCH (p:Person) " + Neo4JUtil.personReturnAllFieldsQuery + ";");
+            return await result.ToListAsync(Neo4JUtil.convertIRecordToPerson);
+        });
     }
 
-    public Task<IReadOnlyCollection<Person>> GetPeopleWithNoParents()
+    public async Task<IReadOnlyCollection<Person>> GetPeopleWithNoParents()
     {
-        throw new NotImplementedException();
+        await using var session = _driver.AsyncSession();
+        return await session.ExecuteReadAsync(async tx =>
+        {
+            var result = await tx.RunAsync("MATCH (p:Person) where p.motherId is null and p.fatherId is null " +
+                                           Neo4JUtil.personReturnAllFieldsQuery + ";");
+            return await result.ToListAsync(Neo4JUtil.convertIRecordToPerson);
+        });
     }
 
-    public Task<Person?> GetPersonById(ObjectId objectId)
+    public async Task<Person?> GetPersonById(ObjectId objectId)
     {
-        throw new NotImplementedException();
+        await using var session = _driver.AsyncSession();
+        return await session.ExecuteReadAsync(async tx =>
+        {
+            var result = await tx.RunAsync("MATCH (p:Person {id:$Id}) " + Neo4JUtil.personReturnAllFieldsQuery + ";",
+                new {Id = objectId.ToString()});
+            return await result.SingleAsync(Neo4JUtil.convertIRecordToPerson);
+        });
     }
 
     public Task<Person> UpdatePerson(
