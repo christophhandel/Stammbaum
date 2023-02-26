@@ -1,3 +1,4 @@
+using FamilyTreeMongoApp.Core.Workloads.JobWorkload;
 using FamilyTreeMongoApp.Core.Workloads.PersonWorkload;
 using MongoDB.Bson;
 using Neo4j.Driver;
@@ -7,6 +8,7 @@ namespace FamilyTreeMongoApp.Core.Util;
 public class Neo4JUtil
 {
     public static string personReturnAllFieldsQuery = "RETURN p.firstname AS firstname, p.lastname AS lastname, p.sex AS sex, p.id AS id, p.jobId AS jobId, p.companyId AS companyId, p.motherId AS motherId, p.fatherId as fatherId";
+    public static string jobReturnAllFieldsQuery = "RETURN j.id as id, j.name as name, j.jobType as jobType";
 
     public static Person convertIRecordToPerson(IRecord p)
     {
@@ -21,6 +23,14 @@ public class Neo4JUtil
             Mother= p["motherId"] == null ? null : ObjectId.Parse(p["motherId"].As<string>()),
         };
     }
-    
-    
+
+
+    public static Job convertIRecordToJob(IRecord p)
+    {
+        return new Job() {
+            Id = ObjectId.Parse(p["id"].As<string>()),
+            Name = p["name"].As<string>(),
+            JobType = p["jobType"].As<string>(),
+        };
+    }
 }
