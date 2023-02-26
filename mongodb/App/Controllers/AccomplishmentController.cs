@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Globalization;
+using AutoMapper;
 using FamilyTreeMongoApp.Core.Workloads.AccomplishmentWorkload;
 using LeoMongo.Transaction;
 using Microsoft.AspNetCore.Mvc;
@@ -35,23 +36,22 @@ public sealed class AccomplishmentController : ControllerBase
 
     /// <summary>
     ///     Get Achievement Count
-    ///
+    /// 
     /// </summary>
     /// <param name="personId">ID of Person to get achievement count of</param>
+    /// <param name="id"></param>
     /// <returns>amount of achievements</returns>
     [HttpDelete]
-    [Route("count/{personId}")]
-    public async Task<ActionResult<IReadOnlyCollection<PersonDto>>> GetAchievementCount(string personId)
+    [Route("{id}")]
+    public async Task<ActionResult> DeleteAchievement(string id)
     {
-        Person? p = await _personService.GetPersonById(new ObjectId(personId));
+        Accomplishment? p = await _accomplishmentService.GetAccomplishmentById(new ObjectId(id));
         if(p is null)
         {
             return NotFound();
         }
-
-        int accomplishmentsCount = await _personService.GetAccomplishmentsCount(new ObjectId(personId));
-        
-        return Ok(_mapper.Map<PersonDto>(accomplishmentsCount));
+        await _accomplishmentService.DeleteAccomplishment(p.Id);
+        return Ok();
     }
 
 
@@ -136,7 +136,7 @@ public sealed class AccomplishmentController : ControllerBase
 
         Accomplishment newAccomplishment = await _accomplishmentService.UpdateAccomplishment(new ObjectId(accomplishmentId),
             accomplishmentDto.Description,
-            DateTime.Parse(accomplishmentDto.Time)
+            DateTime.ParseExact(accomplishmentDto.Time, "dd.MM.yyyy", CultureInfo.InvariantCulture)
             );
 
         return Ok(_mapper.Map<AccomplishmentDto>(newAccomplishment));

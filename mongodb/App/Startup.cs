@@ -41,6 +41,9 @@ public class Startup
 
                 // This is the registration for your domain repository class
                 services.AddScoped<IPersonRepository, PersonRepositoryNeo>();
+                services.AddScoped<IJobRepository, JobRepositoryNeo>();
+                services.AddScoped<ICompanyRepository, CompanyRepositoryNeo>();
+                services.AddScoped<IAccomplishmentRepository, AccomplishmentRepositoryNeo>();
                 break;
             case "mongodb":
                 // configure fwk
@@ -48,17 +51,17 @@ public class Startup
 
                 // for bigger assemblies it would be alright to register those via reflection by naming convention!
                 services.AddScoped<IPersonRepository, PersonRepository>();
+                services.AddScoped<IJobRepository, JobRepository>();
+                services.AddScoped<ICompanyRepository, CompanyRepository>();
+                services.AddScoped<IAccomplishmentRepository, AccomplishmentRepository>();
                 break;
         }
 
         services.AddScoped<IPersonService, PersonService>();
         services.AddScoped<ICompanyService, CompanyService>();
-        services.AddScoped<ICompanyRepository, CompanyRepository>();
-        services.AddScoped<IAccomplishmentRepository, AccomplishmentRepository>();
         services.AddScoped<IAccomplishmentService, AccomplishmentService>();
         
         services.AddScoped<IJobService, JobService>();
-        services.AddScoped<IJobRepository, JobRepository>();
 
         services.AddTransient<IDateTimeProvider, DateTimeProvider>();
 

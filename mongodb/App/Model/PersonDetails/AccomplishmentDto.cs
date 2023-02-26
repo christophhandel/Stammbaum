@@ -11,7 +11,7 @@
     
         public void SetTimeFromDateTime(DateTime time)
         {
-            Time = time.ToString();
+            Time = time.ToString("dd.MM.yyyy");
         }
     }
 }
