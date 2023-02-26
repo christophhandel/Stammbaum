@@ -38,8 +38,10 @@ public sealed class MapperProfile : Profile
             .ForMember(p => p.Id, c => c.MapFrom(p => p.Id!.ToString()));
 
         CreateMap<Accomplishment, AccomplishmentDto>()
-            .ForMember(p => p.Id, c => c.MapFrom(p => p.Id!.ToString()));
+            .ForMember(p => p.Id, c => c.MapFrom(p => p.Id!.ToString()))
+            .ForMember(p => p.Time, c => c.MapFrom(p => p.Time.ToString("dd.MM.yyyy")));
         CreateMap<AccomplishmentDto, Accomplishment>()
-            .ForMember(p => p.Id, c => c.MapFrom(p => p.Id!.ToString()));
+            .ForMember(p => p.Id, c => c.MapFrom(p => p.Id!.ToString()))
+            .ForMember(p => p.Time, c => c.MapFrom(p => DateTime.ParseExact(p.Time, "dd.MM.yyyy",System.Globalization.CultureInfo.InvariantCulture)));
     }
 }
