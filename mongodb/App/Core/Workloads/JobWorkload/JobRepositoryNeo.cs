@@ -103,8 +103,22 @@ public class JobRepositoryNeo: RepositoryBase<Job>, IJobRepository
         });
     }
 
-    public Task<IEnumerable<JobStatDto>> GetJobsStats()
+    public async Task<IEnumerable<JobStatDto>> GetJobsStats()
     {
-        throw new NotImplementedException();
+        await using var session = _driver.AsyncSession();
+        return await session.ExecuteReadAsync(async tx =>
+        {
+            var result = await tx.RunAsync("MATCH (p:Person)-[:WORKS_AS]->(j:Job) " +
+                                           "RETURN j.name as jobName, p.sex as sex ,count(p) as workers;");
+            return (await result.ToListAsync(p => new {
+                Job = p["jobName"].As<string>(),
+                Sex = p["sex"].As<string>(),
+                Count = p["workers"].As<int>()
+            })).GroupBy(js => js.Job).Select(grp => new JobStatDto(
+                jobName:grp.Key,
+                femaleWorkers:grp.Where(p => p.Sex == "f").Select(p => p.Count).Sum(),
+                maleWorkers:grp.Where(p => p.Sex == "m").Select(p => p.Count).Sum()
+                ));
+        });
     }
 }

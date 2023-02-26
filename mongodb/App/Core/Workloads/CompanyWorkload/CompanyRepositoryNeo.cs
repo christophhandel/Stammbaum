@@ -99,12 +99,26 @@ public class CompanyRepositoryNeo : RepositoryBase<Company>, ICompanyRepository
         await using var session = _driver.AsyncSession();
         await session.ExecuteWriteAsync(async tx =>
         {
-            await tx.RunAsync("MATCH (c:Company) DETACH DELETE j;");
+            await tx.RunAsync("MATCH (c:Company) DETACH DELETE c;");
         });
     }
 
-    public Task<IEnumerable<CompanyStatDto>> GetCompanyStats()
+    public async Task<IEnumerable<CompanyStatDto>> GetCompanyStats()
     {
-        throw new NotImplementedException();
+        await using var session = _driver.AsyncSession();
+        return await session.ExecuteReadAsync(async tx =>
+        {
+            var result = await tx.RunAsync("MATCH (p:Person)-[:WORKS_AT]->(c:Company) " +
+                                           "RETURN c.name as companyName, p.sex as sex, count(p) as workers;");
+            return (await result.ToListAsync(p => new {
+                Company = p["companyName"].As<string>(),
+                Sex = p["sex"].As<string>(),
+                Count = p["workers"].As<int>()
+            })).GroupBy(js => js.Company).Select(grp => new CompanyStatDto(
+                companyName:grp.Key,
+                femaleWorkers:grp.Where(p => p.Sex == "f").Select(p => p.Count).Sum(),
+                maleWorkers:grp.Where(p => p.Sex == "m").Select(p => p.Count).Sum()
+            ));
+        });
     }
 }

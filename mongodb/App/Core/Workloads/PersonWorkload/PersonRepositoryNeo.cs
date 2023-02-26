@@ -268,10 +268,4 @@ public class PersonRepositoryNeo : IPersonRepository
             return await result.ToListAsync(Neo4JUtil.convertIRecordToPerson);
         });
     }
-
-    public Task<IEnumerable<JobStatDto>> GetJobsStats()
-    {
-        // TODO: IMPLEMENT JOBS
-        throw new NotImplementedException();
-    }
 }
