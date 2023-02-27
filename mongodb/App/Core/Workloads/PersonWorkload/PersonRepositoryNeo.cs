@@ -17,13 +17,13 @@ namespace FamilyTreeMongoApp.Core.Workloads.PersonWorkload;
 public class PersonRepositoryNeo : IPersonRepository
 {
     private IDriver _driver;
-    private ILogger<PersonRepository> _logger;
+    private ILogger<IPersonRepository> _logger;
     private readonly IMapper _mapper;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="PersonRepository"/> class.
     /// </summary>
-    public PersonRepositoryNeo(IDriver driver, ILogger<PersonRepository> logger, IMapper mapper)
+    public PersonRepositoryNeo(IDriver driver, ILogger<IPersonRepository> logger, IMapper mapper)
     {
         _driver = driver;
         _logger = logger;
@@ -213,7 +213,14 @@ public class PersonRepositoryNeo : IPersonRepository
         {
             var result = await tx.RunAsync("MATCH (p:Person {id:$Id}) " + Neo4JUtil.personReturnAllFieldsQuery + ";",
                 new {Id = objectId.ToString()});
-            return await result.SingleAsync(Neo4JUtil.convertIRecordToPerson);
+            try
+            {
+                return await result.SingleAsync(Neo4JUtil.convertIRecordToPerson);
+            }
+            catch (InvalidOperationException)
+            {
+                return null;
+            } 
         });
     }
 
