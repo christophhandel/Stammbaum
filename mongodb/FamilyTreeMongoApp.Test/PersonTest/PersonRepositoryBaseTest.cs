@@ -4,16 +4,17 @@ using Xunit;
 
 namespace FamilyTreeMongoApp.Test.PersonTest;
 
-public abstract class PersonRepositoryBaseTest
+public abstract class PersonRepositoryBaseTest : IDisposable
 {
     private readonly IPersonRepository _personRepository;
 
     protected PersonRepositoryBaseTest(IPersonRepository personRepository)
     {
         _personRepository = personRepository;
+        _personRepository.DeleteCollection();
     }
     
-        [Fact]
+    [Fact]
     public async Task TestCreate()
     {
        Person p = await _personRepository.AddPerson(new Person()
@@ -138,5 +139,80 @@ public abstract class PersonRepositoryBaseTest
         Person? personToUpdate = await _personRepository.GetPersonById(personToDelete.Id);
 
         personToUpdate.Should().BeNull();
+    }
+    
+    [Fact]
+    public async Task TestGetDescendants()
+    {
+        Person fatherSideGrandpa = await _personRepository.AddPerson(new Person()
+        {
+            Firstname = "Father Grandpa",
+            Lastname = "Mustermann",
+            Sex = "m"
+        });
+        
+        Person fatherSideGrandma = await _personRepository.AddPerson(new Person()
+        {
+            Firstname = "Father Grandma",
+            Lastname = "Mustermann",
+            Sex = "f"
+        });
+        
+        Person motherSideGrandma = await _personRepository.AddPerson(new Person()
+        {
+            Firstname = "Mother Grandma",
+            Lastname = "Mustermann",
+            Sex = "f"
+        });
+        
+        Person father = await _personRepository.AddPerson(new Person()
+        {
+            Firstname = "Father",
+            Lastname = "Mustermann",
+            Sex = "m",
+            Mother = fatherSideGrandma.Id,
+            Father = fatherSideGrandpa.Id
+        });
+        
+        Person mother = await _personRepository.AddPerson(new Person()
+        {
+            Firstname = "Mother",
+            Lastname = "Mustermann",
+            Sex = "f",
+            Mother = motherSideGrandma.Id
+        });
+
+        Person firstChild = await _personRepository.AddPerson(new Person()
+        {
+            Firstname = "First",
+            Lastname = "Child",
+            Sex = "m",
+            Mother = mother.Id,
+            Father = father.Id
+        });
+        
+        Person secondChild = await _personRepository.AddPerson(new Person()
+        {
+            Firstname = "Second",
+            Lastname = "Child",
+            Sex = "m",
+            Mother = mother.Id,
+            Father = father.Id
+        });
+
+
+
+        (await _personRepository.GetDescendants(firstChild)).Select(p => p.Id).Should().BeEquivalentTo(
+            new List<Person>() {firstChild}.Select( p => p.Id));
+        (await _personRepository.GetDescendants(fatherSideGrandpa)).Select(p => p.Id).Should().BeEquivalentTo(
+            new List<Person>() {fatherSideGrandpa, father, firstChild, secondChild}.Select( p => p.Id));
+        (await _personRepository.GetDescendants(motherSideGrandma)).Select(p => p.Id).Should().BeEquivalentTo(
+            new List<Person>() {motherSideGrandma, mother, firstChild, secondChild}.Select( p => p.Id));
+    }
+
+
+    public void Dispose()
+    {
+        _personRepository.DeleteCollection();
     }
 }
