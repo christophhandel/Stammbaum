@@ -75,6 +75,7 @@ public sealed class JobRepository : RepositoryBase<Job>, IJobRepository
             .Select(mD => new JobStatDto(
                 mD.Master,
                 mD.Details == null ? 0 : mD.Details!.Count(p => p == "f"),
-                mD.Details == null ? 0 : mD.Details!.Count(p => p == "m")));
+                mD.Details == null ? 0 : mD.Details!.Count(p => p == "m")))
+            .Where(js => js.femaleWorkers > 0 || js.maleWorkers > 0);
     }
 }
