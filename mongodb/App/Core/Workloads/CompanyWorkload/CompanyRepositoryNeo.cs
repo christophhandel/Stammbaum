@@ -10,20 +10,18 @@ using Neo4j.Driver;
 
 namespace FamilyTreeMongoApp.Core.Workloads.CompanyWorkload;
 
-public class CompanyRepositoryNeo : RepositoryBase<Company>, ICompanyRepository
+public class CompanyRepositoryNeo : ICompanyRepository
 {
     private readonly IMapper _mapper;
     private readonly IDriver _driver;
 
-    public CompanyRepositoryNeo(ITransactionProvider transactionProvider, IDatabaseProvider databaseProvider,
-        IMapper mapper, IDriver driver) 
-        : base(transactionProvider, databaseProvider)
+    public CompanyRepositoryNeo(IMapper mapper, IDriver driver) 
     {
         this._mapper = mapper;
         _driver = driver;
     }
 
-    public override string CollectionName { get; } = MongoUtil.GetCollectionName<Company>();
+    public string CollectionName { get; } = MongoUtil.GetCollectionName<Company>();
     
     public async Task<Company?> GetCompanyById(ObjectId parse)
     {
@@ -36,7 +34,7 @@ public class CompanyRepositoryNeo : RepositoryBase<Company>, ICompanyRepository
         });
     }
 
-    public async Task<Company?> AddCompany(Company company)
+    public async Task<Company> AddCompany(Company company)
     {
         // Generate ID for Neo4J
         var toAdd = _mapper.Map<CompanyDto>(company);

@@ -19,7 +19,6 @@ public abstract class PersonRepositoryBaseTest : IDisposable
     protected PersonRepositoryBaseTest(IPersonRepository personRepository)
     {
         _personRepository = personRepository;
-        _personRepository.DeleteCollection();
     }
     
     [Fact]
@@ -34,7 +33,7 @@ public abstract class PersonRepositoryBaseTest : IDisposable
 
        Person? testP = await _personRepository.GetPersonById(p.Id);
 
-       testP.Should().NotBe(null);
+       testP.Should().NotBeNull();
        testP.Firstname.Should().Be("Bob");
        testP.Lastname.Should().Be("Marley");
 
@@ -43,7 +42,9 @@ public abstract class PersonRepositoryBaseTest : IDisposable
        
        testP = await _personRepository.GetPersonById(p.Id);
 
-       testP.Should().Be(null);
+       testP.Should().BeNull();
+
+       await _personRepository.DeletePerson(p.Id);
     }
 
     [Fact]
@@ -58,8 +59,8 @@ public abstract class PersonRepositoryBaseTest : IDisposable
             Sex = "m"
         });
 
-        (await _personRepository.GetPeopleBySex("m")).Count().Should().Be(cntMale+1);
-
+        (await _personRepository.GetPeopleBySex("m")).Count().Should().BeGreaterOrEqualTo(cntMale+1);
+        await _personRepository.DeletePerson(male.Id);
     }
 
     [Fact]
@@ -103,6 +104,11 @@ public abstract class PersonRepositoryBaseTest : IDisposable
         IReadOnlyCollection<Person> childsBoth = await _personRepository.GetPeopleByParents(mother.Id, father.Id);
 
         childsBoth.Count().Should().Be(1);
+
+        await _personRepository.DeletePerson(father.Id);
+        await _personRepository.DeletePerson(mother.Id);
+        await _personRepository.DeletePerson(childBoth.Id);
+        await _personRepository.DeletePerson(childFather.Id);
     }
 
 
@@ -128,6 +134,7 @@ public abstract class PersonRepositoryBaseTest : IDisposable
         updatedPerson.Should().NotBeNull();
         updatedPerson!.Firstname.Should().Be(personToUpdate.Firstname);
 
+        await _personRepository.DeletePerson(personToUpdate.Id);
     }
 
 
@@ -152,10 +159,8 @@ public abstract class PersonRepositoryBaseTest : IDisposable
     [Fact]
     public async Task TestGetDescendants()
     {
-        await generateFamilyTree();
-
-
-
+        await GenerateFamilyTree();
+        
         (await _personRepository.GetDescendants(_firstChild)).Select(p => p.Id).Should().BeEquivalentTo(
             new List<Person>() {_firstChild}.Select( p => p.Id));
         (await _personRepository.GetDescendants(_fatherSideGrandpa)).Select(p => p.Id).Should().BeEquivalentTo(
@@ -167,9 +172,8 @@ public abstract class PersonRepositoryBaseTest : IDisposable
     [Fact]
     public async Task TestGetAncestors()
     {
-        await generateFamilyTree();
+        await GenerateFamilyTree();
         
-
         (await _personRepository.GetAncestors(_fatherSideGrandpa)).Should().BeEquivalentTo(
             new List<Person>() {_fatherSideGrandpa});
         (await _personRepository.GetAncestors(_father)).Select(p => p.Id).Should().BeEquivalentTo(
@@ -179,9 +183,22 @@ public abstract class PersonRepositoryBaseTest : IDisposable
         (await _personRepository.GetAncestors(_secondChild)).Select(p => p.Id).Should().BeEquivalentTo(
             new List<Person>() {_mother,_father,_fatherSideGrandma,_fatherSideGrandpa, _motherSideGrandma, _secondChild}
                 .Select( p => p.Id));
+
+        await DisposeFamilyTree();
     }
 
-    private async Task generateFamilyTree()
+    private async Task DisposeFamilyTree()
+    {
+        await _personRepository.DeletePerson(_fatherSideGrandma.Id);
+        await _personRepository.DeletePerson(_motherSideGrandma.Id);
+        await _personRepository.DeletePerson(_fatherSideGrandpa.Id);
+        await _personRepository.DeletePerson(_mother.Id);
+        await _personRepository.DeletePerson(_father.Id);
+        await _personRepository.DeletePerson(_secondChild.Id);
+        await _personRepository.DeletePerson(_firstChild.Id);
+    }
+
+    private async Task GenerateFamilyTree()
     {
         this._fatherSideGrandpa = await _personRepository.AddPerson(new Person()
         {
@@ -243,6 +260,5 @@ public abstract class PersonRepositoryBaseTest : IDisposable
 
     public void Dispose()
     {
-        _personRepository.DeleteCollection();
     }
 }
