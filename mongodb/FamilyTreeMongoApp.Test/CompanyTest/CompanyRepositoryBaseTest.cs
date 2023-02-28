@@ -66,6 +66,28 @@ public abstract class CompanyRepositoryBaseTest : IDisposable
         await _personRepository.DeletePerson(p2.Id);
         await _personRepository.DeletePerson(p3.Id);
     }
+    
+    [Fact]
+    public async Task TestJobStatsExistingCompanyWithNoEmpl()
+    {
+        Company firstCompany = await _companyRepository.AddCompany(new Company()
+        {
+            BusinessActivity= "Pfuschn",
+            Name = "Aichinger Co."
+        });
+        Company secondCompany = await _companyRepository.AddCompany(new Company()
+        {
+            BusinessActivity = "Informatics",
+            Name = "Darius Co."
+        });
+
+        var stats =  await _companyRepository.GetCompanyStats();
+
+        stats.Count().Should().Be(0);
+
+        await _companyRepository.DeleteCompany(firstCompany.Id);
+        await _companyRepository.DeleteCompany(secondCompany.Id);
+    }
 
 
     public void Dispose()

@@ -7,7 +7,7 @@ namespace FamilyTreeMongoApp.Test;
 
 public sealed class MapperTests
 {
-    [Fact (Skip = "Not all properties are mapped!")]
+    [Fact]
     public void TestMappingProfile()
     {
         var profile = new MapperProfile();

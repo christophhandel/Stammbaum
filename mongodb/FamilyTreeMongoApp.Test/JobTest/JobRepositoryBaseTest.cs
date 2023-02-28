@@ -65,6 +65,28 @@ public abstract class JobRepositoryBaseTest : IDisposable
         await _personRepository.DeletePerson(p2.Id);
         await _personRepository.DeletePerson(p3.Id);
     }
+    
+    [Fact]
+    public async Task TestJobStatsWithNoEmps()
+    {
+        Job firstJob = await _jobRepository.AddJob(new Job()
+        {
+            JobType = "Software Engineering",
+            Name = "Project Owner"
+        });
+        Job secondJob = await _jobRepository.AddJob(new Job()
+        {
+            JobType = "Facility Management",
+            Name = "Communications"
+        });
+
+        var stats =  await _jobRepository.GetJobsStats();
+
+        stats.Count().Should().Be(0);
+
+        await _jobRepository.DeleteJob(firstJob.Id);
+        await _jobRepository.DeleteJob(secondJob.Id);
+    }
 
 
     public void Dispose()
