@@ -100,6 +100,23 @@ public sealed class AccomplishmentController : ControllerBase
     }
 
     /// <summary>
+    ///     Returns accomplishment with person id
+    /// </summary>
+    /// <returns>Get by ID</returns>
+    [HttpGet]
+    [Route("person/{personId}")]
+    public async Task<ActionResult<IReadOnlyCollection<AccomplishmentDto>>> GetAccomplishmentByPersonId(string personId)
+    {
+        IEnumerable<Accomplishment> accomplishment = await _accomplishmentService.GetAccomplishmentByPersonId(new ObjectId(personId));
+
+        if (personId is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(_mapper.Map<List<AccomplishmentDto>>(accomplishment));
+    }
+        /// <summary>
     ///     Returns accomplishment with id
     /// </summary>
     /// <returns>Get by ID</returns>

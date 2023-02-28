@@ -21,7 +21,7 @@
         </ul>
         <div class="flex">
           <app-overview *ngIf="type=='overview'" [currentPerson]="selectedPerson" [isEditing]="isEditing"></app-overview>
-          <app-accomplishment-list *ngIf="type=='accomplishments'" [accomplishments]="selectedPerson.accomplishments"></app-accomplishment-list>
+          <app-accomplishment-list *ngIf="type=='accomplishments'" [personId]="selectedPerson.id"></app-accomplishment-list>
           <app-family-tree *ngIf="type=='descendants'" [people]="descendants" [view]="view" ></app-family-tree>
           <app-family-tree *ngIf="type=='ancestors'" [people]="ancestors" [view]="view"></app-family-tree>
         </div>

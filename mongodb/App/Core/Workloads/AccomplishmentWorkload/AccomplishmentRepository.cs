@@ -53,4 +53,9 @@ public sealed class AccomplishmentRepository : RepositoryBase<Accomplishment>, I
     {
         await DeleteManyAsync(a => 1 == 1); 
     }
+
+    public async Task<IEnumerable<Accomplishment>> GetAccomplishmentByPersonId(ObjectId objectId)
+    {
+        return await Query().Where(a=>a.Person==objectId).ToListAsync();
+    }
 }

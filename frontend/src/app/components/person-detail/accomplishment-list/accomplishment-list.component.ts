@@ -12,7 +12,8 @@ import {Accomplishments} from "../../../models/accomplishments.model";
 export class AccomplishmentListComponent implements OnInit {
 
   @Input()
-  accomplishments: Accomplishments[] = [];
+  personId: string|null = '';
+  accomplishments: Accomplishments[] = [{description: 'hello world', time: '2022-01-20'}];
 
   loading: boolean = true;
 
@@ -20,6 +21,11 @@ export class AccomplishmentListComponent implements OnInit {
               private toastr: ToastrService) { }
 
   ngOnInit(): void {
+    if(!this.personId) return;
+    this.restService.getAccomplishmentsByPerson(this.personId).subscribe({
+      next: d=> {this.accomplishments = d; this.loading=false},
+      error: err=>this.toastr.error(err)
+    })
   }
 
   deleteAcc(accs: any) {

@@ -13,4 +13,5 @@ public interface IAccomplishmentRepository : IRepositoryBase
     Task<Accomplishment> UpdateAccomplishment(ObjectId objectId, string description, DateTime time);
     Task DeleteAccomplishment(ObjectId objectId);
     Task DeleteCollection();
+    Task<IEnumerable<Accomplishment>> GetAccomplishmentByPersonId(ObjectId objectId);
 }

@@ -1,3 +1,4 @@
+import { Accomplishments } from './../models/accomplishments.model';
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Person} from "../models/person.model";
@@ -121,6 +122,10 @@ export class RestService {
       });
     }
     return this.http.get(environment.API_URL + "delete-collections")
+  }
+
+  getAccomplishmentsByPerson(id: string) {
+    return this.http.get<Accomplishments[]>(environment.API_URL + "accomplishment/person/"+ id)
   }
 
   getDescendants(id: string) {

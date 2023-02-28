@@ -407,6 +407,24 @@ namespace FamilyTreeMongoApp.Controllers
             await _personService.UpdatePerson(lyanna.Id, lyanna.Firstname, lyanna.Lastname, yara.Id, rickard.Id,
                 lyanna.Sex, lyanna.BirthPlace, maesterJob!.Id, theNorth!.Id);
 
+            await _accomplishmentService.AddAccomplishment(new AccomplishmentDto {
+                Description = "Irgend a random accomplishment kys!",
+                Time = "15.06.2009",
+                Id=null,
+                Person = rickard.Id.ToString()
+            });
+            await _accomplishmentService.AddAccomplishment(new AccomplishmentDto {
+                Description = "Ein wahrer macher idk hob GOT nd gseng lol",
+                Time = "01.12.1200",
+                Id=null,
+                Person = tywin.Id.ToString()
+            });
+            await _accomplishmentService.AddAccomplishment(new AccomplishmentDto {
+                Description = "Keine Ahnung sie is der beste oda so?",
+                Time = "01.12.1200",
+                Id=null,
+                Person = lyanna.Id.ToString()
+            });
             return;
         }
 

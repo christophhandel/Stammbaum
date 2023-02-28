@@ -102,4 +102,15 @@ public class AccomplishmentRepositoryNeo: RepositoryBase<Accomplishment>, IAccom
             await tx.RunAsync("MATCH (a:Accomplishment) DETACH DELETE a;");
         });
     }
+
+    public async Task<IEnumerable<Accomplishment>> GetAccomplishmentByPersonId(ObjectId objectId)
+    {
+            await using var session = _driver.AsyncSession();
+            return await session.ExecuteReadAsync(async tx =>
+            {
+                var result = await tx.RunAsync("MATCH (a:Accomplishment {person:$Id}) " + Neo4JUtil.accomplishmentReturnAllFieldsQuery + ";",
+                    new {Id = objectId.ToString()});
+                return await result.ToListAsync(Neo4JUtil.convertIRecordToAccomplishment);
+            });
+    }
 }

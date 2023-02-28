@@ -52,4 +52,9 @@ public sealed class AccomplishmentService : IAccomplishmentService
     {
         await _repository.DeleteCollection();
     }
+
+    public Task<IEnumerable<Accomplishment>> GetAccomplishmentByPersonId(ObjectId objectId)
+    {
+        return _repository.GetAccomplishmentByPersonId(objectId);
+    }
 }
