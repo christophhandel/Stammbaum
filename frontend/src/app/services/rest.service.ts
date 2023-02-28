@@ -73,22 +73,37 @@ export class RestService {
   }
 
   deletePerson(personId: string) {
+    if(localStorage.getItem("admintoken") != environment.admintoken && environment.production) {
+      return;
+    }
     return this.http.delete<Person>(environment.API_URL + "person/" + personId)
   }
 
   deleteCompany(companyId: string) {
+    if(localStorage.getItem("admintoken") != environment.admintoken && environment.production) {
+      return;
+    }
     return this.http.delete<Company>(environment.API_URL + "company/" + companyId)
   }
 
   deleteJob(jobId: string) {
+    if(localStorage.getItem("admintoken") != environment.admintoken && environment.production) {
+      return;
+    }
     return this.http.delete<Job>(environment.API_URL + "Job/" + jobId)
   }
 
   loadTestDataIntoDb() {
+    if(localStorage.getItem("admintoken") != environment.admintoken && environment.production) {
+      return;
+    }
     return this.http.get(environment.API_URL + "TestData")
   }
 
   deleteAllData(){
+    if(localStorage.getItem("admintoken") != environment.admintoken && environment.production) {
+      return;
+    }
     return this.http.get(environment.API_URL + "delete-collections")
   }
 
