@@ -132,6 +132,8 @@ export class OverviewComponent implements OnInit {
       next: v => {
         this.toastr.success("Successfully deleted person (" + this.currentPerson.firstname + " " + this.currentPerson.lastname + ")!")
         this.router.navigate(["persons"]);
+      },error: err=> {
+        this.toastr.success(err);
       }
     })
   }

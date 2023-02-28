@@ -6,6 +6,7 @@ import {Company} from "../models/company.model";
 import {Job} from "../models/job.model";
 import {JobStatDto} from "../models/job-stat-dto";
 import {CompanyStatDto} from "../models/company-stat-dto";
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -73,22 +74,52 @@ export class RestService {
   }
 
   deletePerson(personId: string) {
+    if(localStorage.getItem("admintoken") != environment.admintoken && environment.production) {
+      return new Observable((t)=>{
+        t.error("Not Allowed!");
+        t.complete();
+      });
+    }
     return this.http.delete<Person>(environment.API_URL + "person/" + personId)
   }
 
   deleteCompany(companyId: string) {
+    if(localStorage.getItem("admintoken") != environment.admintoken && environment.production) {
+      return new Observable((t)=>{
+        t.error("Not Allowed!");
+        t.complete();
+      });
+    }
     return this.http.delete<Company>(environment.API_URL + "company/" + companyId)
   }
 
   deleteJob(jobId: string) {
+    if(localStorage.getItem("admintoken") != environment.admintoken && environment.production) {
+      return new Observable((t)=>{
+        t.error("Not Allowed!");
+        t.complete();
+      });
+    }
     return this.http.delete<Job>(environment.API_URL + "Job/" + jobId)
   }
 
   loadTestDataIntoDb() {
+    if(localStorage.getItem("admintoken") != environment.admintoken && environment.production) {
+      return new Observable((t)=>{
+        t.error("Not Allowed!");
+        t.complete();
+      });
+    }
     return this.http.get(environment.API_URL + "TestData")
   }
 
   deleteAllData(){
+    if(localStorage.getItem("admintoken") != environment.admintoken && environment.production) {
+      return new Observable((t)=>{
+        t.error("Not Allowed!");
+        t.complete();
+      });
+    }
     return this.http.get(environment.API_URL + "delete-collections")
   }
 

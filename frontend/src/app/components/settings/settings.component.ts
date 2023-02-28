@@ -20,6 +20,8 @@ export class SettingsComponent implements OnInit {
     this.restService.loadTestDataIntoDb().subscribe({
       next: value => {
         this.toastr.success("Loaded Test Data into Database!")
+      },error: err => {
+        this.toastr.error(err)
       }
     })
   }

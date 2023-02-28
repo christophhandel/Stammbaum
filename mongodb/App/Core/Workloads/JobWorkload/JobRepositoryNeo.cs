@@ -10,21 +10,18 @@ using Neo4j.Driver;
 
 namespace FamilyTreeMongoApp.Core.Workloads.JobWorkload;
 
-public class JobRepositoryNeo: RepositoryBase<Job>, IJobRepository
+public class JobRepositoryNeo: IJobRepository
 {
     private readonly IDriver _driver;
     private readonly IMapper _mapper;
 
-    public JobRepositoryNeo(IDriver driver, ITransactionProvider transactionProvider, IDatabaseProvider databaseProvider,
-        IMapper _mapper) 
-        : base(transactionProvider, databaseProvider)
+    public JobRepositoryNeo(IDriver driver,
+        IMapper _mapper)
     {
         _driver = driver;
         this._mapper = _mapper;
     }
-    
-    public override string CollectionName { get; }  = MongoUtil.GetCollectionName<Job>();
-    
+
     public async Task<Job?> GetJobById(ObjectId parse)
     {
         await using var session = _driver.AsyncSession();
@@ -121,4 +118,6 @@ public class JobRepositoryNeo: RepositoryBase<Job>, IJobRepository
                 ));
         });
     }
+
+    public string CollectionName { get; } = "Job";
 }

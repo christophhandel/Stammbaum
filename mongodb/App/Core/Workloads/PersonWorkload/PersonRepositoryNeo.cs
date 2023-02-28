@@ -17,13 +17,13 @@ namespace FamilyTreeMongoApp.Core.Workloads.PersonWorkload;
 public class PersonRepositoryNeo : IPersonRepository
 {
     private IDriver _driver;
-    private ILogger<PersonRepository> _logger;
+    private ILogger<IPersonRepository> _logger;
     private readonly IMapper _mapper;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="PersonRepository"/> class.
     /// </summary>
-    public PersonRepositoryNeo(IDriver driver, ILogger<PersonRepository> logger, IMapper mapper)
+    public PersonRepositoryNeo(IDriver driver, ILogger<IPersonRepository> logger, IMapper mapper)
     {
         _driver = driver;
         _logger = logger;
@@ -52,13 +52,13 @@ public class PersonRepositoryNeo : IPersonRepository
                                            ((toAdd.Father != null) ? ",fatherId: $Father" : "") +
                                            "}) " +
                                            Neo4JUtil.personReturnAllFieldsQuery + ";", toAdd);
-            await createRelations(tx, request.Id, request.Mother, request.Father, request.Job, request.Company);
+            await createRelations(tx, toAdd.Id, request.Mother, request.Father, request.Job, request.Company);
             return await result.SingleAsync(Neo4JUtil.convertIRecordToPerson);
         });
     }
 
     private async Task createRelations(IAsyncQueryRunner tx,
-        ObjectId id,
+        string id,
         ObjectId? motherId, 
         ObjectId? fatherId, 
         ObjectId? jobId, 
@@ -130,7 +130,7 @@ public class PersonRepositoryNeo : IPersonRepository
         await using var session = _driver.AsyncSession();
         return await session.ExecuteReadAsync(async tx =>
         {
-            var result = await tx.RunAsync("MATCH (p:Person)-[:PARENT_OF *0..]->(act:Person {id:$id}) " 
+            var result = await tx.RunAsync("MATCH (act:Person {id:$id})-[:PARENT_OF *0..]->(p:Person) " 
                                            + Neo4JUtil.personReturnAllFieldsQuery + ";"
                 , new {id=objectId.Id.ToString()});
             return await result.ToListAsync(Neo4JUtil.convertIRecordToPerson);
@@ -213,7 +213,14 @@ public class PersonRepositoryNeo : IPersonRepository
         {
             var result = await tx.RunAsync("MATCH (p:Person {id:$Id}) " + Neo4JUtil.personReturnAllFieldsQuery + ";",
                 new {Id = objectId.ToString()});
-            return await result.SingleAsync(Neo4JUtil.convertIRecordToPerson);
+            try
+            {
+                return await result.SingleAsync(Neo4JUtil.convertIRecordToPerson);
+            }
+            catch (InvalidOperationException)
+            {
+                return null;
+            } 
         });
     }
 
@@ -243,7 +250,7 @@ public class PersonRepositoryNeo : IPersonRepository
                     Id= id.ToString(),firstname, lastname, motherId = motherId.ToString(), fatherId = fatherId.ToString(),
                     sex = personSex, jobId=Job.ToString(), companyId =Company.ToString()
                 });
-            await createRelations(tx, id, motherId, fatherId, Job, Company);
+            await createRelations(tx, id.ToString(), motherId, fatherId, Job, Company);
             return await result.SingleAsync(Neo4JUtil.convertIRecordToPerson);
         });
     }
@@ -262,9 +269,9 @@ public class PersonRepositoryNeo : IPersonRepository
         await using var session = _driver.AsyncSession();
         return await session.ExecuteReadAsync(async tx =>
         {
-            var result = await tx.RunAsync("MATCH (act:Person {id:$id})-[:PARENT_OF *0..]->(p:Person) " 
+            var result = await tx.RunAsync("MATCH (p:Person)-[:PARENT_OF *0..]->(act:Person {id:$id}) " 
                                            + Neo4JUtil.personReturnAllFieldsQuery + ";"
-                                           , new {id=person.Id.ToString()});
+                , new {id=person.Id.ToString()});
             return await result.ToListAsync(Neo4JUtil.convertIRecordToPerson);
         });
     }

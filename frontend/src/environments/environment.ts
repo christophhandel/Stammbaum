@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  admintoken: "ABCDE",
   API_URL: "http://localhost:5001/api/"
 };
 
