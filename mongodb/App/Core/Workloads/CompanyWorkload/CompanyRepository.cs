@@ -74,6 +74,7 @@ public sealed class CompanyRepository : RepositoryBase<Company>, ICompanyReposit
                     .Select(mD => new CompanyStatDto(
                         mD.Master,
                         mD.Details == null ? 0 : mD.Details!.Count(p => p == "f"),
-                        mD.Details == null ? 0 : mD.Details!.Count(p => p == "m")));
+                        mD.Details == null ? 0 : mD.Details!.Count(p => p == "m")))
+                    .Where(cs => cs.femaleWorkers > 0 || cs.maleWorkers > 0);
     }
 }
