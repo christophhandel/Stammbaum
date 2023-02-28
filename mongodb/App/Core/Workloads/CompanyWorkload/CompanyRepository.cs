@@ -30,7 +30,7 @@ public sealed class CompanyRepository : RepositoryBase<Company>, ICompanyReposit
 
     }
 
-    public async Task<Company?> AddCompany(Company company)
+    public async Task<Company> AddCompany(Company company)
     {
         return await InsertOneAsync(company);
     }

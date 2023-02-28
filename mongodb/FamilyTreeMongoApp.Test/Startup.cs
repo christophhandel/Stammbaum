@@ -1,9 +1,11 @@
 using FamilyTreeMongoApp.Core.Util;
+using FamilyTreeMongoApp.Core.Workloads.AccomplishmentWorkload;
 using FamilyTreeMongoApp.Core.Workloads.Person;
 using FamilyTreeMongoApp.Core.Workloads.PersonWorkload;
 using LeoMongo;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Neo4j.Driver;
 
 namespace FamilyTreeMongoApp.Test
 {
@@ -24,13 +26,19 @@ namespace FamilyTreeMongoApp.Test
         {
             services.Configure<AppSettings>(Configuration.GetSection(AppSettings.Key));
             services.AddAutoMapper(typeof(MapperProfile));
+            var settings = new AppSettings();
+            Configuration.GetSection("AppSettings").Bind(settings);
             
             // configure fwk
             services.AddLeoMongo<MongoConfig>();
+            
+            services.AddSingleton(GraphDatabase.Driver(settings.Neo4jConnection, AuthTokens.Basic(settings.Neo4jUser, settings.Neo4jPassword)));
+
 
             // for bigger assemblies it would be alright to register those via reflection by naming convention!
             services.AddScoped<IPersonService, PersonService>();
             services.AddScoped<IPersonRepository, PersonRepository>();
+            services.AddScoped<IAccomplishmentRepository, AccomplishmentRepository>();
 
             services.AddTransient<IDateTimeProvider, DateTimeProvider>();
         }
