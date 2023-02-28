@@ -7,6 +7,14 @@ namespace FamilyTreeMongoApp.Test.PersonTest;
 public abstract class PersonRepositoryBaseTest : IDisposable
 {
     private readonly IPersonRepository _personRepository;
+    private Person _fatherSideGrandpa;
+    private Person _fatherSideGrandma;
+    private Person _motherSideGrandma;
+    private Person _mother;
+    private Person _father;
+    private Person _firstChild;
+    private Person _secondChild;
+    
 
     protected PersonRepositoryBaseTest(IPersonRepository personRepository)
     {
@@ -144,70 +152,92 @@ public abstract class PersonRepositoryBaseTest : IDisposable
     [Fact]
     public async Task TestGetDescendants()
     {
-        Person fatherSideGrandpa = await _personRepository.AddPerson(new Person()
+        await generateFamilyTree();
+
+
+
+        (await _personRepository.GetDescendants(_firstChild)).Select(p => p.Id).Should().BeEquivalentTo(
+            new List<Person>() {_firstChild}.Select( p => p.Id));
+        (await _personRepository.GetDescendants(_fatherSideGrandpa)).Select(p => p.Id).Should().BeEquivalentTo(
+            new List<Person>() {_fatherSideGrandpa, _father, _firstChild, _secondChild}.Select( p => p.Id));
+        (await _personRepository.GetDescendants(_motherSideGrandma)).Select(p => p.Id).Should().BeEquivalentTo(
+            new List<Person>() {_motherSideGrandma, _mother, _firstChild, _secondChild}.Select( p => p.Id));
+    }
+    
+    [Fact]
+    public async Task TestGetAncestors()
+    {
+        await generateFamilyTree();
+        
+
+        (await _personRepository.GetAncestors(_fatherSideGrandpa)).Should().BeEquivalentTo(
+            new List<Person>() {_fatherSideGrandpa});
+        (await _personRepository.GetAncestors(_father)).Select(p => p.Id).Should().BeEquivalentTo(
+            new List<Person>() {_fatherSideGrandma, _fatherSideGrandpa, _father}.Select( p => p.Id));
+        (await _personRepository.GetAncestors(_mother)).Select(p => p.Id).Should().BeEquivalentTo(
+            new List<Person>() {_motherSideGrandma, _mother}.Select( p => p.Id));
+        (await _personRepository.GetAncestors(_secondChild)).Select(p => p.Id).Should().BeEquivalentTo(
+            new List<Person>() {_mother,_father,_fatherSideGrandma,_fatherSideGrandpa, _motherSideGrandma, _secondChild}
+                .Select( p => p.Id));
+    }
+
+    private async Task generateFamilyTree()
+    {
+        this._fatherSideGrandpa = await _personRepository.AddPerson(new Person()
         {
             Firstname = "Father Grandpa",
             Lastname = "Mustermann",
             Sex = "m"
         });
         
-        Person fatherSideGrandma = await _personRepository.AddPerson(new Person()
+        _fatherSideGrandma = await _personRepository.AddPerson(new Person()
         {
             Firstname = "Father Grandma",
             Lastname = "Mustermann",
             Sex = "f"
         });
         
-        Person motherSideGrandma = await _personRepository.AddPerson(new Person()
+        _motherSideGrandma = await _personRepository.AddPerson(new Person()
         {
             Firstname = "Mother Grandma",
             Lastname = "Mustermann",
             Sex = "f"
         });
         
-        Person father = await _personRepository.AddPerson(new Person()
+        _father = await _personRepository.AddPerson(new Person()
         {
             Firstname = "Father",
             Lastname = "Mustermann",
             Sex = "m",
-            Mother = fatherSideGrandma.Id,
-            Father = fatherSideGrandpa.Id
+            Mother = _fatherSideGrandma.Id,
+            Father = _fatherSideGrandpa.Id
         });
         
-        Person mother = await _personRepository.AddPerson(new Person()
+        _mother = await _personRepository.AddPerson(new Person()
         {
             Firstname = "Mother",
             Lastname = "Mustermann",
             Sex = "f",
-            Mother = motherSideGrandma.Id
+            Mother = _motherSideGrandma.Id
         });
 
-        Person firstChild = await _personRepository.AddPerson(new Person()
+        _firstChild = await _personRepository.AddPerson(new Person()
         {
             Firstname = "First",
             Lastname = "Child",
             Sex = "m",
-            Mother = mother.Id,
-            Father = father.Id
+            Mother = _mother.Id,
+            Father = _father.Id
         });
         
-        Person secondChild = await _personRepository.AddPerson(new Person()
+        _secondChild = await _personRepository.AddPerson(new Person()
         {
             Firstname = "Second",
             Lastname = "Child",
             Sex = "m",
-            Mother = mother.Id,
-            Father = father.Id
+            Mother = _mother.Id,
+            Father = _father.Id
         });
-
-
-
-        (await _personRepository.GetDescendants(firstChild)).Select(p => p.Id).Should().BeEquivalentTo(
-            new List<Person>() {firstChild}.Select( p => p.Id));
-        (await _personRepository.GetDescendants(fatherSideGrandpa)).Select(p => p.Id).Should().BeEquivalentTo(
-            new List<Person>() {fatherSideGrandpa, father, firstChild, secondChild}.Select( p => p.Id));
-        (await _personRepository.GetDescendants(motherSideGrandma)).Select(p => p.Id).Should().BeEquivalentTo(
-            new List<Person>() {motherSideGrandma, mother, firstChild, secondChild}.Select( p => p.Id));
     }
 
 
