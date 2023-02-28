@@ -11,7 +11,7 @@ import {ToastrService} from "ngx-toastr";
 })
 export class JobChartComponent implements OnInit, OnChanges {
   single: { name: string, value: number }[] = [];
-  view: [number, number] = [900, 400];
+  view: [number, number] = [1000, 400];
   gradient: boolean = true;
 
   colorScheme: Color = {
