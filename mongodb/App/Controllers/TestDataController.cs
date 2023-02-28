@@ -53,22 +53,32 @@ namespace FamilyTreeMongoApp.Controllers
 
 
             var kingJob = await _jobService.AddJob(new JobDto()
-                {Name = "King", JobType = "The one who sits on the Iron-Throne"});
+                {Name = "King of the 7 Kingdoms", JobType = "The one who sits on the Iron-Throne"});
             var nKingJob = await _jobService.AddJob(new JobDto()
                 {Name = "King in the North", JobType = "The one who sits on the throne in winterfell"});
             var motherDJob = await _jobService.AddJob(new JobDto()
                 {Name = "Mother of the Dragons", JobType = "A person who raised dragons"});
+            var swordFighterJob = await _jobService.AddJob(new JobDto()
+            { Name = "Swordfighter", JobType = "A person who is very skilled with swords" });
+            var maesterJob = await _jobService.AddJob(new JobDto()
+            { Name = "Maester", JobType = "A very smart person." });
 
+
+            var orderOfMaesters = await _companyService.AddCompany(new CompanyDto()
+            {
+                Name = "Order of Maesters",
+                BusinessActivity = "An order of intellectuals in the Seven Kingdoms."
+            });
+            var theNorth = await _companyService.AddCompany(new CompanyDto()
+            {
+                Name = "The North",
+                BusinessActivity = "The North remembers"
+            });
             var goldenComp = await _companyService.AddCompany(new CompanyDto()
             {
                 Name = "Golden Army",
                 BusinessActivity = "Paid army which is said to be super strong but is actually super weak"
             });
-            var whiteComp = await _companyService.AddCompany(new CompanyDto()
-                {Name = "White Walkers", BusinessActivity = "Zombie alike white dudes"});
-            var facelessComp = await _companyService.AddCompany(new CompanyDto()
-                {Name = "Faceless Men", BusinessActivity = "Assassins who can change their face at will"});
-
             #region Test Data
 
             // HOUSE LANNISTER
@@ -358,44 +368,44 @@ namespace FamilyTreeMongoApp.Controllers
 
             // ADDING RELATIONS 
             await _personService.UpdatePerson(cersei.Id, cersei.Firstname, cersei.Lastname, joanna.Id, tywin.Id,
-                cersei.Sex, cersei.BirthPlace, motherDJob!.Id, null);
+                cersei.Sex, cersei.BirthPlace, maesterJob!.Id, orderOfMaesters!.Id);
             await _personService.UpdatePerson(jaime.Id, jaime.Firstname, jaime.Lastname, joanna.Id, tywin.Id, jaime.Sex,
-                jaime.BirthPlace, kingJob!.Id, null);
+                jaime.BirthPlace, swordFighterJob!.Id, goldenComp!.Id);
             await _personService.UpdatePerson(tyrion.Id, tyrion.Firstname, tyrion.Lastname, joanna.Id, tywin.Id,
-                tyrion.Sex, tyrion.BirthPlace, nKingJob!.Id, whiteComp!.Id);
+                tyrion.Sex, tyrion.BirthPlace, swordFighterJob!.Id, goldenComp!.Id);
 
             await _personService.UpdatePerson(joffrey.Id, joffrey.Firstname, joffrey.Lastname, cersei.Id, jaime.Id,
-                joffrey.Sex, joffrey.BirthPlace, null, goldenComp!.Id);
+                joffrey.Sex, joffrey.BirthPlace, swordFighterJob!.Id, goldenComp!.Id);
             await _personService.UpdatePerson(myrcella.Id, myrcella.Firstname, myrcella.Lastname, cersei.Id, jaime.Id,
-                myrcella.Sex, myrcella.BirthPlace, motherDJob!.Id, whiteComp!.Id);
+                myrcella.Sex, myrcella.BirthPlace, maesterJob!.Id, null);
             await _personService.UpdatePerson(tommen.Id, tommen.Firstname, tommen.Lastname, cersei.Id, robert.Id,
                 tommen.Sex, tommen.BirthPlace, null, goldenComp!.Id);
 
             await _personService.UpdatePerson(rhaegar.Id, rhaegar.Firstname, rhaegar.Lastname, rhaella.Id, aerys.Id,
-                rhaegar.Sex, rhaegar.BirthPlace, null, whiteComp!.Id);
+                rhaegar.Sex, rhaegar.BirthPlace, maesterJob!.Id, orderOfMaesters!.Id);
             await _personService.UpdatePerson(viserys.Id, viserys.Firstname, viserys.Lastname, rhaella.Id, aerys.Id,
-                viserys.Sex, viserys.BirthPlace, null, goldenComp!.Id);
+                viserys.Sex, viserys.BirthPlace, maesterJob!.Id, orderOfMaesters!.Id);
             await _personService.UpdatePerson(daenerys.Id, daenerys.Firstname, daenerys.Lastname, rhaella.Id, aerys.Id,
-                daenerys.Sex, daenerys.BirthPlace, kingJob!.Id, whiteComp!.Id);
+                daenerys.Sex, daenerys.BirthPlace, motherDJob!.Id, null);
 
             await _personService.UpdatePerson(jon.Id, jon.Firstname, jon.Lastname, lyanna.Id, rhaegar.Id, jon.Sex,
-                jon.BirthPlace, null, null);
+                jon.BirthPlace, swordFighterJob!.Id, null);
             await _personService.UpdatePerson(drogon.Id, drogon.Firstname, drogon.Lastname, daenerys.Id, jon.Id,
-                drogon.Sex, drogon.BirthPlace, null, goldenComp!.Id);
+                drogon.Sex, drogon.BirthPlace, swordFighterJob!.Id, goldenComp!.Id);
             await _personService.UpdatePerson(rhaegal.Id, rhaegal.Firstname, rhaegal.Lastname, daenerys.Id, jon.Id,
-                rhaegal.Sex, rhaegal.BirthPlace, kingJob!.Id, whiteComp!.Id);
+                rhaegal.Sex, rhaegal.BirthPlace, kingJob!.Id, goldenComp!.Id);
 
             await _personService.UpdatePerson(lancel.Id, lancel.Firstname, lancel.Lastname, sansa.Id, tyrion.Id,
-                lancel.Sex, lancel.BirthPlace, null, facelessComp!.Id);
+                lancel.Sex, lancel.BirthPlace, null, goldenComp!.Id);
             await _personService.UpdatePerson(sansa.Id, sansa.Firstname, sansa.Lastname, catelyn.Id, ned.Id, sansa.Sex,
-                sansa.BirthPlace, motherDJob!.Id, facelessComp!.Id);
+                sansa.BirthPlace, nKingJob!.Id, theNorth!.Id);
             await _personService.UpdatePerson(arya.Id, arya.Firstname, arya.Lastname, catelyn.Id, ned.Id, arya.Sex,
-                arya.BirthPlace, null, facelessComp!.Id);
+                arya.BirthPlace, swordFighterJob!.Id, theNorth!.Id);
 
             await _personService.UpdatePerson(ned.Id, ned.Firstname, ned.Lastname, yara.Id, rickard.Id, ned.Sex,
-                ned.BirthPlace, kingJob!.Id, null);
+                ned.BirthPlace, nKingJob!.Id, theNorth!.Id);
             await _personService.UpdatePerson(lyanna.Id, lyanna.Firstname, lyanna.Lastname, yara.Id, rickard.Id,
-                lyanna.Sex, lyanna.BirthPlace, null, facelessComp!.Id);
+                lyanna.Sex, lyanna.BirthPlace, maesterJob!.Id, theNorth!.Id);
 
             return;
         }
