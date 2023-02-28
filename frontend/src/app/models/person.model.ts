@@ -1,4 +1,5 @@
 import {Location} from "./location.model";
+import {Accomplishments} from "./accomplishments.model";
 
 export interface Person {
   id: string|null;
@@ -13,4 +14,6 @@ export interface Person {
 
   fatherId: string|null;
   motherId: string|null;
+
+  accomplishments: Accomplishments[];
 }

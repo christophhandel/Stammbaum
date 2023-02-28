@@ -15,6 +15,7 @@ export class PersonDetailComponent implements OnInit {
   isEditing: boolean = true;
   ancestors: Person[] = [];
   descendants: Person[] = [];
+
   selectedPerson: Person = {
     id: '',
     firstname: '',
@@ -24,7 +25,8 @@ export class PersonDetailComponent implements OnInit {
     sex: null,
     jobId: null,
     birthLocation: {id: null, city: "", country: ""},
-    companyId: null
+    companyId: null,
+    accomplishments: []
   };
 
 

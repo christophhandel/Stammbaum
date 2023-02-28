@@ -77,8 +77,6 @@ export class CompanyChartComponent implements OnInit, OnChanges {
         this.multi = [...arr]
         this.loaded = true;
         this.cdRef.detectChanges();
-        console.log(this.multi)
-        console.log(this.loaded)
       },
       error: () => {
         this.toastrService.error("Die Daten konnten nicht geladen werden!")

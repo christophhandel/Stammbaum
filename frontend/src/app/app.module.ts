@@ -22,6 +22,7 @@ import {CompanyChartComponent} from "./components/stats/company-chart/company-ch
 import {NgxChartsModule} from "@swimlane/ngx-charts";
 import {StatsComponent} from "./components/stats/stats.component";
 import {JobChartComponent} from "./components/stats/job-chart/job-chart.component";
+import { AccomplishmentListComponent } from './components/person-detail/accomplishment-list/accomplishment-list.component';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import {JobChartComponent} from "./components/stats/job-chart/job-chart.componen
     JobAddComponent,
     SettingsComponent,
     OverviewComponent,
-    FamilyTreeComponent
+    FamilyTreeComponent,
+    AccomplishmentListComponent
   ],
   imports: [
     BrowserModule,

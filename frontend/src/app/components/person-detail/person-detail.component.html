@@ -9,6 +9,9 @@
           <li class="mr-2">
             <button (click)="type='overview'" [ngClass]="{'active text-blue-600 bg-gray-100':type=='overview'}" class="inline-block p-4 rounded-t-lg">Overview</button>
           </li>
+          <li class="mr-2">
+            <button (click)="type='accomplishments'" [ngClass]="{'active text-blue-600 bg-gray-100':type=='accomplishments'}" class="inline-block p-4 rounded-t-lg">Accomplishments</button>
+          </li>
           <li class="mr-2" *ngIf="descendants.length > 1">
             <button (click)="type='descendants'" [ngClass]="{'active text-blue-600 bg-gray-100':type=='descendants'}" class="inline-block p-4 rounded-t-lg">Descendants</button>
           </li>
@@ -18,6 +21,7 @@
         </ul>
         <div class="flex">
           <app-overview *ngIf="type=='overview'" [currentPerson]="selectedPerson" [isEditing]="isEditing"></app-overview>
+          <app-accomplishment-list *ngIf="type=='accomplishments'" [accomplishments]="selectedPerson.accomplishments"></app-accomplishment-list>
           <app-family-tree *ngIf="type=='descendants'" [people]="descendants" [view]="view" ></app-family-tree>
           <app-family-tree *ngIf="type=='ancestors'" [people]="ancestors" [view]="view"></app-family-tree>
         </div>

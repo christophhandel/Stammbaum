@@ -1,4 +1,4 @@
 export interface Accomplishments {
-  time: Date;
+  time: string;
   description: string;
 }

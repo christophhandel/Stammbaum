@@ -22,7 +22,8 @@ export class OverviewComponent implements OnInit {
     sex: null,
     jobId: null,
     birthLocation: {id: null, city: "", country: ""},
-    companyId: null
+    companyId: null,
+    accomplishments: []
   };
   @Input() isEditing: boolean = false;
 
